@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">qbittorrent Remote</string>
+    <string name="add_server">Add server</string>
+    <string name="welcome_text">Welcome to qBittorrent Remote</string>
+</resources>
