@@ -8,6 +8,7 @@ androidApplication = "7.4.0-alpha05"
 androidLibrary = "7.4.0-alpha05"
 hilt = "2.42"
 kotlin = "1.6.21"
+room = "2.4.2"
 spotless = "6.7.2"
 
 [libraries]
@@ -16,6 +17,10 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "axNavigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "axNavigation" }
+
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
