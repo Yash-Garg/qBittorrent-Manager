@@ -6,6 +6,7 @@ plugins {
     kotlin("kapt")
     id("com.diffplug.spotless")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs")
 }
 
 android {
