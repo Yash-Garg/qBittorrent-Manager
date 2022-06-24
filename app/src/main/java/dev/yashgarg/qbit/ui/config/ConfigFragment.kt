@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.ui
+package dev.yashgarg.qbit.ui.config
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ class AddServerFragment : Fragment(R.layout.add_server_fragment) {
     private val binding
         get() = _binding!!
 
-    private val viewModel: AddServerViewModel by viewModels()
+    private val viewModel: ConfigViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,17 +32,16 @@ class AddServerFragment : Fragment(R.layout.add_server_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveConfigFab.setOnClickListener {
-            val serverConfig =
+            val config =
                 ServerConfig(
                     configId = 1,
-                    serverName = binding.serverName.editText?.text.toString(),
                     baseUrl = binding.serverHost.editText?.text.toString(),
                     username = binding.serverUsername.editText?.text.toString(),
                     password = binding.serverPassword.editText?.text.toString(),
-                    port = binding.serverPort.editText?.text.toString().toInt()
+                    port = binding.serverPort.editText?.text.toString().toInt(),
                 )
 
-            println(serverConfig.toString())
+            viewModel.insert(config)
         }
     }
 

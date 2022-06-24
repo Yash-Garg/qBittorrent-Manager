@@ -9,5 +9,5 @@ import dev.yashgarg.qbit.models.ServerConfig
 interface ConfigDao {
     @Query("SELECT * FROM configs") fun getConfigs(): List<ServerConfig>
 
-    @Insert fun addConfig(config: ServerConfig)
+    @Insert suspend fun addConfig(config: ServerConfig)
 }
