@@ -36,11 +36,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity).supportActionBar?.hide()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
