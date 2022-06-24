@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/addServerFragment"
-        android:name="dev.yashgarg.qbit.ui.AddServerFragment"
+        android:name="dev.yashgarg.qbit.ui.config.ConfigFragment"
         android:label="AddServerFragment" >
         <action
             android:id="@+id/action_addServerFragment_to_homeFragment"
