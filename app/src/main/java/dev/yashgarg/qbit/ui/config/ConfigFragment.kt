@@ -8,12 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
-import dev.yashgarg.qbit.databinding.AddServerFragmentBinding
-import dev.yashgarg.qbit.models.ServerConfig
+import dev.yashgarg.qbit.databinding.ConfigFragmentBinding
 
 @AndroidEntryPoint
-class AddServerFragment : Fragment(R.layout.add_server_fragment) {
-    private var _binding: AddServerFragmentBinding? = null
+class AddServerFragment : Fragment(R.layout.config_fragment) {
+    private var _binding: ConfigFragmentBinding? = null
     private val binding
         get() = _binding!!
 
@@ -24,25 +23,12 @@ class AddServerFragment : Fragment(R.layout.add_server_fragment) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = AddServerFragmentBinding.inflate(inflater, container, false)
+        _binding = ConfigFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.saveConfigFab.setOnClickListener {
-            val config =
-                ServerConfig(
-                    configId = 1,
-                    baseUrl = binding.serverHost.editText?.text.toString(),
-                    username = binding.serverUsername.editText?.text.toString(),
-                    password = binding.serverPassword.editText?.text.toString(),
-                    port = binding.serverPort.editText?.text.toString().toInt(),
-                )
-
-            viewModel.insert(config)
-        }
     }
 
     override fun onDestroyView() {
