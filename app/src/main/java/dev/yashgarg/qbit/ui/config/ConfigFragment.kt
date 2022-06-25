@@ -1,14 +1,19 @@
 package dev.yashgarg.qbit.ui.config
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -31,23 +36,32 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         observeFlows()
         watchTextFields()
         setupActionBar()
+        setupMenu()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
         (binding.dropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         binding.autoTextview.setSelection(0)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            android.R.id.home -> {
-                Navigation.findNavController(requireView()).navigateUp()
-                true
+    private fun setupMenu() {
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) = Unit
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    android.R.id.home -> {
+                        Navigation.findNavController(requireView()).navigateUp()
+                        return true
+                    }
+                    else -> this.onMenuItemSelected(menuItem)
+                }
+                return true
             }
-            else -> super.onOptionsItemSelected(item)
-        }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
 
     private fun setupActionBar() {
-        setHasOptionsMenu(true)
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.title = "Add server"
         actionBar?.setHomeButtonEnabled(true)
