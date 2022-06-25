@@ -36,18 +36,25 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         observeFlows()
         watchTextFields()
         setupMenu()
-
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        setupActionbar()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
         (binding.dropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         binding.autoTextview.setSelection(0)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         (activity as AppCompatActivity).setSupportActionBar(null)
     }
+
+    private fun setupActionbar() {
+        val activity = (activity as AppCompatActivity)
+        activity.setSupportActionBar(binding.toolbar)
+        activity.supportActionBar?.setHomeButtonEnabled(true)
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
 
