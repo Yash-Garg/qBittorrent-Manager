@@ -35,37 +35,39 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         super.onViewCreated(view, savedInstanceState)
         observeFlows()
         watchTextFields()
-        setupActionBar()
         setupMenu()
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
         (binding.dropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         binding.autoTextview.setSelection(0)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as AppCompatActivity).setSupportActionBar(null)
+    }
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
 
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) = Unit
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    android.R.id.home -> {
-                        Navigation.findNavController(requireView()).navigateUp()
-                        return true
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) = Unit
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    when (menuItem.itemId) {
+                        android.R.id.home -> {
+                            Navigation.findNavController(requireView()).navigateUp()
+                            return true
+                        }
+                        else -> this.onMenuItemSelected(menuItem)
                     }
-                    else -> this.onMenuItemSelected(menuItem)
+                    return true
                 }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    private fun setupActionBar() {
-        val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.title = "Add server"
-        actionBar?.setHomeButtonEnabled(true)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun observeFlows() {
