@@ -2,6 +2,8 @@ package dev.yashgarg.qbit.ui.config
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,13 +21,16 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
     private val binding: ConfigFragmentBinding by viewBinding(ConfigFragmentBinding::bind)
     private val viewModel: ConfigViewModel by viewModels()
 
+    private val connectionTypes = arrayOf("HTTP", "HTTPS")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeFlows()
+        watchTextFields()
 
-        binding.serverHostUrl.doAfterTextChanged { editable ->
-            viewModel.validateHostUrl(editable.toString())
-        }
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
+        (binding.dropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        binding.autoTextview.setSelection(0)
     }
 
     private fun observeFlows() {
@@ -35,12 +40,32 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun watchTextFields() {
+        binding.serverHostUrl.doAfterTextChanged { editable ->
+            viewModel.validateHostUrl(editable.toString())
+        }
+
+        binding.serverPortNumber.doAfterTextChanged { editable ->
+            viewModel.validatePort(editable.toString())
+        }
+    }
+
     private fun render(state: ConfigUiState) {
         with(binding) {
             if (state.showUrlError) {
-                serverHost.error = getString(R.string.url_invalid)
+                serverHost.isErrorEnabled = true
+                serverHost.error = getString(R.string.invalid_url)
             } else {
+                serverHost.isErrorEnabled = false
                 serverHost.error = null
+            }
+
+            if (state.showPortError) {
+                serverPort.isErrorEnabled = true
+                serverPort.error = getString(R.string.invalid_port)
+            } else {
+                serverPort.isErrorEnabled = false
+                serverPort.error = null
             }
         }
     }
