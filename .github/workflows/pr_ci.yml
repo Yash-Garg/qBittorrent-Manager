@@ -14,16 +14,16 @@ jobs:
         uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
-          
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
       - name: Set up JDK
         uses: actions/setup-java@v3.3.0
         with:
-          distribution: 'zulu'
-          java-version: '11'
-          cache: 'gradle'
+          distribution: "zulu"
+          java-version: "11"
+          cache: "gradle"
 
       - name: Check codestyle
         uses: gradle/gradle-build-action@v2.1.6
@@ -44,34 +44,11 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3.3.0
         with:
-          distribution: 'zulu'
-          java-version: '11'
-          cache: 'gradle'
+          distribution: "zulu"
+          java-version: "11"
+          cache: "gradle"
 
       - name: Build debug APKs
         uses: gradle/gradle-build-action@v2.1.6
         with:
           arguments: assembleDebug
-
-  lint-debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3.0.2
-        with:
-          fetch-depth: 0
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3.3.0
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-          cache: 'gradle'
-
-      - name: Run Lint on debug variants
-        uses: gradle/gradle-build-action@v2.1.6
-        with:
-          arguments: --no-configuration-cache lintDebug

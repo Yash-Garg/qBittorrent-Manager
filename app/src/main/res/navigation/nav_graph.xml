@@ -9,16 +9,12 @@
         android:name="dev.yashgarg.qbit.ui.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_addServerFragment"
-            app:destination="@id/addServerFragment" />
+            android:id="@+id/action_homeFragment_to_configFragment"
+            app:destination="@id/configFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/addServerFragment"
-        android:name="dev.yashgarg.qbit.ui.AddServerFragment"
-        android:label="AddServerFragment" >
-        <action
-            android:id="@+id/action_addServerFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        android:id="@+id/configFragment"
+        android:name="dev.yashgarg.qbit.ui.config.ConfigFragment"
+        android:label="ConfigFragment" />
 </navigation>

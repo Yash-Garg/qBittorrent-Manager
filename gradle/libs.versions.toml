@@ -2,19 +2,24 @@
 axCore = "1.8.0"
 axAppcompat = "1.4.2"
 axConstraintlayout = "2.1.4"
-axNavigation = "2.4.2"
+axNavigation = "2.5.0-rc02"
 googleMaterial = "1.7.0-alpha02"
 androidApplication = "7.4.0-alpha05"
 androidLibrary = "7.4.0-alpha05"
 hilt = "2.42"
+lifecycle = "2.5.0-rc02"
 kotlin = "1.6.21"
-room = "2.4.2"
+room = "2.5.0-alpha02"
 spotless = "6.7.2"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
+
+androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "axNavigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "axNavigation" }
 
