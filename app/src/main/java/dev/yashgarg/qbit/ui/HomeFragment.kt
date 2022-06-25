@@ -2,7 +2,6 @@ package dev.yashgarg.qbit.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,14 +16,8 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         binding.addServerFab.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_configFragment)
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity).setSupportActionBar(null)
     }
 }

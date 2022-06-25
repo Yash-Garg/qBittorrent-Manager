@@ -1,14 +1,17 @@
 package dev.yashgarg.qbit.ui.config
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ConfigFragmentBinding
@@ -27,10 +30,28 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         super.onViewCreated(view, savedInstanceState)
         observeFlows()
         watchTextFields()
+        setupActionBar()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
         (binding.dropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         binding.autoTextview.setSelection(0)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            android.R.id.home -> {
+                Navigation.findNavController(requireView()).navigateUp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    private fun setupActionBar() {
+        setHasOptionsMenu(true)
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.title = "Add server"
+        actionBar?.setHomeButtonEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun observeFlows() {
