@@ -23,7 +23,9 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         super.onViewCreated(view, savedInstanceState)
         observeFlows()
 
-        binding.serverHostUrl.doAfterTextChanged { editable -> viewModel.validateHostUrl(editable.toString()) }
+        binding.serverHostUrl.doAfterTextChanged { editable ->
+            viewModel.validateHostUrl(editable.toString())
+        }
     }
 
     private fun observeFlows() {
