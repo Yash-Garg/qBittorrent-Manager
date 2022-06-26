@@ -61,20 +61,6 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
                 binding.serverPasswordTil.editText?.text.toString(),
             )
         }
-
-        binding.testButton.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                val version =
-                    viewModel.testConfig(
-                        "${binding.typeDropdown.editText?.text.toString().lowercase()}://${binding.serverHostTil.editText?.text}:${ binding.serverPortTil.editText?.text}",
-                        binding.serverUsernameTil.editText?.text.toString(),
-                        binding.serverPasswordTil.editText?.text.toString(),
-                    )
-
-                Snackbar.make(requireView(), "Client app version is $version", Snackbar.LENGTH_LONG)
-                    .show()
-            }
-        }
     }
 
     override fun onStop() {
@@ -151,13 +137,36 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
 
     private fun handleEvent(event: ConfigViewModel.ValidationEvent) {
         when (event) {
-            is ConfigViewModel.ValidationEvent.Success ->
-                Snackbar.make(
-                        requireView(),
-                        "All fields successfully validated",
-                        Snackbar.LENGTH_LONG
+            is ConfigViewModel.ValidationEvent.Success -> {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val connectionResponse =
+                        viewModel.testConfig(
+                            "${binding.typeDropdown.editText?.text.toString().lowercase()}://" +
+                                "${binding.serverHostTil.editText?.text}:${binding.serverPortTil.editText?.text}",
+                            binding.serverUsernameTil.editText?.text.toString(),
+                            binding.serverPasswordTil.editText?.text.toString(),
+                        )
+
+                    connectionResponse.fold(
+                        { version ->
+                            Snackbar.make(
+                                    requireView(),
+                                    "Success! Client app version is $version",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                .show()
+                        },
+                        { error ->
+                            Snackbar.make(
+                                    requireView(),
+                                    "Failed! ${error.message}",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                .show()
+                        }
                     )
-                    .show()
+                }
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "configs")
 data class ServerConfig(
     @PrimaryKey val configId: Int,
+    val serverName: String,
     val baseUrl: String,
     val port: Int = 22,
     val username: String,

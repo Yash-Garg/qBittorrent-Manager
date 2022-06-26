@@ -2,6 +2,7 @@ package dev.yashgarg.qbit.ui.config
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.database.AppDatabase
 import dev.yashgarg.qbit.models.ServerConfig
@@ -160,16 +161,24 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
         viewModelScope.launch { db.configDao().addConfig(config) }
     }
 
-    suspend fun testConfig(baseUrl: String, username: String, password: String): String {
-        val client =
-            QBittorrentClient(
-                baseUrl,
-                username,
-                password,
-                httpClient = HttpClient(),
-                dispatcher = Dispatchers.Default
-            )
+    suspend fun testConfig(
+        baseUrl: String,
+        username: String,
+        password: String
+    ): Either<String, Exception> {
+        try {
+            val client =
+                QBittorrentClient(
+                    baseUrl,
+                    username,
+                    password,
+                    httpClient = HttpClient(),
+                    dispatcher = Dispatchers.Default
+                )
 
-        return client.getVersion()
+            return Either.Left(client.getVersion())
+        } catch (e: Exception) {
+            return Either.Right(e)
+        }
     }
 }
