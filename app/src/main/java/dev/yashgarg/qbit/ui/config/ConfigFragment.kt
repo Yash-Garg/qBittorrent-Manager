@@ -142,12 +142,19 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         binding.typeDropdown.isEnabled = enabled
         binding.serverUsernameTiet.isEnabled = enabled
         binding.serverPasswordTiet.isEnabled = enabled
+        binding.saveButton.isEnabled = enabled
     }
 
     private fun handleEvent(event: ConfigViewModel.ValidationEvent) {
         when (event) {
             is ConfigViewModel.ValidationEvent.Success -> {
                 enableFields(false)
+                Snackbar.make(
+                        requireView(),
+                        "Checking connection, please wait...",
+                        Snackbar.LENGTH_SHORT
+                    )
+                    .show()
                 viewLifecycleOwner.lifecycleScope.launch {
                     val connectionResponse =
                         viewModel.testConfig(
