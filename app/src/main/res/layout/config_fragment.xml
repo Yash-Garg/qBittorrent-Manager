@@ -1,61 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:transitionGroup="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:layout_constraintBottom_toTopOf="@id/server_host"
+        app:layout_constraintBottom_toTopOf="@id/server_name_til"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:title="@string/add_server"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/add_server" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_host"
+        android:id="@+id/server_name_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:hint="Host or IP"
+        android:hint="Server name"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/dropdown"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+        app:placeholderText="e.g. homeserver 01">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/server_host_url"
+            android:id="@+id/server_name_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="text"
             android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_port"
+        android:id="@+id/server_host_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="10dp"
-        android:hint="Port"
+        android:layout_marginVertical="5dp"
+        android:hint="Host or IP"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/server_host">
+        app:layout_constraintStart_toEndOf="@id/type_dropdown"
+        app:layout_constraintTop_toBottomOf="@id/server_name_til"
+        app:placeholderText="example.com">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/server_port_number"
+            android:id="@+id/server_host_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/server_port_til"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="5dp"
+        android:hint="Port"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/server_host_til"
+        app:placeholderText="0 - 65535">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/server_port_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
@@ -63,41 +89,45 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_username"
+        android:id="@+id/server_username_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="10dp"
+        android:layout_marginVertical="5dp"
         android:hint="Username"
-        app:layout_constraintEnd_toEndOf="@id/server_port"
-        app:layout_constraintStart_toStartOf="@id/server_port"
-        app:layout_constraintTop_toBottomOf="@id/server_port">
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="@id/server_port_til"
+        app:layout_constraintStart_toStartOf="@id/server_port_til"
+        app:layout_constraintTop_toBottomOf="@id/server_port_til"
+        app:placeholderText="e.g. admin">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/server_username_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="text"
             android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_password"
+        android:id="@+id/server_password_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="10dp"
+        android:layout_marginVertical="5dp"
         android:hint="Password"
         app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toEndOf="@id/server_username"
-        app:layout_constraintStart_toStartOf="@id/server_username"
-        app:layout_constraintTop_toBottomOf="@id/server_username">
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="@id/server_username_til"
+        app:layout_constraintStart_toStartOf="@id/server_username_til"
+        app:layout_constraintTop_toBottomOf="@id/server_username_til">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/server_password_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
@@ -105,25 +135,39 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dropdown"
+        android:id="@+id/type_dropdown"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/server_host"
+        android:layout_marginVertical="5dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="@id/server_host_til"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/server_host">
+        app:layout_constraintTop_toTopOf="@id/server_host_til">
 
         <AutoCompleteTextView
-            android:id="@+id/auto_textview"
+            android:id="@+id/type_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:editable="false"
             android:hint="Type"
-            android:inputType="none" />
+            android:textAlignment="center" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/save_button"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="5dp"
+        android:text="Save and test config"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/server_password_til" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,4 +5,8 @@
 
     <string name="invalid_url">Please enter a valid host</string>
     <string name="invalid_port">Please enter valid port number</string>
+    <string name="invalid_name">Name cannot be empty</string>
+    <string name="invalid_username">Username cannot be empty</string>
+    <string name="invalid_password">Password cannot be empty</string>
+    <string name="invalid_type">Select a value</string>
 </resources>

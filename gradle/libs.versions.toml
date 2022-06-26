@@ -7,12 +7,15 @@ googleMaterial = "1.7.0-alpha02"
 androidApplication = "7.4.0-alpha05"
 androidLibrary = "7.4.0-alpha05"
 hilt = "2.42"
+ktor = "2.0.2"
 lifecycle = "2.5.0-rc02"
 kotlin = "1.6.21"
 room = "2.5.0-alpha02"
 spotless = "6.7.2"
 
 [libraries]
+arrow-core = "io.arrow-kt:arrow-core:1.0.1"
+
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
@@ -31,6 +34,8 @@ google-material = { module = "com.google.android.material:material", version.ref
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
+ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.5.1"
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 
 [plugins]

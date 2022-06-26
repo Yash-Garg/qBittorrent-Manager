@@ -74,6 +74,8 @@ spotless {
 kapt { correctErrorTypes = true }
 
 dependencies {
+    implementation(libs.arrow.core)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
@@ -91,6 +93,9 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.google.dagger.hilt)
     kapt(libs.google.dagger.hilt.compiler)
+
+    implementation(libs.ktor.android)
+    implementation(libs.qbittorrent.client)
 
     debugImplementation(libs.square.leakcanary)
 }
