@@ -25,6 +25,7 @@ import dev.yashgarg.qbit.databinding.ConfigFragmentBinding
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ConfigFragment : Fragment(R.layout.config_fragment) {
@@ -59,6 +60,20 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
                 binding.serverUsernameTil.editText?.text.toString(),
                 binding.serverPasswordTil.editText?.text.toString(),
             )
+        }
+
+        binding.testButton.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val version =
+                    viewModel.testConfig(
+                        "${binding.typeDropdown.editText?.text.toString().lowercase()}://${binding.serverHostTil.editText?.text}:${ binding.serverPortTil.editText?.text}",
+                        binding.serverUsernameTil.editText?.text.toString(),
+                        binding.serverPasswordTil.editText?.text.toString(),
+                    )
+
+                Snackbar.make(requireView(), "Client app version is $version", Snackbar.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 

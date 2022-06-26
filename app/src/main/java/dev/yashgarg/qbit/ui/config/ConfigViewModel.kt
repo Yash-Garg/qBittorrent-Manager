@@ -8,10 +8,13 @@ import dev.yashgarg.qbit.models.ServerConfig
 import dev.yashgarg.qbit.validation.HostValidator
 import dev.yashgarg.qbit.validation.PortValidator
 import dev.yashgarg.qbit.validation.StringValidator
+import io.ktor.client.*
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import qbittorrent.QBittorrentClient
 
 @HiltViewModel
 class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewModel() {
@@ -155,5 +158,18 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
 
     fun insert(config: ServerConfig) {
         viewModelScope.launch { db.configDao().addConfig(config) }
+    }
+
+    suspend fun testConfig(baseUrl: String, username: String, password: String): String {
+        val client =
+            QBittorrentClient(
+                baseUrl,
+                username,
+                password,
+                httpClient = HttpClient(),
+                dispatcher = Dispatchers.Default
+            )
+
+        return client.getVersion()
     }
 }

@@ -92,5 +92,8 @@ dependencies {
     implementation(libs.google.dagger.hilt)
     kapt(libs.google.dagger.hilt.compiler)
 
+    implementation(libs.ktor.android)
+    implementation(libs.qbittorrent.client)
+
     debugImplementation(libs.square.leakcanary)
 }
