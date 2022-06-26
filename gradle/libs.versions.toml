@@ -14,7 +14,7 @@ room = "2.5.0-alpha02"
 spotless = "6.7.2"
 
 [libraries]
-arrow-core = "io.arrow-kt:arrow-core:1.0.1"
+arrow-core = "io.arrow-kt:arrow-core:1.1.2"
 
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
