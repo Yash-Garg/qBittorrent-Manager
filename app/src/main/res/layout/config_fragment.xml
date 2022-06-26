@@ -30,7 +30,8 @@
         android:hint="Server name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout">
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+        app:placeholderText="e.g. homeserver 01">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/server_name_tiet"
@@ -50,7 +51,8 @@
         android:hint="Host or IP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dropdown"
-        app:layout_constraintTop_toBottomOf="@id/server_name_til">
+        app:layout_constraintTop_toBottomOf="@id/server_name_til"
+        app:placeholderText="192.168.x.x or domain.com">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/server_host_url"
@@ -70,7 +72,8 @@
         android:hint="Port"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/server_host">
+        app:layout_constraintTop_toBottomOf="@+id/server_host"
+        app:placeholderText="0 - 65535">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/server_port_number"
@@ -91,7 +94,8 @@
         android:hint="Username"
         app:layout_constraintEnd_toEndOf="@id/server_port"
         app:layout_constraintStart_toStartOf="@id/server_port"
-        app:layout_constraintTop_toBottomOf="@id/server_port">
+        app:layout_constraintTop_toBottomOf="@id/server_port"
+        app:placeholderText="e.g. admin">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
