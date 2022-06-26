@@ -135,9 +135,19 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         }
     }
 
+    private fun enableFields(enabled: Boolean) {
+        binding.serverNameTiet.isEnabled = enabled
+        binding.serverHostTiet.isEnabled = enabled
+        binding.serverPortTiet.isEnabled = enabled
+        binding.typeDropdown.isEnabled = enabled
+        binding.serverUsernameTiet.isEnabled = enabled
+        binding.serverPasswordTiet.isEnabled = enabled
+    }
+
     private fun handleEvent(event: ConfigViewModel.ValidationEvent) {
         when (event) {
             is ConfigViewModel.ValidationEvent.Success -> {
+                enableFields(false)
                 viewLifecycleOwner.lifecycleScope.launch {
                     val connectionResponse =
                         viewModel.testConfig(
@@ -165,6 +175,7 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
                                 .show()
                         }
                     )
+                    enableFields(true)
                 }
             }
         }
@@ -173,50 +184,38 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
     private fun render(state: ConfigUiState) {
         with(binding) {
             if (state.showServerNameError) {
-                serverNameTil.isErrorEnabled = true
                 serverNameTil.error = getString(R.string.invalid_name)
             } else {
-                serverNameTil.isErrorEnabled = false
                 serverNameTil.error = null
             }
 
             if (state.showUrlError) {
-                serverHostTil.isErrorEnabled = true
                 serverHostTil.error = getString(R.string.invalid_url)
             } else {
-                serverHostTil.isErrorEnabled = false
                 serverHostTil.error = null
             }
 
             if (state.showPortError) {
-                serverPortTil.isErrorEnabled = true
                 serverPortTil.error = getString(R.string.invalid_port)
             } else {
-                serverPortTil.isErrorEnabled = false
                 serverPortTil.error = null
             }
 
             if (state.showUsernameError) {
-                serverUsernameTil.isErrorEnabled = true
                 serverUsernameTil.error = getString(R.string.invalid_username)
             } else {
-                serverUsernameTil.isErrorEnabled = false
                 serverUsernameTil.error = null
             }
 
             if (state.showConnectionTypeError) {
-                typeDropdown.isErrorEnabled = true
                 typeDropdown.error = getString(R.string.invalid_type)
             } else {
-                typeDropdown.isErrorEnabled = false
                 typeDropdown.error = null
             }
 
             if (state.showPasswordError) {
-                serverPasswordTil.isErrorEnabled = true
                 serverPasswordTil.error = getString(R.string.invalid_password)
             } else {
-                serverPasswordTil.isErrorEnabled = false
                 serverPasswordTil.error = null
             }
         }
