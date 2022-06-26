@@ -36,7 +36,7 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         super.onCreate(savedInstanceState)
 
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z,false)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,8 +47,18 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         setupActionbar()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
-        (binding.dropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-        binding.autoTextview.setSelection(0)
+        (binding.typeDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+        binding.saveButton.setOnClickListener {
+            viewModel.validateForm(
+                binding.serverNameTil.editText?.text.toString(),
+                binding.serverHostTil.editText?.text.toString(),
+                binding.serverPortTil.editText?.text.toString(),
+                binding.typeDropdown.editText?.text.toString(),
+                binding.serverUsernameTil.editText?.text.toString(),
+                binding.serverPasswordTil.editText?.text.toString(),
+            )
+        }
     }
 
     override fun onStop() {
@@ -93,31 +103,79 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
     }
 
     private fun watchTextFields() {
-        binding.serverHostUrl.doAfterTextChanged { editable ->
-            viewModel.validateHostUrl(editable.toString())
+        binding.serverHostTiet.doAfterTextChanged { text ->
+            viewModel.validateHostUrl(text.toString())
         }
 
-        binding.serverPortNumber.doAfterTextChanged { editable ->
-            viewModel.validatePort(editable.toString())
+        binding.serverPortTiet.doAfterTextChanged { text ->
+            viewModel.validatePort(text.toString())
+        }
+
+        binding.serverUsernameTiet.doAfterTextChanged { text ->
+            viewModel.validateUsername(text.toString())
+        }
+
+        binding.typeTextview.doAfterTextChanged { text ->
+            viewModel.validateConnectionType(text.toString())
+        }
+
+        binding.serverNameTiet.doAfterTextChanged { text ->
+            viewModel.validateName(text.toString())
+        }
+
+        binding.serverPasswordTiet.doAfterTextChanged { text ->
+            viewModel.validatePassword(text.toString())
         }
     }
 
     private fun render(state: ConfigUiState) {
         with(binding) {
-            if (state.showUrlError) {
-                serverHost.isErrorEnabled = true
-                serverHost.error = getString(R.string.invalid_url)
+            if (state.showServerNameError) {
+                serverNameTil.isErrorEnabled = true
+                serverNameTil.error = getString(R.string.invalid_name)
             } else {
-                serverHost.isErrorEnabled = false
-                serverHost.error = null
+                serverNameTil.isErrorEnabled = false
+                serverNameTil.error = null
+            }
+
+            if (state.showUrlError) {
+                serverHostTil.isErrorEnabled = true
+                serverHostTil.error = getString(R.string.invalid_url)
+            } else {
+                serverHostTil.isErrorEnabled = false
+                serverHostTil.error = null
             }
 
             if (state.showPortError) {
-                serverPort.isErrorEnabled = true
-                serverPort.error = getString(R.string.invalid_port)
+                serverPortTil.isErrorEnabled = true
+                serverPortTil.error = getString(R.string.invalid_port)
             } else {
-                serverPort.isErrorEnabled = false
-                serverPort.error = null
+                serverPortTil.isErrorEnabled = false
+                serverPortTil.error = null
+            }
+
+            if (state.showUsernameError) {
+                serverUsernameTil.isErrorEnabled = true
+                serverUsernameTil.error = getString(R.string.invalid_username)
+            } else {
+                serverUsernameTil.isErrorEnabled = false
+                serverUsernameTil.error = null
+            }
+
+            if (state.showConnectionTypeError) {
+                typeDropdown.isErrorEnabled = true
+                typeDropdown.error = getString(R.string.invalid_type)
+            } else {
+                typeDropdown.isErrorEnabled = false
+                typeDropdown.error = null
+            }
+
+            if (state.showPasswordError) {
+                serverPasswordTil.isErrorEnabled = true
+                serverPasswordTil.error = getString(R.string.invalid_password)
+            } else {
+                serverPasswordTil.isErrorEnabled = false
+                serverPasswordTil.error = null
             }
         }
     }

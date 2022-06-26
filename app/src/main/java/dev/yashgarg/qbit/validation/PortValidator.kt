@@ -5,7 +5,7 @@ import java.util.regex.Pattern
 class PortValidator : TextValidator {
     override fun isValid(text: String): Boolean {
         val portMatcher = portRegex.matcher(text)
-        return portMatcher.matches()
+        return text.isNotEmpty() && portMatcher.matches()
     }
 
     companion object {

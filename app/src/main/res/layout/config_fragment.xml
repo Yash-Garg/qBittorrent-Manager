@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:layout_constraintBottom_toTopOf="@id/server_name_tiet"
+        app:layout_constraintBottom_toTopOf="@id/server_name_til"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -43,7 +43,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_host"
+        android:id="@+id/server_host_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,12 +51,12 @@
         android:layout_marginVertical="10dp"
         android:hint="Host or IP"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/dropdown"
+        app:layout_constraintStart_toEndOf="@id/type_dropdown"
         app:layout_constraintTop_toBottomOf="@id/server_name_til"
-        app:placeholderText="192.168.x.x or domain.com">
+        app:placeholderText="example.com">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/server_host_url"
+            android:id="@+id/server_host_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLines="1" />
@@ -64,7 +64,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_port"
+        android:id="@+id/server_port_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -73,11 +73,11 @@
         android:hint="Port"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/server_host"
+        app:layout_constraintTop_toBottomOf="@id/server_host_til"
         app:placeholderText="0 - 65535">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/server_port_number"
+            android:id="@+id/server_port_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
@@ -86,19 +86,20 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_username"
+        android:id="@+id/server_username_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="10dp"
         android:hint="Username"
-        app:layout_constraintEnd_toEndOf="@id/server_port"
-        app:layout_constraintStart_toStartOf="@id/server_port"
-        app:layout_constraintTop_toBottomOf="@id/server_port"
+        app:layout_constraintEnd_toEndOf="@id/server_port_til"
+        app:layout_constraintStart_toStartOf="@id/server_port_til"
+        app:layout_constraintTop_toBottomOf="@id/server_port_til"
         app:placeholderText="e.g. admin">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/server_username_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLines="1" />
@@ -106,7 +107,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/server_password"
+        android:id="@+id/server_password_til"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,11 +115,12 @@
         android:layout_marginVertical="10dp"
         android:hint="Password"
         app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toEndOf="@id/server_username"
-        app:layout_constraintStart_toStartOf="@id/server_username"
-        app:layout_constraintTop_toBottomOf="@id/server_username">
+        app:layout_constraintEnd_toEndOf="@id/server_username_til"
+        app:layout_constraintStart_toStartOf="@id/server_username_til"
+        app:layout_constraintTop_toBottomOf="@id/server_username_til">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/server_password_tiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
@@ -127,20 +129,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dropdown"
+        android:id="@+id/type_dropdown"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/server_host"
+        app:layout_constraintBottom_toBottomOf="@id/server_host_til"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/server_host">
+        app:layout_constraintTop_toTopOf="@id/server_host_til">
 
         <AutoCompleteTextView
-            android:id="@+id/auto_textview"
+            android:id="@+id/type_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:editable="false"
             android:hint="Type"
             android:textAlignment="center" />
 
@@ -159,12 +162,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="5dp"
         android:text="Test"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/server_password" />
+        app:layout_constraintTop_toBottomOf="@id/server_password_til" />
 
     <Button
         android:id="@+id/save_button"
@@ -172,11 +175,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="15dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/server_password" />
+        app:layout_constraintTop_toBottomOf="@id/server_password_til" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

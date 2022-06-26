@@ -19,7 +19,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         super.onCreate(savedInstanceState)
 
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z,  false)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
