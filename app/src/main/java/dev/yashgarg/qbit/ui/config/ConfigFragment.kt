@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -17,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
@@ -149,12 +151,14 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         when (event) {
             is ConfigViewModel.ValidationEvent.Success -> {
                 enableFields(false)
-                Snackbar.make(
+                val checkSnackbar =
+                    Snackbar.make(
                         requireView(),
                         "Checking connection, please wait...",
                         Snackbar.LENGTH_SHORT
                     )
-                    .show()
+                checkSnackbar.show()
+
                 viewLifecycleOwner.lifecycleScope.launch {
                     val connectionResponse =
                         viewModel.testConfig(
@@ -166,12 +170,24 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
 
                     connectionResponse.fold(
                         { version ->
-                            Snackbar.make(
-                                    requireView(),
+                            checkSnackbar.dismiss()
+                            Toast.makeText(
+                                    context,
                                     "Success! Client app version is $version",
-                                    Snackbar.LENGTH_LONG
+                                    Toast.LENGTH_LONG
                                 )
                                 .show()
+
+                            viewModel.insert(
+                                binding.serverNameTil.editText?.text.toString(),
+                                binding.serverHostTil.editText?.text.toString(),
+                                binding.serverPortTil.editText?.text.toString(),
+                                binding.typeDropdown.editText?.text.toString(),
+                                binding.serverUsernameTil.editText?.text.toString(),
+                                binding.serverPasswordTil.editText?.text.toString()
+                            )
+
+                            findNavController().navigateUp()
                         },
                         { error ->
                             Snackbar.make(

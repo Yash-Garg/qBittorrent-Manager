@@ -12,6 +12,5 @@ data class ConfigUiState(
     val showPortError: Boolean = false,
     val showUsernameError: Boolean = false,
     val showPasswordError: Boolean = false,
-    val showConnectionTypeError: Boolean = false,
-    val isSaveEnabled: Boolean = false
+    val showConnectionTypeError: Boolean = false
 )

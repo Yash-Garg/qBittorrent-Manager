@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.database.AppDatabase
+import dev.yashgarg.qbit.models.ConnectionType
 import dev.yashgarg.qbit.models.ServerConfig
 import dev.yashgarg.qbit.validation.HostValidator
 import dev.yashgarg.qbit.validation.PortValidator
@@ -157,8 +158,29 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
         }
     }
 
-    fun insert(config: ServerConfig) {
-        viewModelScope.launch { db.configDao().addConfig(config) }
+    fun insert(
+        serverName: String,
+        serverHost: String,
+        port: String,
+        connectionType: String,
+        username: String,
+        password: String
+    ) {
+        val config =
+            ServerConfig(
+                0,
+                serverName.trim(),
+                serverHost.trim(),
+                port.trim().toInt(),
+                username.trim(),
+                password.trim(),
+                if (connectionType.trim() == "HTTP") ConnectionType.HTTP else ConnectionType.HTTPS
+            )
+
+        viewModelScope.launch {
+            db.configDao().addConfig(config)
+            println(db.configDao().getConfigs())
+        }
     }
 
     suspend fun testConfig(
