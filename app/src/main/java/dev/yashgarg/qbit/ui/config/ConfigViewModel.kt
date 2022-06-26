@@ -9,6 +9,7 @@ import dev.yashgarg.qbit.validation.HostValidator
 import dev.yashgarg.qbit.validation.PortValidator
 import dev.yashgarg.qbit.validation.StringValidator
 import javax.inject.Inject
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,13 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
 
     private val _uiState = MutableStateFlow(ConfigUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val validationEventChannel = Channel<ValidationEvent>()
+    val validationEvents = validationEventChannel.receiveAsFlow()
+
+    sealed class ValidationEvent {
+        object Success : ValidationEvent()
+    }
 
     fun validateHostUrl(url: String) {
         if (url.isEmpty()) {
@@ -140,7 +148,9 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
                     showConnectionTypeError = !connectionTypeValid,
                 )
             }
-        } else {}
+        } else {
+            viewModelScope.launch { validationEventChannel.send(ValidationEvent.Success) }
+        }
     }
 
     fun insert(config: ServerConfig) {

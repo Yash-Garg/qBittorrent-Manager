@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -100,6 +101,11 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach(::render)
             .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.validationEvents
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach(::handleEvent)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun watchTextFields() {
@@ -125,6 +131,18 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
 
         binding.serverPasswordTiet.doAfterTextChanged { text ->
             viewModel.validatePassword(text.toString())
+        }
+    }
+
+    private fun handleEvent(event: ConfigViewModel.ValidationEvent) {
+        when (event) {
+            is ConfigViewModel.ValidationEvent.Success ->
+                Snackbar.make(
+                        requireView(),
+                        "All fields successfully validated",
+                        Snackbar.LENGTH_LONG
+                    )
+                    .show()
         }
     }
 
