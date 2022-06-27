@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.models
+package dev.yashgarg.qbit.data.models
 
 enum class ConnectionType {
     HTTP,

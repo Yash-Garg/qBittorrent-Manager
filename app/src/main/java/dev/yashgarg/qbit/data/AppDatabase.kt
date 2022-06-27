@@ -1,8 +1,9 @@
-package dev.yashgarg.qbit.database
+package dev.yashgarg.qbit.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import dev.yashgarg.qbit.models.ServerConfig
+import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.data.models.ServerConfig
 
 @Database(entities = [ServerConfig::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {

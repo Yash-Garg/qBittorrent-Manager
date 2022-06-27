@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.yashgarg.qbit.database.AppDatabase
+import dev.yashgarg.qbit.data.AppDatabase
 import javax.inject.Singleton
 
 @Module

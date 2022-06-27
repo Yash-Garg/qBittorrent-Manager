@@ -1,10 +1,10 @@
-package dev.yashgarg.qbit.database
+package dev.yashgarg.qbit.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.yashgarg.qbit.models.ServerConfig
+import dev.yashgarg.qbit.data.models.ServerConfig
 import kotlinx.coroutines.flow.Flow
 
 @Dao

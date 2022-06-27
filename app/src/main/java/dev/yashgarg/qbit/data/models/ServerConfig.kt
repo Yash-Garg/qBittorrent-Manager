@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.models
+package dev.yashgarg.qbit.data.models
 
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
