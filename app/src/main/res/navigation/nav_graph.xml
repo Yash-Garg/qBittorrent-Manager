@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="dev.yashgarg.qbit.ui.HomeFragment"
+        android:name="dev.yashgarg.qbit.ui.home.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_configFragment"

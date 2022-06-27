@@ -31,8 +31,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ConfigFragment : Fragment(R.layout.config_fragment) {
-    private val binding: ConfigFragmentBinding by viewBinding(ConfigFragmentBinding::bind)
-    private val viewModel: ConfigViewModel by viewModels()
+    private val binding by viewBinding(ConfigFragmentBinding::bind)
+    private val viewModel by viewModels<ConfigViewModel>()
 
     private val connectionTypes = arrayOf("HTTP", "HTTPS")
 
@@ -204,7 +204,7 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         }
     }
 
-    private fun render(state: ConfigUiState) {
+    private fun render(state: ConfigState) {
         with(binding) {
             if (state.showServerNameError) {
                 serverNameTil.error = getString(R.string.invalid_name)

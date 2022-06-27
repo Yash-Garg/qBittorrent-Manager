@@ -1,6 +1,6 @@
 package dev.yashgarg.qbit.ui.config
 
-data class ConfigUiState(
+data class ConfigState(
     val isServerNameValid: Boolean = false,
     val isServerUrlValid: Boolean = false,
     val isPortValid: Boolean = false,
