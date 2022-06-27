@@ -112,28 +112,24 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
     }
 
     private fun watchTextFields() {
-        binding.serverHostTiet.doAfterTextChanged { text ->
-            viewModel.validateHostUrl(text.toString())
-        }
+        with(binding) {
+            serverHostTiet.doAfterTextChanged { text -> viewModel.validateHostUrl(text.toString()) }
 
-        binding.serverPortTiet.doAfterTextChanged { text ->
-            viewModel.validatePort(text.toString())
-        }
+            serverPortTiet.doAfterTextChanged { text -> viewModel.validatePort(text.toString()) }
 
-        binding.serverUsernameTiet.doAfterTextChanged { text ->
-            viewModel.validateUsername(text.toString())
-        }
+            serverUsernameTiet.doAfterTextChanged { text ->
+                viewModel.validateUsername(text.toString())
+            }
 
-        binding.typeTextview.doAfterTextChanged { text ->
-            viewModel.validateConnectionType(text.toString())
-        }
+            typeTextview.doAfterTextChanged { text ->
+                viewModel.validateConnectionType(text.toString())
+            }
 
-        binding.serverNameTiet.doAfterTextChanged { text ->
-            viewModel.validateName(text.toString())
-        }
+            serverNameTiet.doAfterTextChanged { text -> viewModel.validateName(text.toString()) }
 
-        binding.serverPasswordTiet.doAfterTextChanged { text ->
-            viewModel.validatePassword(text.toString())
+            serverPasswordTiet.doAfterTextChanged { text ->
+                viewModel.validatePassword(text.toString())
+            }
         }
     }
 

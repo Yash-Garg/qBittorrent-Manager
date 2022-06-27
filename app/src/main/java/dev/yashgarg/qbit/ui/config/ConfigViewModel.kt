@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.yashgarg.qbit.database.AppDatabase
+import dev.yashgarg.qbit.database.ConfigDao
 import dev.yashgarg.qbit.models.ConnectionType
 import dev.yashgarg.qbit.models.ServerConfig
 import dev.yashgarg.qbit.validation.HostValidator
@@ -22,11 +22,10 @@ import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
 @HiltViewModel
-class ConfigViewModel @Inject constructor(db: AppDatabase) : ViewModel() {
+class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : ViewModel() {
     private val hostValidator = HostValidator()
     private val portValidator = PortValidator()
     private val textValidator = StringValidator()
-    private val configDao = db.configDao()
 
     private val _uiState = MutableStateFlow(ConfigState())
     val uiState = _uiState.asStateFlow()
