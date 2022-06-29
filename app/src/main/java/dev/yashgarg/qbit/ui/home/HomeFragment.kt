@@ -8,12 +8,16 @@ import androidx.navigation.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.databinding.HomeFragmentBinding
 import dev.yashgarg.qbit.utils.viewBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.home_fragment) {
     private val binding by viewBinding(HomeFragmentBinding::bind)
+
+    @Inject lateinit var clientManager: ClientManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

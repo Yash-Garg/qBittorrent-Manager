@@ -8,6 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.yashgarg.qbit.data.AppDatabase
+import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.data.manager.ClientManager
 import javax.inject.Singleton
 
 @Module
@@ -20,4 +22,6 @@ class AppModule {
         Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.dbName).build()
 
     @Singleton @Provides fun provideConfigDao(db: AppDatabase) = db.configDao()
+
+    @Singleton @Provides fun provideClientManager(configDao: ConfigDao) = ClientManager(configDao)
 }
