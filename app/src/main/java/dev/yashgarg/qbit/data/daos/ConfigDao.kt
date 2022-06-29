@@ -12,7 +12,7 @@ interface ConfigDao {
     @Query("SELECT * FROM configs") fun getConfigs(): Flow<List<ServerConfig>>
 
     @Query("SELECT * FROM configs WHERE config_id = :index")
-    fun getConfigAtIndex(index: Int = 0): Flow<ServerConfig?>
+    suspend fun getConfigAtIndex(index: Int = 0): ServerConfig?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun addConfig(config: ServerConfig)
 }

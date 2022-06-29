@@ -10,6 +10,9 @@ import dagger.hilt.components.SingletonComponent
 import dev.yashgarg.qbit.data.AppDatabase
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.manager.ClientManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -23,5 +26,12 @@ class AppModule {
 
     @Singleton @Provides fun provideConfigDao(db: AppDatabase) = db.configDao()
 
-    @Singleton @Provides fun provideClientManager(configDao: ConfigDao) = ClientManager(configDao)
+    @ApplicationScope @Provides fun provideCoroutineScope() = MainScope()
+
+    @Singleton
+    @Provides
+    fun provideClientManager(configDao: ConfigDao, @ApplicationScope scope: CoroutineScope) =
+        ClientManager(configDao, scope)
 }
+
+@Qualifier @Retention(AnnotationRetention.BINARY) annotation class ApplicationScope
