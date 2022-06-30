@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.yashgarg.qbit.database.AppDatabase
-import dev.yashgarg.qbit.models.ConnectionType
-import dev.yashgarg.qbit.models.ServerConfig
+import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.data.models.ConnectionType
+import dev.yashgarg.qbit.data.models.ServerConfig
 import dev.yashgarg.qbit.validation.HostValidator
 import dev.yashgarg.qbit.validation.PortValidator
 import dev.yashgarg.qbit.validation.StringValidator
@@ -14,17 +14,20 @@ import io.ktor.client.*
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
 @HiltViewModel
-class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewModel() {
+class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : ViewModel() {
     private val hostValidator = HostValidator()
     private val portValidator = PortValidator()
     private val textValidator = StringValidator()
 
-    private val _uiState = MutableStateFlow(ConfigUiState())
+    private val _uiState = MutableStateFlow(ConfigState())
     val uiState = _uiState.asStateFlow()
 
     private val validationEventChannel = Channel<ValidationEvent>()
@@ -134,7 +137,7 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
                     passwordValid,
                     connectionTypeValid,
                 )
-                .any { it == false }
+                .any { !it }
 
         if (hasError) {
             _uiState.update { state ->
@@ -177,10 +180,7 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
                 if (connectionType.trim() == "HTTP") ConnectionType.HTTP else ConnectionType.HTTPS
             )
 
-        viewModelScope.launch {
-            db.configDao().addConfig(config)
-            println(db.configDao().getConfigs())
-        }
+        viewModelScope.launch { configDao.addConfig(config) }
     }
 
     suspend fun testConfig(
@@ -188,7 +188,7 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
         username: String,
         password: String
     ): Either<String, Exception> {
-        try {
+        return try {
             val client =
                 QBittorrentClient(
                     baseUrl,
@@ -198,9 +198,9 @@ class ConfigViewModel @Inject constructor(private val db: AppDatabase) : ViewMod
                     dispatcher = Dispatchers.Default
                 )
 
-            return Either.Left(client.getVersion())
+            Either.Left(client.getVersion())
         } catch (e: Exception) {
-            return Either.Right(e)
+            Either.Right(e)
         }
     }
 }
