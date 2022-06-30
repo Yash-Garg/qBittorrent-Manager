@@ -1,23 +1,17 @@
 package dev.yashgarg.qbit.ui.config
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
@@ -47,7 +41,6 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         super.onViewCreated(view, savedInstanceState)
         observeFlows()
         watchTextFields()
-        setupMenu()
         setupActionbar()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
@@ -75,28 +68,8 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         activity.setSupportActionBar(binding.toolbar)
         activity.supportActionBar?.setHomeButtonEnabled(true)
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 
-    private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) = Unit
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    when (menuItem.itemId) {
-                        android.R.id.home -> {
-                            Navigation.findNavController(requireView()).navigateUp()
-                            return true
-                        }
-                        else -> this.onMenuItemSelected(menuItem)
-                    }
-                    return true
-                }
-            },
-            viewLifecycleOwner,
-            Lifecycle.State.RESUMED
-        )
+        binding.toolbar.setNavigationOnClickListener { it.findNavController().navigateUp() }
     }
 
     private fun observeFlows() {

@@ -56,8 +56,12 @@ constructor(
                         httpClient = HttpClient(),
                         dispatcher = Dispatchers.Default,
                     )
-                Log.d("qbit-client", "qBit Client - v${client!!.getApiVersion()}")
+                Log.i(tag, "Client App Version - ${client!!.getVersion()}")
             }
             return@withContext requireNotNull(client)
         }
+
+    companion object {
+        const val tag = "qbit-client"
+    }
 }
