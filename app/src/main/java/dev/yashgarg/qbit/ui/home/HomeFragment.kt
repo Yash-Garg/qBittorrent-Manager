@@ -40,6 +40,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     // TODO: Just for testing purposes, remove this afterwards
                     Navigation.findNavController(requireView())
                         .navigate(R.id.action_homeFragment_to_serverFragment)
+                } else {
+                    binding.addServerFab.setOnClickListener {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_homeFragment_to_configFragment)
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.server
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
@@ -34,6 +35,7 @@ constructor(
     private suspend fun syncData() {
         client.syncMainData().collect { mainData ->
             _uiState.update { state -> state.copy(dataLoading = false, data = mainData) }
+            Log.i("syncData", mainData.toString())
         }
     }
 }

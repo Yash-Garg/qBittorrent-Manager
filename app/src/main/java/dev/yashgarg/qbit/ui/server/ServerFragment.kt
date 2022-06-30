@@ -40,8 +40,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     }
 
     private fun render(state: ServerState) {
-        with(binding) {
-            toolbar.title = "Server name"
-        }
+        with(binding) { toolbar.title = "Server name" }
     }
 }
