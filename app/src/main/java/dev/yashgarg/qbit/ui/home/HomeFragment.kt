@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -36,7 +37,8 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         viewLifecycleOwner.lifecycleScope.launch {
             clientManager.configStatus.collect { status ->
                 if (status == ConfigStatus.EXISTS) {
-                    // TODO: Navigate to torrent list view (server home view)
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_homeFragment_to_serverFragment)
                 }
             }
         }
