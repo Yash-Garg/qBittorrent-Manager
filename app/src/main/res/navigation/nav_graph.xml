@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="dev.yashgarg.qbit.ui.HomeFragment"
+        android:name="dev.yashgarg.qbit.ui.home.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_configFragment"
             app:destination="@id/configFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_versionFragment"
+            app:destination="@id/versionFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/configFragment"
         android:name="dev.yashgarg.qbit.ui.config.ConfigFragment"
         android:label="ConfigFragment" />
+    <fragment
+        android:id="@+id/versionFragment"
+        android:name="dev.yashgarg.qbit.ui.version.VersionFragment"
+        android:label="version_fragment"
+        tools:layout="@layout/version_fragment" />
 </navigation>

@@ -16,5 +16,5 @@ dependencyResolutionManagement {
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "qbit"
+rootProject.name = "qbittorrent-kt"
 include(":app")
