@@ -2,7 +2,7 @@
 axCore = "1.8.0"
 axAppcompat = "1.4.2"
 axConstraintlayout = "2.1.4"
-axNavigation = "2.5.0-rc02"
+axNavigation = "2.5.0"
 googleMaterial = "1.7.0-alpha02"
 androidApplication = "7.4.0-alpha05"
 androidLibrary = "7.4.0-alpha05"
