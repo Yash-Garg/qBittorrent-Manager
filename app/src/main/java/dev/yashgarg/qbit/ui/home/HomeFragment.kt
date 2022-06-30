@@ -37,6 +37,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         viewLifecycleOwner.lifecycleScope.launch {
             clientManager.configStatus.collect { status ->
                 if (status == ConfigStatus.EXISTS) {
+                    // TODO: Just for testing purposes, remove this afterwards
                     Navigation.findNavController(requireView())
                         .navigate(R.id.action_homeFragment_to_serverFragment)
                 }
