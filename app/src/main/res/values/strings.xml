@@ -9,4 +9,6 @@
     <string name="invalid_username">Username cannot be empty</string>
     <string name="invalid_password">Password cannot be empty</string>
     <string name="invalid_type">Select a value</string>
+    
+    <string name="version">App Version - %1$s\nApi Version - v%2$s</string>
 </resources>

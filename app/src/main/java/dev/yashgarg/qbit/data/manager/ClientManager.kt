@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.data.manager
 
+import android.util.Log
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import io.ktor.client.*
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class ClientManager
 @Inject
 constructor(
     private val configDao: ConfigDao,
-    private val coroutineScope: CoroutineScope,
+    coroutineScope: CoroutineScope,
 ) {
     private val _configStatus = MutableSharedFlow<ConfigStatus>()
     val configStatus = _configStatus.asSharedFlow()
@@ -35,6 +36,7 @@ constructor(
         configDao.getConfigs().collect { configs ->
             if (configs.isNotEmpty()) {
                 _configStatus.emit(ConfigStatus.EXISTS)
+                getClient()
             } else {
                 _configStatus.emit(ConfigStatus.DOES_NOT_EXIST)
             }
@@ -47,13 +49,14 @@ constructor(
                 val config = configDao.getConfigAtIndex()!!
                 client =
                     QBittorrentClient(
-                        "${config.connectionType}://${config.baseUrl}:${config.port}",
+                        "${config.connectionType.toString().lowercase()}://${config.baseUrl}:${config.port}",
                         config.username,
                         config.password,
                         mainDataSyncMs = 5000L,
                         httpClient = HttpClient(),
                         dispatcher = Dispatchers.Default,
                     )
+                Log.d("qbit-client", "qBit Client - v${client!!.getApiVersion()}")
             }
             return@withContext requireNotNull(client)
         }
