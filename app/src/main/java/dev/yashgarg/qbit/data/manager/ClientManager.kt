@@ -55,7 +55,7 @@ constructor(
                         "${config.connectionType.toString().lowercase()}://${config.baseUrl}:${config.port}",
                         config.username,
                         config.password,
-                        mainDataSyncMs = 5000L,
+                        mainDataSyncMs = 1000L,
                         httpClient = HttpClient(),
                         dispatcher = Dispatchers.Default,
                     )

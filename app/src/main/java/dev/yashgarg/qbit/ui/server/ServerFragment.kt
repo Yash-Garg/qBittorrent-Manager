@@ -19,6 +19,8 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
 
+    private lateinit var torrentListAdapter: TorrentListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +42,12 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     }
 
     private fun render(state: ServerState) {
-        with(binding) { toolbar.title = "Server name" }
+        with(binding) {
+            toolbar.title = "Server name"
+            torrentRv.apply {
+                torrentListAdapter = TorrentListAdapter(state.data?.torrents ?: emptyMap())
+                adapter = torrentListAdapter
+            }
+        }
     }
 }
