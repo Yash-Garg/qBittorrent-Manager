@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.utils.toHumanReadable
+import dev.yashgarg.qbit.utils.toTime
 import qbittorrent.models.Torrent
 
 class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
@@ -30,7 +31,6 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torrent = torrents.values.elementAt(position)
-        val tstate: Torrent.State = torrent.state
         val context = holder.itemView.context
 
         with(holder) {
@@ -45,12 +45,12 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
             downloaded.text =
                 String.format(
                     context.getString(R.string.percent_done),
-                    0,
+                    torrent.downloaded.toLong().toHumanReadable(),
                     torrent.size.toHumanReadable(),
                     (torrent.progress * 100).toInt(),
                 )
 
-            when (tstate) {
+            when (torrent.state) {
                 Torrent.State.PAUSED_DL -> {
                     peers.text = context.getString(R.string.paused)
                     peers.setTextColor(context.getColor(R.color.yellowish))
@@ -60,7 +60,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
                     peers.text = context.getString(R.string.seeding)
                 }
                 Torrent.State.DOWNLOADING -> {
-                    eta.text = torrent.eta.toString()
+                    eta.text = torrent.eta.toTime()
                     peers.text =
                         String.format(
                             context.getString(R.string.seed_status),
