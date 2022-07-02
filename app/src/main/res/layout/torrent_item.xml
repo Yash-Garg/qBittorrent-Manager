@@ -5,9 +5,13 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/torrent_card"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,24 +24,40 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/sm_margin"
                 android:ellipsize="end"
-                android:text="torrent name"
-                android:textStyle="bold"
                 android:maxLines="1"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/downloaded_percent"
+            <LinearLayout
+                android:id="@+id/ll_downloaded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/sm_margin"
-                android:textSize="12sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/progressBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/torrentTitle" />
+                app:layout_constraintTop_toBottomOf="@id/torrentTitle">
+
+                <TextView
+                    android:id="@+id/downloaded_percent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/eta_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -69,10 +89,10 @@
 
                 <TextView
                     android:id="@+id/speed_tv"
-                    android:gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="end"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 

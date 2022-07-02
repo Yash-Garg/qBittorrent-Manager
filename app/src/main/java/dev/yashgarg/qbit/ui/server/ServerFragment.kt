@@ -44,11 +44,9 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private fun render(state: ServerState) {
         with(binding) {
             toolbar.title = "Server name"
-            if (!state.data?.torrents.isNullOrEmpty()) {
-                torrentRv.apply {
-                    torrentListAdapter = TorrentListAdapter(state.data!!.torrents)
-                    adapter = torrentListAdapter
-                }
+            torrentRv.apply {
+                torrentListAdapter = TorrentListAdapter(state.data?.torrents ?: emptyMap())
+                adapter = torrentListAdapter
             }
         }
     }

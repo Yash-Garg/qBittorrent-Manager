@@ -23,6 +23,6 @@ private object NumberFormat {
     }
 }
 
-fun Long.toHumanReadable(): String {
-    return NumberFormat.bytesToHumanReadable(this)
-}
+fun Long.toHumanReadable(): String = NumberFormat.bytesToHumanReadable(this)
+
+// fun Long.toTime(): String =
