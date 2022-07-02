@@ -13,6 +13,7 @@
     
     <string name="version">App Version - %1$s\nApi Version - v%2$s</string>
     <string name="server_info">Server information</string>
-    <string name="peers_status">Downloading • %1$d/%2$d peers</string>
-    <string name="speed_status">▼ %1$f • ▲ %2$f</string>
+    <string name="seed_status">Downloading • %1$d/%2$d seeds</string>
+    <string name="speed_status">▼ %1$s/s • ▲ %2$s/s</string>
+    <string name="percent_done">%1$d / %2$d • %3$d</string>
 </resources>

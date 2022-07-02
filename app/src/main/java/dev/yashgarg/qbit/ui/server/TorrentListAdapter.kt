@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.utils.toHumanReadable
 import qbittorrent.models.Torrent
 
 class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
@@ -17,6 +18,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         val peers: TextView = view.findViewById(R.id.peers_tv)
         val speed: TextView = view.findViewById(R.id.speed_tv)
+        val downloaded: TextView = view.findViewById(R.id.downloaded_percent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,6 +29,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torrent = torrents.values.elementAt(position)
+        val tstate = torrent.state
         val context = holder.itemView.context
 
         with(holder) {
@@ -34,15 +37,21 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
             speed.text =
                 String.format(
                     context.getString(R.string.speed_status),
-                    torrent.dlspeed,
-                    torrent.uploadSpeed
+                    torrent.dlspeed.toHumanReadable(),
+                    torrent.uploadSpeed.toHumanReadable(),
                 )
             progressBar.progress = ((torrent.downloaded / torrent.size) * 100).toInt()
+            //            downloaded.text = String.format(
+            //                context.getString(R.string.percent_done),
+            //                torrent.downloaded.toInt(),
+            //                torrent.size.toInt(),
+            //                12
+            //            )
             peers.text =
                 String.format(
-                    context.getString(R.string.peers_status),
-                    torrent.leechersInSwarm,
-                    torrent.connectedLeechers
+                    context.getString(R.string.seed_status),
+                    torrent.connectedSeeds,
+                    torrent.seedsInSwarm,
                 )
         }
     }
