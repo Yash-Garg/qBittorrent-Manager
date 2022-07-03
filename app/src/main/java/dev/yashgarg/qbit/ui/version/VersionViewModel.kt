@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
+import javax.inject.Inject
 
 @HiltViewModel
 class VersionViewModel
@@ -26,8 +26,8 @@ constructor(
 
     init {
         coroutineScope.launch {
-            client = clientManager.getClient()
-            fetchInfo()
+            //            client = clientManager.getClient()
+            //            fetchInfo()
         }
     }
 

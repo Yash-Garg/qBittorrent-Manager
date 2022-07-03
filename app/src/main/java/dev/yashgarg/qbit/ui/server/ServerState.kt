@@ -6,4 +6,6 @@ data class ServerState(
     val dataLoading: Boolean = true,
     val data: MainData? = null,
     val serverName: String? = null,
+    val hasError: Boolean = false,
+    val error: Exception? = null
 )

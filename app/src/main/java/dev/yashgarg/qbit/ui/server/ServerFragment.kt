@@ -43,10 +43,26 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
     private fun render(state: ServerState) {
         with(binding) {
-            toolbar.title = "Server name"
-            torrentRv.apply {
-                torrentListAdapter = TorrentListAdapter(state.data?.torrents ?: emptyMap())
-                adapter = torrentListAdapter
+            if (state.hasError) {
+                listLoader.visibility = View.GONE
+                emptyTv.text = state.error?.toString() ?: requireContext().getString(R.string.error)
+                emptyTv.visibility = View.VISIBLE
+                torrentRv.visibility = View.GONE
+            }
+
+            if (!state.dataLoading) {
+                listLoader.visibility = View.GONE
+                if (state.data!!.torrents.isEmpty()) {
+                    emptyTv.visibility = View.VISIBLE
+                    torrentRv.visibility = View.GONE
+                } else {
+                    emptyTv.visibility = View.GONE
+                    torrentRv.apply {
+                        visibility = View.VISIBLE
+                        torrentListAdapter = TorrentListAdapter(state.data.torrents)
+                        adapter = torrentListAdapter
+                    }
+                }
             }
         }
     }
