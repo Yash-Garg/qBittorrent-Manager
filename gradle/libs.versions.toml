@@ -11,7 +11,7 @@ ktor = "2.0.3"
 lifecycle = "2.5.0"
 kotlin = "1.6.21"
 room = "2.5.0-alpha02"
-spotless = "6.7.2"
+spotless = "6.8.0"
 
 [libraries]
 arrow-core = "io.arrow-kt:arrow-core:1.1.2"
