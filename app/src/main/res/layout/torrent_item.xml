@@ -12,7 +12,8 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="4dp">
+        app:cardBackgroundColor="@color/bluishGrey"
+        app:cardCornerRadius="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -42,20 +43,18 @@
 
                 <TextView
                     android:id="@+id/downloaded_percent"
+                    style="@style/SmallBoldFont"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/eta_tv"
+                    style="@style/SmallBoldFont"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:gravity="end" />
 
             </LinearLayout>
 
@@ -65,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/sm_margin"
+                android:theme="@style/ProgressBarTheme"
                 app:layout_constraintBottom_toTopOf="@id/ll_status"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -81,20 +81,18 @@
 
                 <TextView
                     android:id="@+id/peers_tv"
+                    style="@style/SmallBoldFont"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/speed_tv"
+                    style="@style/SmallBoldFont"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:gravity="end" />
 
             </LinearLayout>
 

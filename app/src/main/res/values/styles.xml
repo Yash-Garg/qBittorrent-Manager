@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SmallBoldFont" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+    </style>
+
+    <style name="ProgressBarTheme" parent="ThemeOverlay.Material3.Dark">
+        <item name="colorAccent">@color/accent</item>
+    </style>
+</resources>
