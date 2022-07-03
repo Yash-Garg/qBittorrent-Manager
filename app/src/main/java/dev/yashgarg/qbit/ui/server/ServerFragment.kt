@@ -10,6 +10,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
+import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -43,10 +44,30 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
     private fun render(state: ServerState) {
         with(binding) {
-            toolbar.title = "Server name"
-            torrentRv.apply {
-                torrentListAdapter = TorrentListAdapter(state.data?.torrents ?: emptyMap())
-                adapter = torrentListAdapter
+            if (state.hasError) {
+                listLoader.visibility = View.GONE
+                emptyTv.text = state.error?.message ?: requireContext().getString(R.string.error)
+                emptyTv.visibility = View.VISIBLE
+                torrentRv.visibility = View.GONE
+            }
+
+            if (!state.dataLoading) {
+                listLoader.visibility = View.GONE
+                if (state.data!!.torrents.isEmpty()) {
+                    emptyTv.visibility = View.VISIBLE
+                    torrentRv.visibility = View.GONE
+                } else {
+                    emptyTv.visibility = View.GONE
+                    torrentRv.apply {
+                        visibility = View.VISIBLE
+                        torrentListAdapter = TorrentListAdapter(state.data.torrents)
+                        adapter = torrentListAdapter
+                    }
+                }
+
+                addTorrentFab.setOnClickListener {
+                    // TODO: Open up a dialog for adding file
+                }
             }
         }
     }

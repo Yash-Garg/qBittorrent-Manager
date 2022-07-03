@@ -26,9 +26,19 @@ constructor(
 
     init {
         coroutineScope.launch {
-            client = clientManager.getClient()
-            syncData()
+            val clientResponse = clientManager.checkAndGetClient()
+            clientResponse.fold(
+                {
+                    client = it
+                    syncData()
+                },
+                { e -> emitException(e) }
+            )
         }
+    }
+
+    private fun emitException(e: Exception) {
+        _uiState.update { state -> state.copy(hasError = true, error = e) }
     }
 
     private suspend fun syncData() {
