@@ -64,6 +64,10 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         adapter = torrentListAdapter
                     }
                 }
+
+                addTorrentFab.setOnClickListener {
+                    // TODO: Open up a dialog for adding file
+                }
             }
         }
     }
