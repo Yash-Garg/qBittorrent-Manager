@@ -5,5 +5,6 @@
     <color name="bluishGrey">#1F222E</color>
     <color name="grey">#A1A1A1</color>
     <color name="white">#ffffff</color>
+    <color name="green">#88FFA6</color>
     <color name="materialDark">#262C3A</color>
 </resources>
