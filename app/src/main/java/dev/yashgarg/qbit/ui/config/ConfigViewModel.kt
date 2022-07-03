@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConnectionType
 import dev.yashgarg.qbit.data.models.ServerConfig
 import dev.yashgarg.qbit.validation.HostValidator
 import dev.yashgarg.qbit.validation.PortValidator
 import dev.yashgarg.qbit.validation.StringValidator
-import io.ktor.client.*
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -194,7 +194,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                     baseUrl,
                     username,
                     password,
-                    httpClient = HttpClient(),
+                    httpClient = ClientManager.httpClient,
                     dispatcher = Dispatchers.Default
                 )
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SmallBoldFont" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+    </style>
+
+    <style name="ProgressBarTheme" parent="ThemeOverlay.Material3.Dark">
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="CustomCardTheme" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/bluishGrey</item>
+        <item name="cardElevation">10dp</item>
+        <item name="cardCornerRadius">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+</resources>

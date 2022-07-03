@@ -1,10 +1,11 @@
-package dev.yashgarg.qbit.ui.server
+package dev.yashgarg.qbit.ui.server.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.utils.toHumanReadable
@@ -15,6 +16,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
     RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val cardView: CardView = view.findViewById(R.id.torrent_card)
         val title: TextView = view.findViewById(R.id.torrentTitle)
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         val peers: TextView = view.findViewById(R.id.peers_tv)
@@ -50,6 +52,8 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
                     (torrent.progress * 100).toInt(),
                 )
 
+            cardView.setOnClickListener {}
+
             when (torrent.state) {
                 Torrent.State.PAUSED_DL -> {
                     peers.text = context.getString(R.string.paused)
@@ -58,6 +62,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
                 }
                 Torrent.State.UPLOADING -> {
                     peers.text = context.getString(R.string.seeding)
+                    peers.setTextColor(context.getColor(R.color.green))
                 }
                 Torrent.State.DOWNLOADING -> {
                     eta.text = torrent.eta.toTime()

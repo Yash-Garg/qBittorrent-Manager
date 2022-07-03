@@ -11,8 +11,8 @@ data class ServerConfig(
     @PrimaryKey @ColumnInfo("config_id") val configId: Int,
     val serverName: String,
     val baseUrl: String,
-    val port: Int = 22,
+    val port: Int,
     val username: String,
     val password: String,
-    val connectionType: ConnectionType = ConnectionType.HTTP,
+    val connectionType: ConnectionType,
 )

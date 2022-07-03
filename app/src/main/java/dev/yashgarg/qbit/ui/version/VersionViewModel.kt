@@ -26,8 +26,8 @@ constructor(
 
     init {
         coroutineScope.launch {
-            client = clientManager.getClient()
-            fetchInfo()
+            //            client = clientManager.getClient()
+            //            fetchInfo()
         }
     }
 
