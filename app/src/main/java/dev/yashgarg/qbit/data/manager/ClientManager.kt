@@ -2,8 +2,10 @@ package dev.yashgarg.qbit.data.manager
 
 import android.util.Log
 import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.di.ApplicationScope
 import io.ktor.client.*
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,11 +19,12 @@ enum class ConfigStatus {
     DOES_NOT_EXIST
 }
 
+@Singleton
 class ClientManager
 @Inject
 constructor(
     private val configDao: ConfigDao,
-    coroutineScope: CoroutineScope,
+    @ApplicationScope coroutineScope: CoroutineScope,
 ) {
     private val _configStatus = MutableSharedFlow<ConfigStatus>()
     val configStatus = _configStatus.asSharedFlow()
@@ -52,7 +55,7 @@ constructor(
                         "${config.connectionType.toString().lowercase()}://${config.baseUrl}:${config.port}",
                         config.username,
                         config.password,
-                        mainDataSyncMs = 5000L,
+                        mainDataSyncMs = 1000L,
                         httpClient = HttpClient(),
                         dispatcher = Dispatchers.Default,
                     )
