@@ -4,6 +4,7 @@ import android.util.Log
 import arrow.core.Either
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.di.ApplicationScope
+import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.CoroutineScope
@@ -54,8 +55,8 @@ constructor(
             Log.i(tag, "Client App Version - ${client.getVersion()}")
             this.client = client
             Either.Left(client)
-        } catch (e: Exception) {
-            Either.Right(e)
+        } catch (_: Exception) {
+            Either.Right(ClientConnectionError())
         }
     }
 

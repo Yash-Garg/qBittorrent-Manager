@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.ui.server
+package dev.yashgarg.qbit.ui.server.adapter
 
 import android.view.LayoutInflater
 import android.view.View
