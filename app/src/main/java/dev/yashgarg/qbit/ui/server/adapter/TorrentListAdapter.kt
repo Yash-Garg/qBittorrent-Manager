@@ -12,8 +12,9 @@ import dev.yashgarg.qbit.utils.toHumanReadable
 import dev.yashgarg.qbit.utils.toTime
 import qbittorrent.models.Torrent
 
-class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
-    RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
+class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
+
+    private var torrentsList = emptyMap<String, Torrent>()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: CardView = view.findViewById(R.id.torrent_card)
@@ -32,7 +33,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val torrent = torrents.values.elementAt(position)
+        val torrent = torrentsList.values.elementAt(position)
         val context = holder.itemView.context
 
         with(holder) {
@@ -79,5 +80,10 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
         }
     }
 
-    override fun getItemCount(): Int = torrents.size
+    fun setData(torrents: Map<String, Torrent>) {
+        torrentsList = torrents
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = torrentsList.size
 }

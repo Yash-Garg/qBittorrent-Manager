@@ -21,7 +21,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
 
-    private lateinit var torrentListAdapter: TorrentListAdapter
+    private var torrentListAdapter = TorrentListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.torrentRv.adapter = torrentListAdapter
         observeFlows()
     }
 
@@ -61,8 +62,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     emptyTv.visibility = View.GONE
                     torrentRv.apply {
                         visibility = View.VISIBLE
-                        torrentListAdapter = TorrentListAdapter(state.data.torrents)
-                        adapter = torrentListAdapter
+                        torrentListAdapter.setData(state.data.torrents)
                     }
                 }
 
