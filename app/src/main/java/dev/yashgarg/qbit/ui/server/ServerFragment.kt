@@ -10,6 +10,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
+import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
@@ -66,7 +67,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 }
 
                 addTorrentFab.setOnClickListener {
-                    // TODO: Open up a dialog for adding file
+                    AddTorrentDialog.newInstance().show(childFragmentManager, null)
                 }
             }
         }
