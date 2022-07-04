@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.server.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,7 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(torrents: Map<String, Torrent>) {
         torrentsList = torrents
         notifyDataSetChanged()

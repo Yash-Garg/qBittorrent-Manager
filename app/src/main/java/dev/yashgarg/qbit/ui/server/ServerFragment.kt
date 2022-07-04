@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.onEach
 class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
-
     private var torrentListAdapter = TorrentListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +32,17 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.torrentRv.adapter = torrentListAdapter
+        setupHandlers()
         observeFlows()
+    }
+
+    private fun setupHandlers() {
+        with(binding) {
+            torrentRv.adapter = torrentListAdapter
+            addTorrentFab.setOnClickListener {
+                AddTorrentDialog.newInstance().show(childFragmentManager, null)
+            }
+        }
     }
 
     private fun observeFlows() {
@@ -64,10 +72,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         visibility = View.VISIBLE
                         torrentListAdapter.setData(state.data.torrents)
                     }
-                }
-
-                addTorrentFab.setOnClickListener {
-                    AddTorrentDialog.newInstance().show(childFragmentManager, null)
                 }
             }
         }
