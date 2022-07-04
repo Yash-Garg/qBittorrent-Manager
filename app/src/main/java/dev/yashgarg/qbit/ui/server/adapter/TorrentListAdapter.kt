@@ -62,11 +62,13 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
                     peers.setTextColor(context.getColor(R.color.yellowish))
                     speed.visibility = View.GONE
                 }
-                Torrent.State.UPLOADING -> {
+                Torrent.State.UPLOADING,
+                Torrent.State.FORCED_UP -> {
                     peers.text = context.getString(R.string.seeding)
                     peers.setTextColor(context.getColor(R.color.green))
                 }
-                Torrent.State.DOWNLOADING -> {
+                Torrent.State.DOWNLOADING,
+                Torrent.State.FORCED_DL -> {
                     eta.text = torrent.eta.toTime()
                     peers.text =
                         String.format(
@@ -75,6 +77,11 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
                             torrent.seedsInSwarm,
                         )
                     peers.setTextColor(context.getColor(R.color.accent))
+                }
+                Torrent.State.STALLED_DL,
+                Torrent.State.STALLED_UP -> {
+                    peers.text = context.getString(R.string.stalled)
+                    peers.setTextColor(context.getColor(R.color.red))
                 }
                 else -> {}
             }
