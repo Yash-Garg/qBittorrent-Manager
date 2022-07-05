@@ -1,7 +1,6 @@
 package dev.yashgarg.qbit.ui.server
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ServerFragment : Fragment(R.layout.server_fragment) {
@@ -39,12 +39,12 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     }
 
     private fun setupDialogResultListener() {
-        parentFragmentManager.setFragmentResultListener(
+        childFragmentManager.setFragmentResultListener(
             AddTorrentDialog.ADD_TORRENT_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
             val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            Log.i("torrent", url.toString())
+            viewLifecycleOwner.lifecycleScope.launch { viewModel.addTorrent(requireNotNull(url)) }
         }
     }
 
