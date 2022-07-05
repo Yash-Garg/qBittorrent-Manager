@@ -38,11 +38,7 @@ constructor(
     }
 
     suspend fun addTorrent(url: String) {
-        try {
-            //            client.addTorrent { AddTorrentBody(urls = mutableListOf(url)) }
-        } catch (e: Exception) {
-            emitException(e)
-        }
+        client.addTorrent { urls.add(url) }
     }
 
     private fun emitException(e: Exception) {
