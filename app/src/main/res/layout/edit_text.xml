@@ -12,12 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/content_paste"
-        app:endIconMode="custom">
+        app:endIconMode="custom"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/magnet_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_url" />
+
+        <requestFocus />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>

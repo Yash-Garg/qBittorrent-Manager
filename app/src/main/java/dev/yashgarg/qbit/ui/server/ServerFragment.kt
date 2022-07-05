@@ -40,7 +40,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         with(binding) {
             torrentRv.adapter = torrentListAdapter
             addTorrentFab.setOnClickListener {
-                AddTorrentDialog.newInstance().show(childFragmentManager, null)
+                AddTorrentDialog.newInstance().show(childFragmentManager, AddTorrentDialog.TAG)
             }
         }
     }
