@@ -22,6 +22,7 @@ android {
         versionName = "1.0"
 
         multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -98,4 +99,5 @@ dependencies {
     implementation(libs.qbittorrent.client)
 
     debugImplementation(libs.square.leakcanary)
+    testImplementation(libs.testing.junit)
 }

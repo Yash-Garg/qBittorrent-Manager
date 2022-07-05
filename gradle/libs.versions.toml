@@ -38,6 +38,8 @@ ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.5.3"
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 
+testing-junit = "junit:junit:4.13.2"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidApplication" }
 android-library = { id = "com.android.library", version.ref = "androidLibrary" }
