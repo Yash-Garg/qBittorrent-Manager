@@ -66,6 +66,7 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
                 Torrent.State.FORCED_UP -> {
                     peers.text = context.getString(R.string.seeding)
                     peers.setTextColor(context.getColor(R.color.green))
+                    speed.visibility = View.VISIBLE
                 }
                 Torrent.State.DOWNLOADING,
                 Torrent.State.FORCED_DL -> {
@@ -77,11 +78,20 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
                             torrent.seedsInSwarm,
                         )
                     peers.setTextColor(context.getColor(R.color.accent))
+                    speed.visibility = View.VISIBLE
                 }
                 Torrent.State.STALLED_DL,
                 Torrent.State.STALLED_UP -> {
                     peers.text = context.getString(R.string.stalled)
                     peers.setTextColor(context.getColor(R.color.red))
+                    speed.visibility = View.GONE
+                    eta.visibility = View.GONE
+                }
+                Torrent.State.PAUSED_UP -> {
+                    peers.text = context.getString(R.string.completed)
+                    peers.setTextColor(context.getColor(R.color.accent))
+                    speed.visibility = View.GONE
+                    eta.visibility = View.GONE
                 }
                 else -> {}
             }
