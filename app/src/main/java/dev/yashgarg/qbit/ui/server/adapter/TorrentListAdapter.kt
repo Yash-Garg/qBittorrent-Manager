@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.utils.toHumanReadable
 import dev.yashgarg.qbit.utils.toTime
+import javax.inject.Inject
 import qbittorrent.models.Torrent
 
-class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
+class TorrentListAdapter @Inject constructor() :
+    RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
 
     private var torrentsList = emptyMap<String, Torrent>()
+    var onItemClick: ((String) -> Unit)? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: CardView = view.findViewById(R.id.torrent_card)
@@ -35,6 +38,7 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torrent = torrentsList.values.elementAt(position)
+        val hash = torrentsList.keys.elementAt(position)
         val context = holder.itemView.context
 
         with(holder) {
@@ -54,7 +58,7 @@ class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>()
                     (torrent.progress * 100).toInt(),
                 )
 
-            cardView.setOnClickListener {}
+            cardView.setOnClickListener { onItemClick?.invoke(hash) }
 
             when (torrent.state) {
                 Torrent.State.PAUSED_DL -> {

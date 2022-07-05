@@ -13,15 +13,16 @@ import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
-    private var torrentListAdapter = TorrentListAdapter()
+
+    @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +45,34 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             viewLifecycleOwner
         ) { _, bundle ->
             val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            viewLifecycleOwner.lifecycleScope.launch { viewModel.addTorrent(requireNotNull(url)) }
+            viewModel.addTorrent(requireNotNull(url))
         }
     }
 
     private fun setupHandlers() {
         with(binding) {
+            torrentListAdapter.onItemClick = { viewModel.pauseTorrent(it) }
             torrentRv.adapter = torrentListAdapter
+
+            refreshLayout.setOnRefreshListener { viewModel.refresh() }
+
             addTorrentFab.setOnClickListener {
                 AddTorrentDialog.newInstance().show(childFragmentManager, AddTorrentDialog.TAG)
+            }
+
+            bottomBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.category -> {
+                        true
+                    }
+                    R.id.sort_list -> {
+                        true
+                    }
+                    R.id.speed_toggle -> {
+                        true
+                    }
+                    else -> false
+                }
             }
         }
     }
@@ -68,23 +88,26 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         with(binding) {
             if (state.hasError) {
                 listLoader.visibility = View.GONE
-                emptyTv.text = state.error?.message ?: requireContext().getString(R.string.error)
-                emptyTv.visibility = View.VISIBLE
+                errorTv.text = state.error?.message ?: requireContext().getString(R.string.error)
+                errorTv.visibility = View.VISIBLE
                 torrentRv.visibility = View.GONE
+                refreshLayout.isRefreshing = false
             }
 
             if (!state.dataLoading) {
+                errorTv.visibility = View.GONE
                 listLoader.visibility = View.GONE
-                if (state.data!!.torrents.isEmpty()) {
+                if (state.data?.torrents.isNullOrEmpty()) {
                     emptyTv.visibility = View.VISIBLE
                     torrentRv.visibility = View.GONE
                 } else {
                     emptyTv.visibility = View.GONE
                     torrentRv.apply {
                         visibility = View.VISIBLE
-                        torrentListAdapter.setData(state.data.torrents)
+                        torrentListAdapter.setData(state.data!!.torrents)
                     }
                 }
+                refreshLayout.isRefreshing = false
             }
         }
     }
