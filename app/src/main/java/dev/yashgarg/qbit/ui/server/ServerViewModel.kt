@@ -37,6 +37,10 @@ constructor(
         }
     }
 
+    suspend fun addTorrent(url: String) {
+        client.addTorrent { urls.add(url) }
+    }
+
     private fun emitException(e: Exception) {
         _uiState.update { state -> state.copy(hasError = true, error = e) }
     }

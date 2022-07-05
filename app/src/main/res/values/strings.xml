@@ -20,4 +20,7 @@
     <string name="seeding">Seeding</string>
     <string name="no_queue">Nothing in queue</string>
     <string name="error">Something went wrong</string>
+    <string name="enter_url">Magnet Url</string>
+    <string name="stalled">Stalled</string>
+    <string name="completed">Completed</string>
 </resources>

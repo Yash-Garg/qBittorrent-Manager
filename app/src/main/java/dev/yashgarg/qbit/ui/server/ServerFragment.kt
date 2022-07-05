@@ -10,17 +10,18 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
+import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
-
-    private lateinit var torrentListAdapter: TorrentListAdapter
+    private var torrentListAdapter = TorrentListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,28 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupHandlers()
         observeFlows()
+        setupDialogResultListener()
+    }
+
+    private fun setupDialogResultListener() {
+        childFragmentManager.setFragmentResultListener(
+            AddTorrentDialog.ADD_TORRENT_KEY,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
+            viewLifecycleOwner.lifecycleScope.launch { viewModel.addTorrent(requireNotNull(url)) }
+        }
+    }
+
+    private fun setupHandlers() {
+        with(binding) {
+            torrentRv.adapter = torrentListAdapter
+            addTorrentFab.setOnClickListener {
+                AddTorrentDialog.newInstance().show(childFragmentManager, AddTorrentDialog.TAG)
+            }
+        }
     }
 
     private fun observeFlows() {
@@ -60,13 +82,8 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     emptyTv.visibility = View.GONE
                     torrentRv.apply {
                         visibility = View.VISIBLE
-                        torrentListAdapter = TorrentListAdapter(state.data.torrents)
-                        adapter = torrentListAdapter
+                        torrentListAdapter.setData(state.data.torrents)
                     }
-                }
-
-                addTorrentFab.setOnClickListener {
-                    // TODO: Open up a dialog for adding file
                 }
             }
         }

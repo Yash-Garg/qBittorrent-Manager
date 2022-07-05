@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.server.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,9 @@ import dev.yashgarg.qbit.utils.toHumanReadable
 import dev.yashgarg.qbit.utils.toTime
 import qbittorrent.models.Torrent
 
-class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
-    RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
+class TorrentListAdapter : RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
+
+    private var torrentsList = emptyMap<String, Torrent>()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: CardView = view.findViewById(R.id.torrent_card)
@@ -32,7 +34,7 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val torrent = torrents.values.elementAt(position)
+        val torrent = torrentsList.values.elementAt(position)
         val context = holder.itemView.context
 
         with(holder) {
@@ -60,11 +62,14 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
                     peers.setTextColor(context.getColor(R.color.yellowish))
                     speed.visibility = View.GONE
                 }
-                Torrent.State.UPLOADING -> {
+                Torrent.State.UPLOADING,
+                Torrent.State.FORCED_UP -> {
                     peers.text = context.getString(R.string.seeding)
                     peers.setTextColor(context.getColor(R.color.green))
+                    speed.visibility = View.VISIBLE
                 }
-                Torrent.State.DOWNLOADING -> {
+                Torrent.State.DOWNLOADING,
+                Torrent.State.FORCED_DL -> {
                     eta.text = torrent.eta.toTime()
                     peers.text =
                         String.format(
@@ -73,11 +78,31 @@ class TorrentListAdapter(private val torrents: Map<String, Torrent>) :
                             torrent.seedsInSwarm,
                         )
                     peers.setTextColor(context.getColor(R.color.accent))
+                    speed.visibility = View.VISIBLE
+                }
+                Torrent.State.STALLED_DL,
+                Torrent.State.STALLED_UP -> {
+                    peers.text = context.getString(R.string.stalled)
+                    peers.setTextColor(context.getColor(R.color.red))
+                    speed.visibility = View.GONE
+                    eta.visibility = View.GONE
+                }
+                Torrent.State.PAUSED_UP -> {
+                    peers.text = context.getString(R.string.completed)
+                    peers.setTextColor(context.getColor(R.color.accent))
+                    speed.visibility = View.GONE
+                    eta.visibility = View.GONE
                 }
                 else -> {}
             }
         }
     }
 
-    override fun getItemCount(): Int = torrents.size
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(torrents: Map<String, Torrent>) {
+        torrentsList = torrents
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = torrentsList.size
 }
