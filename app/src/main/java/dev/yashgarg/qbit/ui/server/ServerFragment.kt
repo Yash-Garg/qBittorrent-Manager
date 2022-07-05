@@ -1,6 +1,7 @@
 package dev.yashgarg.qbit.ui.server
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +35,17 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
         setupHandlers()
         observeFlows()
+        setupDialogResultListener()
+    }
+
+    private fun setupDialogResultListener() {
+        parentFragmentManager.setFragmentResultListener(
+            AddTorrentDialog.ADD_TORRENT_KEY,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
+            Log.i("torrent", url.toString())
+        }
     }
 
     private fun setupHandlers() {
