@@ -19,6 +19,7 @@ arrow-core = "io.arrow-kt:arrow-core:1.1.2"
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
+androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -37,6 +38,8 @@ google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", vers
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.5.3"
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
+
+testing-junit = "junit:junit:4.13.2"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidApplication" }

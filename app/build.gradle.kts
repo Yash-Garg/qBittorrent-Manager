@@ -22,6 +22,7 @@ android {
         versionName = "1.0"
 
         multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -79,6 +80,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
 
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -98,4 +100,5 @@ dependencies {
     implementation(libs.qbittorrent.client)
 
     debugImplementation(libs.square.leakcanary)
+    testImplementation(libs.testing.junit)
 }

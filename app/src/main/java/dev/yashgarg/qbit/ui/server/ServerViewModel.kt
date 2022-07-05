@@ -1,6 +1,7 @@
 package dev.yashgarg.qbit.ui.server
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
@@ -25,6 +26,10 @@ constructor(
     private lateinit var client: QBittorrentClient
 
     init {
+        refresh()
+    }
+
+    fun refresh() {
         coroutineScope.launch {
             val clientResponse = clientManager.checkAndGetClient()
             clientResponse.fold(
@@ -37,8 +42,12 @@ constructor(
         }
     }
 
-    suspend fun addTorrent(url: String) {
-        client.addTorrent { urls.add(url) }
+    fun addTorrent(url: String) {
+        viewModelScope.launch { client.addTorrent { urls.add(url) } }
+    }
+
+    fun pauseTorrent(hash: String) {
+        viewModelScope.launch { client.pauseTorrents(mutableListOf(hash)) }
     }
 
     private fun emitException(e: Exception) {
