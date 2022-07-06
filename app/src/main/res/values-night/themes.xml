@@ -4,5 +4,6 @@
         <item name="android:fontFamily">@font/space_grotesk</item>
         <item name="android:statusBarColor">@color/materialDark</item>
         <item name="android:windowBackground">@color/materialDark</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
     </style>
 </resources>

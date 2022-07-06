@@ -50,6 +50,14 @@ constructor(
         viewModelScope.launch { client.pauseTorrents(mutableListOf(hash)) }
     }
 
+    fun resumeTorrent(hash: String) {
+        viewModelScope.launch { client.resumeTorrents(mutableListOf(hash)) }
+    }
+
+    fun deleteTorrent(hash: String) {
+        viewModelScope.launch { client.deleteTorrents(mutableListOf(hash), true) }
+    }
+
     private fun emitException(e: Exception) {
         _uiState.update { state -> state.copy(hasError = true, error = e) }
     }

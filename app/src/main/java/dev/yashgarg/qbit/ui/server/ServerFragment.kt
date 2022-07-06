@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.data.models.TorrentOptions
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
@@ -51,7 +52,14 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
     private fun setupHandlers() {
         with(binding) {
-            torrentListAdapter.onItemClick = { viewModel.pauseTorrent(it) }
+            torrentListAdapter.onItemClick = { option, hash ->
+                when (option) {
+                    TorrentOptions.PAUSE -> viewModel.pauseTorrent(hash)
+                    TorrentOptions.PLAY -> viewModel.resumeTorrent(hash)
+                    TorrentOptions.REMOVE -> viewModel.deleteTorrent(hash)
+                }
+            }
+
             torrentRv.adapter = torrentListAdapter
 
             refreshLayout.setOnRefreshListener { viewModel.refresh() }
