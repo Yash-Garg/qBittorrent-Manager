@@ -37,5 +37,12 @@
         <action
             android:id="@+id/action_serverFragment_to_versionFragment"
             app:destination="@id/versionFragment" />
+        <action
+            android:id="@+id/action_serverFragment_to_torrentInfoFragment"
+            app:destination="@id/torrentInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/torrentInfoFragment"
+        android:name="dev.yashgarg.qbit.ui.torrent_info.TorrentInfoFragment"
+        android:label="TorrentInfoFragment" />
 </navigation>

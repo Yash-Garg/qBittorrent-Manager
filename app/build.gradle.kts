@@ -1,5 +1,3 @@
-import android.annotation.SuppressLint
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -16,7 +14,6 @@ android {
     defaultConfig {
         applicationId = "dev.yashgarg.qbit"
         minSdk = 24
-        @SuppressLint("OldTargetApi")
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
