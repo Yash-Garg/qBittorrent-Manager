@@ -1,17 +1,14 @@
 package dev.yashgarg.qbit.ui.server.adapter
 
 import android.annotation.SuppressLint
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
-import dev.yashgarg.qbit.data.models.TorrentOptions
 import dev.yashgarg.qbit.utils.toHumanReadable
 import dev.yashgarg.qbit.utils.toTime
 import javax.inject.Inject
@@ -21,7 +18,7 @@ class TorrentListAdapter @Inject constructor() :
     RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
 
     private var torrentsList = emptyMap<String, Torrent>()
-    var onItemClick: ((TorrentOptions, String) -> Unit)? = null
+    var onItemClick: ((String) -> Unit)? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: CardView = view.findViewById(R.id.torrent_card)
@@ -41,12 +38,7 @@ class TorrentListAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torrent = torrentsList.values.elementAt(position)
-        val hash = torrentsList.keys.elementAt(position)
         val context = holder.itemView.context
-        val popupMenu = PopupMenu(context, holder.cardView)
-        popupMenu.inflate(R.menu.torrent_options)
-        popupMenu.gravity = Gravity.END
-        popupMenu.setForceShowIcon(true)
 
         with(holder) {
             title.text = torrent.name
@@ -66,27 +58,8 @@ class TorrentListAdapter @Inject constructor() :
                 )
             eta.text = if (torrent.eta == 8640000.toLong()) null else torrent.eta.toTime()
 
-            cardView.setOnLongClickListener {
-                popupMenu.show()
-                true
-            }
-
-            popupMenu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.pause_item -> {
-                        onItemClick?.invoke(TorrentOptions.PAUSE, hash)
-                        true
-                    }
-                    R.id.resume_item -> {
-                        onItemClick?.invoke(TorrentOptions.PLAY, hash)
-                        true
-                    }
-                    R.id.remove_item -> {
-                        onItemClick?.invoke(TorrentOptions.REMOVE, hash)
-                        true
-                    }
-                    else -> false
-                }
+            cardView.setOnClickListener {
+                onItemClick?.invoke(torrentsList.keys.elementAt(position))
             }
 
             when (torrent.state) {

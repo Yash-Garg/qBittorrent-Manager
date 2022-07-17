@@ -9,6 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
@@ -63,8 +64,15 @@ constructor(
     }
 
     private suspend fun syncData() {
-        client.syncMainData().collect { mainData ->
-            _uiState.update { state -> state.copy(dataLoading = false, data = mainData) }
-        }
+        client
+            .syncMainData()
+            .catch { e ->
+                _uiState.update { state ->
+                    state.copy(hasError = true, error = Exception(e.message))
+                }
+            }
+            .collect { mainData ->
+                _uiState.update { state -> state.copy(dataLoading = false, data = mainData) }
+            }
     }
 }

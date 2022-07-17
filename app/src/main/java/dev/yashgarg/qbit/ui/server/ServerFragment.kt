@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
-import dev.yashgarg.qbit.data.models.TorrentOptions
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
@@ -52,12 +52,10 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
     private fun setupHandlers() {
         with(binding) {
-            torrentListAdapter.onItemClick = { option, hash ->
-                when (option) {
-                    TorrentOptions.PAUSE -> viewModel.pauseTorrent(hash)
-                    TorrentOptions.PLAY -> viewModel.resumeTorrent(hash)
-                    TorrentOptions.REMOVE -> viewModel.deleteTorrent(hash)
-                }
+            torrentListAdapter.onItemClick = { hash ->
+                val action =
+                    ServerFragmentDirections.actionServerFragmentToTorrentInfoFragment(hash)
+                requireView().findNavController().navigate(action)
             }
 
             torrentRv.adapter = torrentListAdapter
