@@ -36,7 +36,7 @@ google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = 
 google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.5.3"
+qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.6.2"
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 
 testing-junit = "junit:junit:4.13.2"
