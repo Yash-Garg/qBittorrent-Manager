@@ -9,7 +9,7 @@ androidLibrary = "7.4.0-alpha07"
 hilt = "2.42"
 ktor = "2.0.3"
 lifecycle = "2.5.0"
-kotlin = "1.6.21"
+kotlin = "1.7.10"
 room = "2.5.0-alpha02"
 spotless = "6.8.0"
 
