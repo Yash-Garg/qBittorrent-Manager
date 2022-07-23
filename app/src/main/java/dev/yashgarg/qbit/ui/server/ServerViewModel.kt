@@ -1,10 +1,12 @@
 package dev.yashgarg.qbit.ui.server
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
+import dev.yashgarg.qbit.utils.ClientConnectionError
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,18 +49,6 @@ constructor(
         viewModelScope.launch { client.addTorrent { urls.add(url) } }
     }
 
-    fun pauseTorrent(hash: String) {
-        viewModelScope.launch { client.pauseTorrents(mutableListOf(hash)) }
-    }
-
-    fun resumeTorrent(hash: String) {
-        viewModelScope.launch { client.resumeTorrents(mutableListOf(hash)) }
-    }
-
-    fun deleteTorrent(hash: String) {
-        viewModelScope.launch { client.deleteTorrents(mutableListOf(hash), true) }
-    }
-
     private fun emitException(e: Exception) {
         _uiState.update { state -> state.copy(hasError = true, error = e) }
     }
@@ -66,13 +56,17 @@ constructor(
     private suspend fun syncData() {
         client
             .syncMainData()
-            .catch { e ->
-                _uiState.update { state ->
-                    state.copy(hasError = true, error = Exception(e.message))
-                }
-            }
+            .catch { emitException(ClientConnectionError()) }
             .collect { mainData ->
-                _uiState.update { state -> state.copy(dataLoading = false, data = mainData) }
+                Log.i("sync", mainData.toString())
+                _uiState.update { state ->
+                    state.copy(
+                        dataLoading = false,
+                        data = mainData,
+                        hasError = false,
+                        error = null,
+                    )
+                }
             }
     }
 }

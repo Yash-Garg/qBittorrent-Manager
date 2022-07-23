@@ -39,7 +39,8 @@
             app:destination="@id/versionFragment" />
         <action
             android:id="@+id/action_serverFragment_to_torrentInfoFragment"
-            app:destination="@id/torrentInfoFragment" />
+            app:destination="@id/torrentInfoFragment"
+            app:popUpTo="@id/serverFragment" />
     </fragment>
     <fragment
         android:id="@+id/torrentInfoFragment"

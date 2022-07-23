@@ -7,14 +7,12 @@ import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
 import io.ktor.client.plugins.*
+import kotlinx.coroutines.*
+import java.util.concurrent.CancellationException
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import qbittorrent.QBittorrentClient
 
 enum class ConfigStatus {
@@ -55,7 +53,8 @@ constructor(
             Log.i(tag, "Client App Version - ${client.getVersion()}")
             this.client = client
             Either.Left(client)
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.e(this::class.simpleName, e.toString())
             Either.Right(ClientConnectionError())
         }
     }
