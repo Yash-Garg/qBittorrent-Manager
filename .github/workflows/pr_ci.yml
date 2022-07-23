@@ -19,14 +19,14 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.4.0
+        uses: actions/setup-java@v3.4.1
         with:
           distribution: "zulu"
           java-version: "11"
           cache: "gradle"
 
       - name: Check codestyle
-        uses: gradle/gradle-build-action@v2.2.1
+        uses: gradle/gradle-build-action@v2.2.2
         with:
           arguments: spotlessCheck
 
@@ -42,13 +42,13 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.4.0
+        uses: actions/setup-java@v3.4.1
         with:
           distribution: "zulu"
           java-version: "11"
           cache: "gradle"
 
       - name: Build debug APKs
-        uses: gradle/gradle-build-action@v2.2.1
+        uses: gradle/gradle-build-action@v2.2.2
         with:
           arguments: assembleDebug
