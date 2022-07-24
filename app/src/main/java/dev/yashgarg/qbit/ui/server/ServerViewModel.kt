@@ -1,6 +1,5 @@
 package dev.yashgarg.qbit.ui.server
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,7 +57,6 @@ constructor(
             .syncMainData()
             .catch { emitException(ClientConnectionError()) }
             .collect { mainData ->
-                Log.i("sync", mainData.toString())
                 _uiState.update { state ->
                     state.copy(
                         dataLoading = false,

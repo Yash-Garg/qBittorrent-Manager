@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.torrent_info
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
@@ -13,4 +14,7 @@ class TorrentInfoViewModel
 constructor(
     private val clientManager: ClientManager,
     @ApplicationScope private val coroutineScope: CoroutineScope,
-) : ViewModel() {}
+    private val state: SavedStateHandle
+) : ViewModel() {
+    val hash = state.get<String>("torrentHash")
+}

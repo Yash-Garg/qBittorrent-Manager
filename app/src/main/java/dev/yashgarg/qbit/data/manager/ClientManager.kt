@@ -7,10 +7,9 @@ import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
 import io.ktor.client.plugins.*
-import kotlinx.coroutines.*
-import java.util.concurrent.CancellationException
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import qbittorrent.QBittorrentClient

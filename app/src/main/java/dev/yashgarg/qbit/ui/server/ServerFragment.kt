@@ -40,6 +40,17 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         setupDialogResultListener()
     }
 
+    override fun onStop() {
+        super.onStop()
+        binding.refreshLayout.isEnabled = false
+        binding.torrentRv.adapter = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.refreshLayout.isEnabled = true
+    }
+
     private fun setupDialogResultListener() {
         childFragmentManager.setFragmentResultListener(
             AddTorrentDialog.ADD_TORRENT_KEY,
