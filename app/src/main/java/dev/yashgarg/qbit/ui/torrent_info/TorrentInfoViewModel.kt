@@ -7,6 +7,11 @@ import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import qbittorrent.QBittorrentClient
 
 @HiltViewModel
 class TorrentInfoViewModel
@@ -14,7 +19,30 @@ class TorrentInfoViewModel
 constructor(
     private val clientManager: ClientManager,
     @ApplicationScope private val coroutineScope: CoroutineScope,
-    private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
-    val hash = state.get<String>("torrentHash")
+    private lateinit var client: QBittorrentClient
+    private val _uiState = MutableStateFlow(TorrentInfoState())
+    val uiState = _uiState.asStateFlow()
+
+    val hash by lazy { state.get<String>("torrentHash") }
+
+    init {
+        coroutineScope.launch {
+            val clientResponse = clientManager.checkAndGetClient()
+            clientResponse.fold(
+                {
+                    client = it
+                    syncTorrentFlow()
+                },
+                { e -> println(e.message) }
+            )
+        }
+    }
+
+    private suspend fun syncTorrentFlow() {
+        client.torrentFlow(requireNotNull(hash)).collect { info ->
+            _uiState.update { state -> state.copy(loading = false, torrent = info) }
+        }
+    }
 }

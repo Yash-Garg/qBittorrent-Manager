@@ -14,7 +14,9 @@
             app:destination="@id/configFragment" />
         <action
             android:id="@+id/action_homeFragment_to_serverFragment"
-            app:destination="@id/serverFragment" />
+            app:destination="@id/serverFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -23,7 +25,9 @@
         android:label="ConfigFragment" >
         <action
             android:id="@+id/action_configFragment_to_serverFragment"
-            app:destination="@id/serverFragment" />
+            app:destination="@id/serverFragment"
+            app:popUpTo="@id/configFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/versionFragment"
