@@ -45,11 +45,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         binding.refreshLayout.isEnabled = false
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.torrentRv.adapter = null
-    }
-
     override fun onResume() {
         super.onResume()
         binding.refreshLayout.isEnabled = true
