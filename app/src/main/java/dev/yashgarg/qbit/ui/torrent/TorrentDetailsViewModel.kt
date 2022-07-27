@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.ui.torrent_info
+package dev.yashgarg.qbit.ui.torrent
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
 @HiltViewModel
-class TorrentInfoViewModel
+class TorrentDetailsViewModel
 @Inject
 constructor(private val clientManager: ClientManager, state: SavedStateHandle) : ViewModel() {
     private lateinit var client: QBittorrentClient
-    private val _uiState = MutableStateFlow(TorrentInfoState())
+    private val _uiState = MutableStateFlow(TorrentDetailsState())
     val uiState = _uiState.asStateFlow()
 
     private val hash by lazy { state.get<String>("torrentHash") }

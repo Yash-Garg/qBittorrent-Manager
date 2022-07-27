@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/torrentInfoFragment"
-        android:name="dev.yashgarg.qbit.ui.torrent_info.TorrentInfoFragment"
+        android:name="dev.yashgarg.qbit.ui.torrent.TorrentDetailsFragment"
         android:label="TorrentInfoFragment" >
         <argument
             android:name="torrentHash"

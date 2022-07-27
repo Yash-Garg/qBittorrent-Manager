@@ -1,8 +1,8 @@
-package dev.yashgarg.qbit.ui.torrent_info
+package dev.yashgarg.qbit.ui.torrent
 
 import qbittorrent.models.Torrent
 
-data class TorrentInfoState(
+data class TorrentDetailsState(
     val loading: Boolean = true,
     val torrent: Torrent? = null,
 )

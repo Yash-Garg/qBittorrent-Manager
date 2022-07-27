@@ -25,7 +25,7 @@
             android:background="@color/lightBluishGrey"
             android:paddingBottom="5dp"
             app:tabIndicatorHeight="3dp"
-            app:tabMode="auto" />
+            app:tabMode="scrollable" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
