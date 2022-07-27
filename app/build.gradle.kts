@@ -69,6 +69,14 @@ spotless {
         target("**/*.gradle.kts")
         targetExclude("**/build/")
     }
+
+    format("xml") {
+        target("**/*.xml")
+        targetExclude("**/build/", ".idea/")
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
 }
 
 kapt { correctErrorTypes = true }
