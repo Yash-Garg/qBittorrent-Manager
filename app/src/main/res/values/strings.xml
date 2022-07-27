@@ -11,7 +11,7 @@
     <string name="invalid_username">Username cannot be empty</string>
     <string name="invalid_password">Password cannot be empty</string>
     <string name="invalid_type">Select a value</string>
-    
+
     <string name="version">App Version - %1$s\nApi Version - v%2$s</string>
     <string name="server_info">Server information</string>
     <string name="seed_status">Downloading • %1$d/%2$d seeds</string>

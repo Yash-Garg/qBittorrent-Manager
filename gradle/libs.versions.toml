@@ -3,13 +3,13 @@ axCore = "1.8.0"
 axAppcompat = "1.4.2"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.0"
-googleMaterial = "1.7.0-alpha02"
-androidApplication = "7.4.0-alpha07"
-androidLibrary = "7.4.0-alpha07"
-hilt = "2.42"
+googleMaterial = "1.7.0-alpha03"
+androidApplication = "7.4.0-alpha08"
+androidLibrary = "7.4.0-alpha08"
+hilt = "2.43"
 ktor = "2.0.3"
 lifecycle = "2.5.0"
-kotlin = "1.6.21"
+kotlin = "1.7.10"
 room = "2.5.0-alpha02"
 spotless = "6.8.0"
 
@@ -36,7 +36,7 @@ google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = 
 google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.5.3"
+qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.6.2"
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 
 testing-junit = "junit:junit:4.13.2"

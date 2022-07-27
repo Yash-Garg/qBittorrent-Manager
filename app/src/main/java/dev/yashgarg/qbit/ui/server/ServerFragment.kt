@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -39,6 +40,16 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         setupDialogResultListener()
     }
 
+    override fun onStop() {
+        super.onStop()
+        binding.refreshLayout.isEnabled = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.refreshLayout.isEnabled = true
+    }
+
     private fun setupDialogResultListener() {
         childFragmentManager.setFragmentResultListener(
             AddTorrentDialog.ADD_TORRENT_KEY,
@@ -51,7 +62,12 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
     private fun setupHandlers() {
         with(binding) {
-            torrentListAdapter.onItemClick = { viewModel.pauseTorrent(it) }
+            torrentListAdapter.onItemClick = { hash ->
+                val action =
+                    ServerFragmentDirections.actionServerFragmentToTorrentInfoFragment(hash)
+                requireView().findNavController().navigate(action)
+            }
+
             torrentRv.adapter = torrentListAdapter
 
             refreshLayout.setOnRefreshListener { viewModel.refresh() }
@@ -92,9 +108,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 errorTv.visibility = View.VISIBLE
                 torrentRv.visibility = View.GONE
                 refreshLayout.isRefreshing = false
-            }
-
-            if (!state.dataLoading) {
+            } else if (!state.dataLoading) {
                 errorTv.visibility = View.GONE
                 listLoader.visibility = View.GONE
                 if (state.data?.torrents.isNullOrEmpty()) {

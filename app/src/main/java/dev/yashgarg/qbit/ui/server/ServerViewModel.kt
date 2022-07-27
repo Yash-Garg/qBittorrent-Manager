@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
+import dev.yashgarg.qbit.utils.ClientConnectionError
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
@@ -46,17 +48,23 @@ constructor(
         viewModelScope.launch { client.addTorrent { urls.add(url) } }
     }
 
-    fun pauseTorrent(hash: String) {
-        viewModelScope.launch { client.pauseTorrents(mutableListOf(hash)) }
-    }
-
     private fun emitException(e: Exception) {
         _uiState.update { state -> state.copy(hasError = true, error = e) }
     }
 
     private suspend fun syncData() {
-        client.syncMainData().collect { mainData ->
-            _uiState.update { state -> state.copy(dataLoading = false, data = mainData) }
-        }
+        client
+            .syncMainData()
+            .catch { emitException(ClientConnectionError()) }
+            .collect { mainData ->
+                _uiState.update { state ->
+                    state.copy(
+                        dataLoading = false,
+                        data = mainData,
+                        hasError = false,
+                        error = null,
+                    )
+                }
+            }
     }
 }

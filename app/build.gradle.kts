@@ -1,4 +1,4 @@
-import android.annotation.SuppressLint
+@file:Suppress("UnstableApiUsage")
 
 plugins {
     id("com.android.application")
@@ -16,7 +16,6 @@ android {
     defaultConfig {
         applicationId = "dev.yashgarg.qbit"
         minSdk = 24
-        @SuppressLint("OldTargetApi")
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
@@ -69,6 +68,14 @@ spotless {
         ktfmt().kotlinlangStyle()
         target("**/*.gradle.kts")
         targetExclude("**/build/")
+    }
+
+    format("xml") {
+        target("**/*.xml")
+        targetExclude("**/build/", ".idea/")
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
     }
 }
 

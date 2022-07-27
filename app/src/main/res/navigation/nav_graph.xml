@@ -14,7 +14,9 @@
             app:destination="@id/configFragment" />
         <action
             android:id="@+id/action_homeFragment_to_serverFragment"
-            app:destination="@id/serverFragment" />
+            app:destination="@id/serverFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -23,7 +25,9 @@
         android:label="ConfigFragment" >
         <action
             android:id="@+id/action_configFragment_to_serverFragment"
-            app:destination="@id/serverFragment" />
+            app:destination="@id/serverFragment"
+            app:popUpTo="@id/configFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/versionFragment"
@@ -37,5 +41,17 @@
         <action
             android:id="@+id/action_serverFragment_to_versionFragment"
             app:destination="@id/versionFragment" />
+        <action
+            android:id="@+id/action_serverFragment_to_torrentInfoFragment"
+            app:destination="@id/torrentInfoFragment"
+            app:popUpTo="@id/serverFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/torrentInfoFragment"
+        android:name="dev.yashgarg.qbit.ui.torrent_info.TorrentInfoFragment"
+        android:label="TorrentInfoFragment" >
+        <argument
+            android:name="torrentHash"
+            app:argType="string" />
     </fragment>
 </navigation>

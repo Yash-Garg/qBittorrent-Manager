@@ -38,7 +38,6 @@ class TorrentListAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torrent = torrentsList.values.elementAt(position)
-        val hash = torrentsList.keys.elementAt(position)
         val context = holder.itemView.context
 
         with(holder) {
@@ -57,8 +56,11 @@ class TorrentListAdapter @Inject constructor() :
                     torrent.size.toHumanReadable(),
                     (torrent.progress * 100).toInt(),
                 )
+            eta.text = if (torrent.eta == 8640000.toLong()) null else torrent.eta.toTime()
 
-            cardView.setOnClickListener { onItemClick?.invoke(hash) }
+            cardView.setOnClickListener {
+                onItemClick?.invoke(torrentsList.keys.elementAt(position))
+            }
 
             when (torrent.state) {
                 Torrent.State.PAUSED_DL -> {
@@ -74,7 +76,6 @@ class TorrentListAdapter @Inject constructor() :
                 }
                 Torrent.State.DOWNLOADING,
                 Torrent.State.FORCED_DL -> {
-                    eta.text = torrent.eta.toTime()
                     peers.text =
                         String.format(
                             context.getString(R.string.seed_status),
@@ -83,6 +84,7 @@ class TorrentListAdapter @Inject constructor() :
                         )
                     peers.setTextColor(context.getColor(R.color.accent))
                     speed.visibility = View.VISIBLE
+                    eta.visibility = View.VISIBLE
                 }
                 Torrent.State.STALLED_DL,
                 Torrent.State.STALLED_UP -> {
