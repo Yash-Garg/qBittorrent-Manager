@@ -11,7 +11,7 @@ import com.google.android.material.transition.MaterialElevationScale
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.TorrentDetailsFragmentBinding
-import dev.yashgarg.qbit.ui.torrent.adapter.TorrentInfoAdapter
+import dev.yashgarg.qbit.ui.torrent.adapter.TorrentDetailsAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,7 +21,7 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
     private val binding by viewBinding(TorrentDetailsFragmentBinding::bind)
     private val viewModel by viewModels<TorrentDetailsViewModel>()
 
-    private lateinit var torrentInfoAdapter: TorrentInfoAdapter
+    private lateinit var torrentInfoAdapter: TorrentDetailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        torrentInfoAdapter = TorrentInfoAdapter(this)
+        torrentInfoAdapter = TorrentDetailsAdapter(this)
         binding.pager.adapter = torrentInfoAdapter
 
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
@@ -41,8 +41,8 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                     when (position) {
                         0 -> "Info"
                         1 -> "Files"
-                        2 -> "Peers"
-                        else -> "Trackers"
+                        2 -> "Trackers"
+                        else -> "Peers"
                     }
             }
             .attach()

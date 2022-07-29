@@ -38,7 +38,13 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
 
     private suspend fun syncTorrentFlow() {
         client.torrentFlow(requireNotNull(hash)).collect { info ->
-            _uiState.update { state -> state.copy(loading = false, torrent = info) }
+            _uiState.update { state ->
+                state.copy(
+                    loading = false,
+                    torrent = info,
+                    torrentFiles = client.getTorrentFiles(hash!!)
+                )
+            }
         }
     }
 }
