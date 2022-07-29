@@ -8,6 +8,15 @@
         <item name="fontFamily">@font/space_grotesk</item>
     </style>
 
+    <style name="TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TabMedium" parent="TitleMedium">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="PopupMenu" parent="Widget.Material3.PopupMenu">
         <item name="android:popupBackground">@color/lightBluishGrey</item>
     </style>

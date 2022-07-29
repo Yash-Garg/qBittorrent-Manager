@@ -16,16 +16,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="?attr/homeAsUpIndicator" />
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:titleTextAppearance="@style/TitleMedium" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/lightBluishGrey"
-            android:paddingBottom="5dp"
-            app:tabIndicatorHeight="3dp"
-            app:tabMode="scrollable" />
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabMedium" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
