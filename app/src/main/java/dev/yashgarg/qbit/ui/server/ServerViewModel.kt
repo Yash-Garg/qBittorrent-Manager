@@ -54,7 +54,7 @@ constructor(
 
     private suspend fun syncData() {
         client
-            .syncMainData()
+            .observeMainData()
             .catch { emitException(ClientConnectionError()) }
             .collect { mainData ->
                 _uiState.update { state ->

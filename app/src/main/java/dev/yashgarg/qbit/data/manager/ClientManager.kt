@@ -9,6 +9,7 @@ import io.ktor.client.*
 import io.ktor.client.plugins.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -69,7 +70,7 @@ constructor(
                         }://${config.baseUrl}:${config.port}",
                         config.username,
                         config.password,
-                        mainDataSyncMs = 1000L,
+                        syncInterval = syncInterval,
                         httpClient = httpClient,
                         dispatcher = Dispatchers.Default,
                     )
@@ -79,6 +80,7 @@ constructor(
 
     companion object {
         const val tag = "qbit-client"
+        val syncInterval = 1.seconds
         val httpClient = HttpClient { install(HttpTimeout) { connectTimeoutMillis = 3000 } }
     }
 }

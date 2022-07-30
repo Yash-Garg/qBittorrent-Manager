@@ -1,23 +1,39 @@
 package dev.yashgarg.qbit.ui.torrent.adapter
 
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import dev.yashgarg.qbit.R
 import javax.inject.Inject
+import qbittorrent.models.TorrentTracker
 
 class TorrentTrackersAdapter @Inject constructor() :
     RecyclerView.Adapter<TorrentTrackersAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+    private var trackerList = emptyList<TorrentTracker>()
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val trackerUrl: TextView = view.findViewById(R.id.trackerName)
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.tracker_item, parent, false)
+
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int = trackerList.size
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateTrackers(trackers: List<TorrentTracker>) {
+        trackerList = trackers
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val tracker = trackerList.elementAt(position)
+        holder.trackerUrl.text = tracker.url
     }
 }
