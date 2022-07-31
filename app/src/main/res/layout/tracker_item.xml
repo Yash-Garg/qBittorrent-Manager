@@ -2,4 +2,8 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/trackerName"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:maxLines="1"
+    android:padding="16dp" />

@@ -23,4 +23,7 @@
     <string name="enter_url">Magnet Url</string>
     <string name="stalled">Stalled</string>
     <string name="completed">Completed</string>
+    <string name="transfer">Transfer</string>
+    <string name="connections">Connections</string>
+    <string name="seeds">Seeds</string>
 </resources>

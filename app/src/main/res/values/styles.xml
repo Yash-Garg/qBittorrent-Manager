@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="SmallBoldFont" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
@@ -10,6 +9,18 @@
 
     <style name="TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+    </style>
+
+    <style name="TitleMediumBold" parent="TitleMedium">
+        <item name="android:textSize">17sp</item>
+        <item name="fontWeight">500</item>
+    </style>
+
+    <style name="TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">.05</item>
     </style>
 
     <style name="TabMedium" parent="TitleMedium">

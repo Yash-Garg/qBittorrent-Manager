@@ -34,6 +34,11 @@ class TorrentTrackersAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tracker = trackerList.elementAt(position)
-        holder.trackerUrl.text = tracker.url
+
+        with(holder) {
+            trackerUrl.text = tracker.url
+            // TODO: Set tracker status indicator according to the status values
+            // https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-trackers
+        }
     }
 }

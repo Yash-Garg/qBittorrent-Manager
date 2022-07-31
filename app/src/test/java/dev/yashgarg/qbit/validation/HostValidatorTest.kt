@@ -1,6 +1,5 @@
-package dev.yashgarg.qbit
+package dev.yashgarg.qbit.validation
 
-import dev.yashgarg.qbit.validation.HostValidator
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
