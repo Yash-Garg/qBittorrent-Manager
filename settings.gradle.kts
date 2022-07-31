@@ -2,6 +2,7 @@
 
 pluginManagement {
     repositories {
+        includeBuild("build-logic")
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -17,7 +18,9 @@ dependencyResolutionManagement {
 }
 
 enableFeaturePreview("VERSION_CATALOGS")
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "qbittorrent-kt"
+
 include(":app")

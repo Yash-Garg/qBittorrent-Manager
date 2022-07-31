@@ -4,7 +4,6 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("com.diffplug.spotless")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs")
 }
@@ -41,10 +40,7 @@ android {
 
     kotlinOptions { jvmTarget = "1.8" }
 
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
+    buildFeatures { viewBinding = true }
 
     packagingOptions {
         resources {
@@ -55,30 +51,6 @@ android {
             excludes += "**/*.xml"
             excludes += "**/*.properties"
         }
-    }
-}
-
-spotless {
-    kotlin {
-        ktfmt().kotlinlangStyle()
-        target("**/*.kt")
-        targetExclude("**/build/")
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-
-    kotlinGradle {
-        ktfmt().kotlinlangStyle()
-        target("**/*.gradle.kts")
-        targetExclude("**/build/")
-    }
-
-    format("xml") {
-        target("**/*.xml")
-        targetExclude("**/build/", ".idea/")
-        trimTrailingWhitespace()
-        indentWithSpaces()
-        endWithNewline()
     }
 }
 
