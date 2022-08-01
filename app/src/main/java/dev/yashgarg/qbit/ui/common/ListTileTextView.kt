@@ -17,10 +17,10 @@ class ListTileTextView(context: Context, attrs: AttributeSet) : LinearLayout(con
 
     init {
         val typedArr = context.obtainStyledAttributes(attrs, R.styleable.ListTileTextView, 0, 0)
-        val view = View.inflate(context, R.layout.list_tile, this)
+        View.inflate(context, R.layout.list_tile, this)
 
-        title = view.findViewById(R.id.title)
-        subtitle = view.findViewById(R.id.subtitle)
+        title = findViewById(R.id.title)
+        subtitle = findViewById(R.id.subtitle)
 
         try {
             title.text = typedArr.getString(R.styleable.ListTileTextView_title)

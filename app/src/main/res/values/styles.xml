@@ -20,6 +20,7 @@
     <style name="TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="fontFamily">@font/space_grotesk</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">.05</item>
     </style>
 

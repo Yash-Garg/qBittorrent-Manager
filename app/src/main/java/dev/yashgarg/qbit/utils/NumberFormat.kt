@@ -2,6 +2,10 @@ package dev.yashgarg.qbit.utils
 
 import java.text.CharacterIterator
 import java.text.StringCharacterIterator
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
@@ -21,6 +25,14 @@ private object NumberFormat {
         }
         value *= java.lang.Long.signum(bytes).toLong()
         return String.format("%.1f %ciB", value / 1024.0, ci.current())
+    }
+
+    fun millisToDate(millis: Long): String {
+        val millisEpoch = millis * 1000
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")
+        val instant = Instant.ofEpochMilli(millisEpoch)
+        val date = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        return formatter.format(date)
     }
 
     fun secondsToTime(seconds: Long): String {
@@ -53,3 +65,5 @@ private object NumberFormat {
 fun Long.toHumanReadable(): String = NumberFormat.bytesToHumanReadable(this)
 
 fun Long.toTime(): String = NumberFormat.secondsToTime(this)
+
+fun Long.toDate(): String = NumberFormat.millisToDate(this)

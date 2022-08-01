@@ -3,7 +3,6 @@
     <string name="add_server">Add server</string>
     <string name="welcome_text">Welcome to qBittorrent Remote</string>
     <string name="press_button">Use the button below to add a server</string>
-    <string name="paused">Paused</string>
 
     <string name="invalid_url">Please enter a valid host</string>
     <string name="invalid_port">Please enter valid port number</string>
@@ -21,9 +20,25 @@
     <string name="no_queue">Nothing in queue</string>
     <string name="error">Something went wrong</string>
     <string name="enter_url">Magnet Url</string>
+
+    <string name="paused">Paused</string>
     <string name="stalled">Stalled</string>
     <string name="completed">Completed</string>
     <string name="transfer">Transfer</string>
     <string name="connections">Connections</string>
     <string name="seeds">Seeds</string>
+    <string name="peers">Peers</string>
+    <string name="time_active">Time Active</string>
+    <string name="eta">ETA</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="uploaded">Uploaded</string>
+    <string name="dl_speed">Down Speed</string>
+    <string name="up_speed">Upload Speed</string>
+    <string name="dl_limit">Download Limit</string>
+    <string name="up_limit">Upload Limit</string>
+    <string name="wasted">Wasted</string>
+    <string name="ratio">Ratio</string>
+    <string name="reannounce">Reannounce In</string>
+    <string name="last_complete">Last Seen Complete</string>
+    <string name="priority">Priority</string>
 </resources>

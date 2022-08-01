@@ -44,7 +44,8 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                     loading = false,
                     torrent = info,
                     torrentFiles = client.getTorrentFiles(hash),
-                    trackers = client.getTrackers(hash) ?: emptyList()
+                    trackers = client.getTrackers(hash) ?: emptyList(),
+                    torrentProperties = client.getTorrentProperties(hash)
                 )
             }
         }

@@ -1,29 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/transfer_title"
-        style="@style/TitleLarge"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/transfer"
-        app:layout_constraintBottom_toTopOf="@id/connections"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <dev.yashgarg.qbit.ui.common.ListTileTextView
-        android:id="@+id/connections"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/transfer_title"
-        custom:title="@string/connections" />
+        <TextView
+            android:id="@+id/transfer"
+            style="@style/TitleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="12dp"
+            android:text="@string/transfer"
+            app:layout_constraintBottom_toTopOf="@id/connections"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/connections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/transfer"
+            app:layout_constraintStart_toStartOf="@id/transfer"
+            app:layout_constraintTop_toBottomOf="@id/transfer"
+            app:title="@string/connections" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/seeds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/connections"
+            app:layout_constraintStart_toStartOf="@id/connections"
+            app:layout_constraintTop_toBottomOf="@id/connections"
+            app:title="@string/seeds" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/peers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/seeds"
+            app:layout_constraintStart_toStartOf="@id/seeds"
+            app:layout_constraintTop_toBottomOf="@id/seeds"
+            app:title="@string/peers" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/time_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/peers"
+            app:layout_constraintStart_toStartOf="@id/peers"
+            app:layout_constraintTop_toBottomOf="@id/peers"
+            app:title="@string/time_active" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/eta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/time_active"
+            app:layout_constraintStart_toStartOf="@id/time_active"
+            app:layout_constraintTop_toBottomOf="@id/time_active"
+            app:title="@string/eta" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/downloaded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/eta"
+            app:layout_constraintStart_toStartOf="@id/eta"
+            app:layout_constraintTop_toBottomOf="@id/eta"
+            app:title="@string/downloaded" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/uploaded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/downloaded"
+            app:layout_constraintStart_toStartOf="@id/downloaded"
+            app:layout_constraintTop_toBottomOf="@id/downloaded"
+            app:title="@string/uploaded" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/down_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/uploaded"
+            app:layout_constraintStart_toStartOf="@id/uploaded"
+            app:layout_constraintTop_toBottomOf="@id/uploaded"
+            app:title="@string/dl_speed" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/up_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/down_speed"
+            app:layout_constraintStart_toStartOf="@id/down_speed"
+            app:layout_constraintTop_toBottomOf="@id/down_speed"
+            app:title="@string/up_speed" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/dl_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/up_speed"
+            app:layout_constraintStart_toStartOf="@id/up_speed"
+            app:layout_constraintTop_toBottomOf="@id/up_speed"
+            app:title="@string/dl_limit" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/up_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/dl_limit"
+            app:layout_constraintStart_toStartOf="@id/dl_limit"
+            app:layout_constraintTop_toBottomOf="@id/dl_limit"
+            app:title="@string/up_limit" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/wasted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/up_limit"
+            app:layout_constraintStart_toStartOf="@id/up_limit"
+            app:layout_constraintTop_toBottomOf="@id/up_limit"
+            app:title="@string/wasted" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/ratio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/wasted"
+            app:layout_constraintStart_toStartOf="@id/wasted"
+            app:layout_constraintTop_toBottomOf="@id/wasted"
+            app:title="@string/ratio" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/reannounce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/ratio"
+            app:layout_constraintStart_toStartOf="@id/ratio"
+            app:layout_constraintTop_toBottomOf="@id/ratio"
+            app:title="@string/reannounce" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/last_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/reannounce"
+            app:layout_constraintStart_toStartOf="@id/reannounce"
+            app:layout_constraintTop_toBottomOf="@id/reannounce"
+            app:title="@string/last_complete" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/last_complete"
+            app:layout_constraintStart_toStartOf="@id/last_complete"
+            app:layout_constraintTop_toBottomOf="@id/last_complete"
+            app:title="@string/priority" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
