@@ -59,8 +59,12 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
     private fun render(state: TorrentDetailsState) {
         with(binding) {
             if (!state.loading) {
-                val torrent = requireNotNull(state.torrent)
-                toolbar.title = torrent.name
+                if (state.error != null) {
+                    requireParentFragment().parentFragmentManager.popBackStackImmediate()
+                } else {
+                    val torrent = requireNotNull(state.torrent)
+                    toolbar.title = torrent.name
+                }
             }
         }
     }

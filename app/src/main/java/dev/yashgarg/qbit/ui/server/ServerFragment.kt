@@ -110,6 +110,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 errorTv.visibility = View.VISIBLE
                 torrentRv.visibility = View.GONE
                 refreshLayout.isRefreshing = false
+                emptyTv.visibility = View.GONE
             } else if (!state.dataLoading) {
                 errorTv.visibility = View.GONE
                 listLoader.visibility = View.GONE

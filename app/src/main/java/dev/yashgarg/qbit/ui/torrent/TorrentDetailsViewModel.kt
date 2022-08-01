@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
+import dev.yashgarg.qbit.utils.TorrentRemovedError
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
@@ -41,8 +39,7 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         val hash = requireNotNull(hash)
         client
             .observeTorrent(hash, waitIfMissing = false)
-            .catch { Log.e(this::class.java.simpleName, it.toString()) }
-            .collect { info ->
+            .onEach { info ->
                 _uiState.update { state ->
                     state.copy(
                         loading = false,
@@ -53,5 +50,18 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                     )
                 }
             }
+            .onCompletion { throwable ->
+                Log.e(this::class.java.simpleName, throwable.toString())
+                if (throwable == null) {
+                    _uiState.update { state ->
+                        state.copy(loading = false, error = TorrentRemovedError())
+                    }
+                } else {
+                    _uiState.update { state ->
+                        state.copy(loading = false, error = Exception(throwable.message))
+                    }
+                }
+            }
+            .collect()
     }
 }
