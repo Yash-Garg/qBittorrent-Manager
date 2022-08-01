@@ -24,7 +24,7 @@ private object NumberFormat {
             i -= 10
         }
         value *= java.lang.Long.signum(bytes).toLong()
-        return String.format("%.1f %ciB", value / 1024.0, ci.current())
+        return String.format("%.1f %ciB", value / 1024.0, ci.current()).trim()
     }
 
     fun millisToDate(millis: Long, zoneId: ZoneId?): String {
@@ -32,7 +32,7 @@ private object NumberFormat {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")
         val instant = Instant.ofEpochMilli(millisEpoch)
         val date = LocalDateTime.ofInstant(instant, zoneId ?: ZoneId.systemDefault())
-        return formatter.format(date)
+        return formatter.format(date).trim()
     }
 
     fun secondsToTime(seconds: Long): String {
@@ -58,7 +58,7 @@ private object NumberFormat {
             timeStr.append(" ${secs}s")
         }
 
-        return timeStr.toString()
+        return timeStr.toString().trim()
     }
 }
 

@@ -44,10 +44,8 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
                 connections.setSubtitle("${props.nbConnections} (${props.nbConnectionsLimit} max)")
                 seeds.setSubtitle("${props.seeds} (${props.seedsTotal} total)")
                 peers.setSubtitle("${props.peers} (${props.peersTotal} total)")
-                timeActive.setSubtitle(props.timeElapsed.toTime().trim())
-                eta.setSubtitle(
-                    if (props.eta == 8640000.toLong()) "Inf." else props.eta.toTime().trim()
-                )
+                timeActive.setSubtitle(props.timeElapsed.toTime())
+                eta.setSubtitle(if (props.eta == 8640000L) "Inf." else props.eta.toTime())
                 downloaded.setSubtitle(
                     "${props.totalDownloaded.toHumanReadable()} (${props.totalDownloadedSession.toHumanReadable()} in this session)"
                 )
@@ -60,15 +58,15 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
                 upSpeed.setSubtitle(
                     "${props.upSpeed.toHumanReadable()} (${props.upSpeedAvg.toHumanReadable()} avg.)"
                 )
-                dlLimit.setSubtitle(props.dlLimit.toHumanReadable().trim())
-                upLimit.setSubtitle(props.upLimit.toHumanReadable().trim())
-                wasted.setSubtitle(props.totalWasted.toHumanReadable().trim())
-                ratio.setSubtitle(props.shareRatio.toString().trim())
+                dlLimit.setSubtitle(props.dlLimit.toHumanReadable())
+                upLimit.setSubtitle(props.upLimit.toHumanReadable())
+                wasted.setSubtitle(props.totalWasted.toHumanReadable())
+                ratio.setSubtitle(props.shareRatio.toString())
                 reannounce.setSubtitle(
-                    if (props.reannounce == 0L) "Inf." else props.reannounce.toTime().trim()
+                    if (props.reannounce == 0L) "Inf." else props.reannounce.toTime()
                 )
                 lastComplete.setSubtitle(props.lastSeen.toDate())
-                priority.setSubtitle(torrent.priority.toString().trim())
+                priority.setSubtitle(torrent.priority.toString())
             }
         }
     }

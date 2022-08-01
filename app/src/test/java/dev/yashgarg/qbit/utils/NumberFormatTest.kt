@@ -33,11 +33,11 @@ class NumberFormatTest {
 
     @Test
     fun testCorrectTimeIsValid() {
-        assertTrue(timeInSeconds.toTime().trim() == "2m 16s")
+        assertTrue(timeInSeconds.toTime() == "2m 16s")
     }
 
     @Test
     fun testIncorrectTimeIsInvalid() {
-        assertFalse(timeInSeconds.toTime().trim() == "5m 20s")
+        assertFalse(timeInSeconds.toTime() == "5m 20s")
     }
 }
