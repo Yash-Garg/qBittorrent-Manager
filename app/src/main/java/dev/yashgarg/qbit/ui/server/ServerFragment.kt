@@ -43,11 +43,13 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onStop() {
         super.onStop()
         binding.refreshLayout.isEnabled = false
+        binding.torrentRv.adapter = null
     }
 
     override fun onResume() {
         super.onResume()
         binding.refreshLayout.isEnabled = true
+        binding.torrentRv.adapter = torrentListAdapter
     }
 
     private fun setupDialogResultListener() {
