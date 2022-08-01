@@ -27,11 +27,11 @@ private object NumberFormat {
         return String.format("%.1f %ciB", value / 1024.0, ci.current())
     }
 
-    fun millisToDate(millis: Long): String {
+    fun millisToDate(millis: Long, zoneId: ZoneId?): String {
         val millisEpoch = millis * 1000
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")
         val instant = Instant.ofEpochMilli(millisEpoch)
-        val date = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        val date = LocalDateTime.ofInstant(instant, zoneId ?: ZoneId.systemDefault())
         return formatter.format(date)
     }
 
@@ -66,4 +66,4 @@ fun Long.toHumanReadable(): String = NumberFormat.bytesToHumanReadable(this)
 
 fun Long.toTime(): String = NumberFormat.secondsToTime(this)
 
-fun Long.toDate(): String = NumberFormat.millisToDate(this)
+fun Long.toDate(zoneId: ZoneId? = null): String = NumberFormat.millisToDate(this, zoneId)
