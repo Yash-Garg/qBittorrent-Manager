@@ -14,3 +14,16 @@ afterEvaluate {
         kotlinOptions { jvmTarget = JavaVersion.VERSION_11.toString() }
     }
 }
+
+gradlePlugin {
+    plugins {
+        register("spotless") {
+            id = "dev.yashgarg.qbit.spotless"
+            implementationClass = "dev.yashgarg.qbit.gradle.SpotlessPlugin"
+        }
+        register("githooks") {
+            id = "dev.yashgarg.qbit.githooks"
+            implementationClass = "dev.yashgarg.qbit.gradle.GitHooksPlugin"
+        }
+    }
+}
