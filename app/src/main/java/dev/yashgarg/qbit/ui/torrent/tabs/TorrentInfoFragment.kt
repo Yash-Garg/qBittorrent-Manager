@@ -41,32 +41,48 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
                 val torrent = requireNotNull(state.torrent)
                 val props = requireNotNull(state.torrentProperties)
 
-                connections.setSubtitle("${props.nbConnections} (${props.nbConnectionsLimit} max)")
-                seeds.setSubtitle("${props.seeds} (${props.seedsTotal} total)")
-                peers.setSubtitle("${props.peers} (${props.peersTotal} total)")
-                timeActive.setSubtitle(props.timeElapsed.toTime())
-                eta.setSubtitle(if (props.eta == 8640000L) "Inf." else props.eta.toTime())
-                downloaded.setSubtitle(
-                    "${props.totalDownloaded.toHumanReadable()} (${props.totalDownloadedSession.toHumanReadable()} in this session)"
-                )
-                uploaded.setSubtitle(
-                    "${props.totalUploaded.toHumanReadable()} (${props.totalUploadedSession.toHumanReadable()} in this session)"
-                )
-                downSpeed.setSubtitle(
-                    "${props.dlSpeed.toHumanReadable()} (${props.dlSpeedAvg.toHumanReadable()} avg.)"
-                )
-                upSpeed.setSubtitle(
-                    "${props.upSpeed.toHumanReadable()} (${props.upSpeedAvg.toHumanReadable()} avg.)"
-                )
-                dlLimit.setSubtitle(props.dlLimit.toHumanReadable())
-                upLimit.setSubtitle(props.upLimit.toHumanReadable())
-                wasted.setSubtitle(props.totalWasted.toHumanReadable())
-                ratio.setSubtitle(props.shareRatio.toString())
-                reannounce.setSubtitle(
-                    if (props.reannounce == 0L) "Inf." else props.reannounce.toTime()
-                )
-                lastComplete.setSubtitle(props.lastSeen.toDate())
-                priority.setSubtitle(torrent.priority.toString())
+                connections.subtitle =
+                    getString(R.string.connections_sub)
+                        .format(props.nbConnections, props.nbConnectionsLimit)
+
+                seeds.subtitle = getString(R.string.sp_sub).format(props.seeds, props.seedsTotal)
+                peers.subtitle = getString(R.string.sp_sub).format(props.peers, props.peersTotal)
+
+                eta.subtitle =
+                    if (props.eta == 8640000L) getString(R.string.infinite) else props.eta.toTime()
+                reannounce.subtitle =
+                    if (props.reannounce == 0L) getString(R.string.infinite)
+                    else props.reannounce.toTime()
+
+                downloaded.subtitle =
+                    getString(R.string.dl_up_sub)
+                        .format(
+                            props.totalDownloaded.toHumanReadable(),
+                            props.totalDownloadedSession.toHumanReadable(),
+                        )
+
+                uploaded.subtitle =
+                    getString(R.string.dl_up_sub)
+                        .format(
+                            props.totalUploaded.toHumanReadable(),
+                            props.totalUploadedSession.toHumanReadable(),
+                        )
+
+                downSpeed.subtitle =
+                    getString(R.string.dl_up_speed_sub)
+                        .format(props.dlSpeed.toHumanReadable(), props.dlSpeedAvg.toHumanReadable())
+
+                upSpeed.subtitle =
+                    getString(R.string.dl_up_speed_sub)
+                        .format(props.upSpeed.toHumanReadable(), props.upSpeedAvg.toHumanReadable())
+
+                dlLimit.subtitle = props.dlLimit.toHumanReadable()
+                upLimit.subtitle = props.upLimit.toHumanReadable()
+                wasted.subtitle = props.totalWasted.toHumanReadable()
+                ratio.subtitle = "%.2f".format(props.shareRatio)
+                timeActive.subtitle = props.timeElapsed.toTime()
+                lastComplete.subtitle = props.lastSeen.toDate()
+                priority.subtitle = torrent.priority.toString()
             }
         }
     }

@@ -8,22 +8,25 @@ import android.widget.TextView
 import dev.yashgarg.qbit.R
 
 class ListTileTextView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    private var title: TextView
-    private var subtitle: TextView
+    private var titleTv: TextView
+    private var subtitleTv: TextView
 
-    fun setSubtitle(text: String) {
-        subtitle.text = text
-    }
+    var subtitle: String? = null
+        set(value) {
+            subtitleTv.text = value
+            field = value
+        }
 
     init {
         val typedArr = context.obtainStyledAttributes(attrs, R.styleable.ListTileTextView, 0, 0)
         View.inflate(context, R.layout.list_tile, this)
 
-        title = findViewById(R.id.title)
-        subtitle = findViewById(R.id.subtitle)
+        titleTv = findViewById(R.id.title)
+        subtitleTv = findViewById(R.id.subtitle)
 
         try {
-            title.text = typedArr.getString(R.styleable.ListTileTextView_title)
+            titleTv.text = typedArr.getString(R.styleable.ListTileTextView_title)
+            subtitleTv.text = subtitle
         } finally {
             typedArr.recycle()
         }
