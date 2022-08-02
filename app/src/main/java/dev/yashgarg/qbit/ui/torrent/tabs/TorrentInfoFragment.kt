@@ -83,6 +83,15 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
                 timeActive.subtitle = props.timeElapsed.toTime()
                 lastComplete.subtitle = props.lastSeen.toDate()
                 priority.subtitle = torrent.priority.toString()
+                totalSize.subtitle = props.totalSize.toHumanReadable()
+                createdBy.subtitle = props.createdBy
+                addedOn.subtitle = props.additionDate.toDate()
+                completedOn.subtitle = props.completionDate.toDate()
+                createdOn.subtitle = props.creationDate.toDate()
+                savePath.subtitle = props.savePath
+                category.subtitle = torrent.category.ifEmpty { getString(R.string.unspecified) }
+                torrentHash.subtitle = torrent.hash
+                comment.subtitle = props.comment.ifEmpty { getString(R.string.unspecified) }
             }
         }
     }

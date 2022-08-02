@@ -44,6 +44,17 @@
     <string name="reannounce">Reannounce In</string>
     <string name="last_complete">Last Seen Complete</string>
     <string name="priority">Priority</string>
+    <string name="torrent_info">Torrent Information</string>
+    <string name="total_size">Total Size</string>
+    <string name="created_by">Created By</string>
+    <string name="added_on">Added On</string>
+    <string name="completed_on">Completed On</string>
+    <string name="save_path">Save Path</string>
+    <string name="category">Category</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="torrent_hash">Torrent Hash</string>
+    <string name="comment">Comment</string>
+    <string name="created_on">Created On</string>
     <!-- Subtitles-->
     <string name="connections_sub">%1$d (%2$d max)</string>
     <string name="sp_sub">%1$d (%2$d total)</string>

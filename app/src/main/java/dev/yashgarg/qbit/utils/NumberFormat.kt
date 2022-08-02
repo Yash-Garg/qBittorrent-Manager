@@ -24,7 +24,7 @@ private object NumberFormat {
             i -= 10
         }
         value *= java.lang.Long.signum(bytes).toLong()
-        return String.format("%.1f %ciB", value / 1024.0, ci.current()).trim()
+        return String.format("%.2f %ciB", value / 1024.0, ci.current()).trim()
     }
 
     fun millisToDate(millis: Long, zoneId: ZoneId?): String {

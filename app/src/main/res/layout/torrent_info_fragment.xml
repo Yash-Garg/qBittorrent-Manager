@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -117,6 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/dl_limit"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/dl_limit"
             app:layout_constraintTop_toBottomOf="@id/dl_limit"
             app:title="@string/up_limit" />
@@ -166,5 +169,97 @@
             app:layout_constraintTop_toBottomOf="@id/last_complete"
             app:title="@string/priority" />
 
+        <TextView
+            android:id="@+id/torrent_info"
+            style="@style/TitleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:text="@string/torrent_info"
+            app:layout_constraintEnd_toEndOf="@id/priority"
+            app:layout_constraintStart_toStartOf="@id/priority"
+            app:layout_constraintTop_toBottomOf="@id/priority" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/total_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/torrent_info"
+            app:layout_constraintStart_toStartOf="@id/torrent_info"
+            app:layout_constraintTop_toBottomOf="@id/torrent_info"
+            app:title="@string/total_size" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/created_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/total_size"
+            app:layout_constraintStart_toStartOf="@id/total_size"
+            app:layout_constraintTop_toBottomOf="@id/total_size"
+            app:title="@string/created_by" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/added_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/created_by"
+            app:layout_constraintStart_toStartOf="@id/created_by"
+            app:layout_constraintTop_toBottomOf="@id/created_by"
+            app:title="@string/added_on" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/completed_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/added_on"
+            app:layout_constraintStart_toStartOf="@id/added_on"
+            app:layout_constraintTop_toBottomOf="@id/added_on"
+            app:title="@string/completed_on" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/created_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/completed_on"
+            app:layout_constraintStart_toStartOf="@id/completed_on"
+            app:layout_constraintTop_toBottomOf="@id/completed_on"
+            app:title="@string/created_on" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/save_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/created_on"
+            app:layout_constraintStart_toStartOf="@id/created_on"
+            app:layout_constraintTop_toBottomOf="@id/created_on"
+            app:title="@string/save_path" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/save_path"
+            app:layout_constraintStart_toStartOf="@id/save_path"
+            app:layout_constraintTop_toBottomOf="@id/save_path"
+            app:title="@string/category" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/torrent_hash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/category"
+            app:layout_constraintStart_toStartOf="@id/category"
+            app:layout_constraintTop_toBottomOf="@id/category"
+            app:title="@string/torrent_hash" />
+
+        <dev.yashgarg.qbit.ui.common.ListTileTextView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/torrent_hash"
+            app:layout_constraintStart_toStartOf="@id/torrent_hash"
+            app:layout_constraintTop_toBottomOf="@id/torrent_hash"
+            app:title="@string/comment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
