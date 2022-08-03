@@ -12,7 +12,7 @@
     <string name="invalid_type">Select a value</string>
 
     <string name="version">App Version - %1$s\nApi Version - v%2$s</string>
-    <string name="server_info">Server information</string>
+    <string name="server_info">Server Information</string>
     <string name="seed_status">Downloading • %1$d/%2$d seeds</string>
     <string name="speed_status">▼ %1$s/s • ▲ %2$s/s</string>
     <string name="percent_done">%1$s / %2$s • %3$d%%</string>

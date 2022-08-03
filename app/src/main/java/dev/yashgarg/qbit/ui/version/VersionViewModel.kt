@@ -1,11 +1,11 @@
 package dev.yashgarg.qbit.ui.version
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
-import dev.yashgarg.qbit.di.ApplicationScope
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,21 +13,22 @@ import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
 @HiltViewModel
-class VersionViewModel
-@Inject
-constructor(
-    private val clientManager: ClientManager,
-    @ApplicationScope private val coroutineScope: CoroutineScope,
-) : ViewModel() {
+class VersionViewModel @Inject constructor(private val clientManager: ClientManager) : ViewModel() {
     private val _uiState = MutableStateFlow(VersionState())
     val uiState = _uiState.asStateFlow()
 
     private lateinit var client: QBittorrentClient
 
     init {
-        coroutineScope.launch {
-            //            client = clientManager.getClient()
-            //            fetchInfo()
+        viewModelScope.launch {
+            val clientResponse = clientManager.checkAndGetClient()
+            clientResponse.fold(
+                {
+                    client = it
+                    fetchInfo()
+                },
+                { e -> Log.e("VersionVM", e.toString()) }
+            )
         }
     }
 
