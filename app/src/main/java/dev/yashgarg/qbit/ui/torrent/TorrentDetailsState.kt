@@ -1,12 +1,11 @@
 package dev.yashgarg.qbit.ui.torrent
 
-import qbittorrent.models.Torrent
-import qbittorrent.models.TorrentFile
-import qbittorrent.models.TorrentProperties
-import qbittorrent.models.TorrentTracker
+import qbittorrent.models.*
 
 data class TorrentDetailsState(
     val loading: Boolean = true,
+    val peersLoading: Boolean = true,
+    val peers: TorrentPeers? = null,
     val torrent: Torrent? = null,
     val torrentFiles: List<TorrentFile> = emptyList(),
     val trackers: List<TorrentTracker> = emptyList(),

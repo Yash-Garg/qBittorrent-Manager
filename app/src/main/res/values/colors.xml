@@ -2,6 +2,7 @@
 <resources>
     <color name="yellowish">#FFD979</color>
     <color name="accent">#CB9EFF</color>
+    <color name="lightAccent">#DBBCFF</color>
     <color name="bluishGrey">#1F222E</color>
     <color name="grey">#A1A1A1</color>
     <color name="white">#ffffff</color>

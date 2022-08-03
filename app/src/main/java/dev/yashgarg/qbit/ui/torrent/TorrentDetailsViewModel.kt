@@ -29,6 +29,7 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                 {
                     client = it
                     syncTorrentFlow()
+                    syncPeers()
                 },
                 { e -> Log.e(this::class.java.simpleName, e.toString()) }
             )
@@ -50,18 +51,40 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                     )
                 }
             }
-            .onCompletion { throwable ->
-                Log.e(this::class.java.simpleName, throwable.toString())
-                if (throwable == null) {
-                    _uiState.update { state ->
-                        state.copy(loading = false, error = TorrentRemovedError())
-                    }
-                } else {
-                    _uiState.update { state ->
-                        state.copy(loading = false, error = Exception(throwable.message))
-                    }
+            .onCompletion { handleCompletion(it) }
+            .collect()
+    }
+
+    private suspend fun syncPeers() {
+        client
+            .observeTorrentPeers(requireNotNull(hash))
+            .onEach { peers ->
+                println(peers)
+                _uiState.update { state ->
+                    state.copy(
+                        peers = peers,
+                        peersLoading = false,
+                    )
                 }
             }
+            .onCompletion { handleCompletion(it) }
             .collect()
+    }
+
+    private fun handleCompletion(throwable: Throwable?) {
+        Log.e(TorrentDetailsViewModel::class.simpleName, throwable.toString())
+        if (throwable == null) {
+            _uiState.update { state ->
+                state.copy(loading = false, error = TorrentRemovedError(), peersLoading = false)
+            }
+        } else {
+            _uiState.update { state ->
+                state.copy(
+                    loading = false,
+                    error = Exception(throwable.message),
+                    peersLoading = false
+                )
+            }
+        }
     }
 }

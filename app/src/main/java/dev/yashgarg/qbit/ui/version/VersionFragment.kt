@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -49,9 +50,7 @@ class VersionFragment : Fragment(R.layout.version_fragment) {
             composeView.setContent {
                 val state by viewModel.uiState.collectAsState()
 
-                Mdc3Theme(setTextColors = true, setDefaultFontFamily = true) {
-                    VersionView(state.apiVersion)
-                }
+                Mdc3Theme(setTextColors = true, setDefaultFontFamily = true) { VersionView(state) }
             }
         }
     }
@@ -63,22 +62,24 @@ class VersionFragment : Fragment(R.layout.version_fragment) {
 }
 
 @Composable
-fun VersionView(version: String) {
+fun VersionView(state: VersionState) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Web Api v$version",
-            modifier = Modifier.padding(16.dp),
-            style =
-                TextStyle(
-                    fontSize = 20.sp,
-                    color = colorResource(R.color.grey),
-                    fontWeight = FontWeight.SemiBold,
-                    letterSpacing = .1.sp
-                )
-        )
+        if (state.loading) LinearProgressIndicator(color = colorResource(R.color.accent))
+        else
+            Text(
+                text = "Web Api v${state.apiVersion}",
+                modifier = Modifier.padding(16.dp),
+                style =
+                    TextStyle(
+                        fontSize = 20.sp,
+                        color = colorResource(R.color.grey),
+                        fontWeight = FontWeight.SemiBold,
+                        letterSpacing = .1.sp
+                    )
+            )
     }
 }

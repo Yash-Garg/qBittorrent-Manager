@@ -25,23 +25,9 @@ class VersionViewModel @Inject constructor(private val clientManager: ClientMana
             clientResponse.fold(
                 {
                     client = it
-                    fetchInfo()
+                    getVersions()
                 },
-                { e -> Log.e("VersionVM", e.toString()) }
-            )
-        }
-    }
-
-    private suspend fun fetchInfo() {
-        getVersions()
-        getBuildInfo()
-    }
-
-    private suspend fun getBuildInfo() {
-        _uiState.update { state ->
-            state.copy(
-                buildInfo = client.getBuildInfo(),
-                buildInfoLoading = false,
+                { e -> Log.e(VersionViewModel::class.simpleName, e.toString()) }
             )
         }
     }
@@ -51,8 +37,7 @@ class VersionViewModel @Inject constructor(private val clientManager: ClientMana
             state.copy(
                 apiVersion = client.getApiVersion(),
                 appVersion = client.getVersion(),
-                apiVersionLoading = false,
-                appVersionLoading = false
+                loading = false,
             )
         }
     }
