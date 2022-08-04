@@ -20,4 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
+include("automation-plugins")
+
 include("kotlin-plugins")
