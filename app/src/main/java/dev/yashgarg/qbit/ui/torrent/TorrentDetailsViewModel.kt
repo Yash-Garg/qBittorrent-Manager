@@ -38,37 +38,42 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
 
     private suspend fun syncTorrentFlow() {
         val hash = requireNotNull(hash)
-        client
-            .observeTorrent(hash, waitIfMissing = false)
-            .onEach { info ->
-                _uiState.update { state ->
-                    state.copy(
-                        loading = false,
-                        torrent = info,
-                        torrentFiles = client.getTorrentFiles(hash),
-                        trackers = client.getTrackers(hash) ?: emptyList(),
-                        torrentProperties = client.getTorrentProperties(hash)
-                    )
-                }
+        viewModelScope
+            .launch {
+                client
+                    .observeTorrent(hash, waitIfMissing = false)
+                    .onEach { info ->
+                        _uiState.update { state ->
+                            state.copy(
+                                loading = false,
+                                torrent = info,
+                                torrentFiles = client.getTorrentFiles(hash),
+                                trackers = client.getTrackers(hash) ?: emptyList(),
+                                torrentProperties = client.getTorrentProperties(hash)
+                            )
+                        }
+                    }
+                    .collect()
             }
-            .onCompletion { handleCompletion(it) }
-            .collect()
+            .invokeOnCompletion { handleCompletion(it) }
     }
 
     private suspend fun syncPeers() {
-        client
-            .observeTorrentPeers(requireNotNull(hash))
-            .onEach { peers ->
-                println(peers)
-                _uiState.update { state ->
-                    state.copy(
-                        peers = peers,
-                        peersLoading = false,
-                    )
-                }
+        viewModelScope
+            .launch {
+                client
+                    .observeTorrentPeers(requireNotNull(hash))
+                    .onEach { peers ->
+                        _uiState.update { state ->
+                            state.copy(
+                                peers = peers,
+                                peersLoading = false,
+                            )
+                        }
+                    }
+                    .collect()
             }
-            .onCompletion { handleCompletion(it) }
-            .collect()
+            .invokeOnCompletion { handleCompletion(it) }
     }
 
     private fun handleCompletion(throwable: Throwable?) {

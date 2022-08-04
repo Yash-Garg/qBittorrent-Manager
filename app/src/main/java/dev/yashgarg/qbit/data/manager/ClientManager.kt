@@ -7,6 +7,7 @@ import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.logging.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.seconds
@@ -81,6 +82,17 @@ constructor(
     companion object {
         const val tag = "qbit-client"
         val syncInterval = 1.seconds
-        val httpClient = HttpClient { install(HttpTimeout) { connectTimeoutMillis = 3000 } }
+        val httpClient = HttpClient {
+            install(HttpTimeout) { connectTimeoutMillis = 3000 }
+            install(Logging) {
+                logger =
+                    object : Logger {
+                        override fun log(message: String) {
+                            Log.i("QbitClient", message)
+                        }
+                    }
+                level = LogLevel.INFO
+            }
+        }
     }
 }

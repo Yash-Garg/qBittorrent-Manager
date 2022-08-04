@@ -86,6 +86,7 @@ dependencies {
     kapt(libs.google.dagger.hilt.compiler)
 
     implementation(libs.ktor.android)
+    implementation(libs.ktor.logging)
     implementation(libs.qbittorrent.client)
 
     implementation(projects.uiCompose)
