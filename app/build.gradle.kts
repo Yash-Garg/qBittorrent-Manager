@@ -88,7 +88,7 @@ dependencies {
     implementation(libs.ktor.android)
     implementation(libs.qbittorrent.client)
 
-    implementation(projects.uiCommon)
+    implementation(projects.uiCompose)
 
     debugImplementation(libs.square.leakcanary)
     testImplementation(libs.testing.junit)

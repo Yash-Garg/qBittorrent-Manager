@@ -25,4 +25,4 @@ rootProject.name = "qbittorrent-kt"
 
 include(":app")
 
-include(":ui-common")
+include(":ui-compose")

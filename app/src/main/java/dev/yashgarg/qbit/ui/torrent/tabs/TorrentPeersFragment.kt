@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.composethemeadapter3.Mdc3Theme
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.TorrentPeersFragmentBinding
-import dev.yashgarg.qbit.ui.common.Center
+import dev.yashgarg.qbit.ui.compose.Center
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsState
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
 import dev.yashgarg.qbit.utils.viewBinding

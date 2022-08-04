@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.ui.common
+package dev.yashgarg.qbit.ui.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

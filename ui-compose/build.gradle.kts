@@ -1,18 +1,13 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
 }
 
 android {
-    namespace = "dev.yashgarg.qbit.ui.common"
+    namespace = "dev.yashgarg.qbit.ui.compose"
     compileSdk = 32
-
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 32
-    }
 
     buildFeatures {
         compose = true
