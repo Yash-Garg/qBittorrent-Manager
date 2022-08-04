@@ -45,7 +45,10 @@ android {
         compose = true
     }
 
-    composeOptions { kotlinCompilerExtensionVersion = "1.3.0-rc01" }
+    composeOptions {
+        kotlinCompilerExtensionVersion =
+            libs.compose.compiler.get().versionConstraint.requiredVersion
+    }
 
     packagingOptions {
         resources {
@@ -84,6 +87,8 @@ dependencies {
 
     implementation(libs.ktor.android)
     implementation(libs.qbittorrent.client)
+
+    implementation(projects.uiCommon)
 
     debugImplementation(libs.square.leakcanary)
     testImplementation(libs.testing.junit)

@@ -24,3 +24,5 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "qbittorrent-kt"
 
 include(":app")
+
+include(":ui-common")

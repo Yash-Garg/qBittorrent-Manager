@@ -15,7 +15,6 @@ class TorrentDetailsAdapter(fragment: Fragment) : FragmentStateAdapter(fragment)
             0 -> TorrentInfoFragment()
             1 -> TorrentFilesFragment()
             2 -> TorrentTrackersFragment()
-            3 -> TorrentPeersFragment()
-            else -> Fragment()
+            else -> TorrentPeersFragment()
         }
 }
