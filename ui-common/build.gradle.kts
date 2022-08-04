@@ -9,6 +9,11 @@ android {
     namespace = "dev.yashgarg.qbit.ui.common"
     compileSdk = 32
 
+    defaultConfig {
+        minSdk = 24
+        targetSdk = 32
+    }
+
     buildFeatures {
         compose = true
         composeOptions {
