@@ -43,7 +43,7 @@ class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
 @Composable
 fun PeersListView(state: TorrentDetailsState) {
     if (state.peersLoading || state.peers == null) {
-        Center { LinearProgressIndicator(color = colorResource(R.color.accent)) }
+        Center { LinearProgressIndicator(color = colorResource(R.color.md_theme_dark_seed)) }
     } else if (state.peers.peers.isEmpty()) {
         Center { Text("No peers connected") }
     } else {

@@ -9,7 +9,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/lightBluishGrey"
+        android:background="@color/md_theme_dark_bluegray_surface"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -23,7 +23,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightBluishGrey"
+            android:background="@color/md_theme_dark_bluegray_surface"
             app:tabGravity="fill"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"

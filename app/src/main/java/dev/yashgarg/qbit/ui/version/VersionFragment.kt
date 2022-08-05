@@ -50,7 +50,7 @@ class VersionFragment : Fragment(R.layout.version_fragment) {
             composeView.setContent {
                 val state by viewModel.uiState.collectAsState()
 
-                Mdc3Theme(setTextColors = true, setDefaultFontFamily = true) { VersionView(state) }
+                Mdc3Theme(setDefaultFontFamily = true) { VersionView(state) }
             }
         }
     }
@@ -68,7 +68,8 @@ fun VersionView(state: VersionState) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (state.loading) LinearProgressIndicator(color = colorResource(R.color.accent))
+        if (state.loading)
+            LinearProgressIndicator(color = colorResource(R.color.md_theme_dark_seed))
         else
             Text(
                 text = "Web Api v${state.apiVersion}",
