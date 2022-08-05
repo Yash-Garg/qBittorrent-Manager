@@ -3,7 +3,6 @@
     <style name="Base.Theme.Qbit" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:fontFamily">@font/space_grotesk</item>
         <item name="fontFamily">@font/space_grotesk</item>
-        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
 
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
@@ -28,6 +27,8 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+
+        <item name="textAppearanceBodyLarge">@style/BodyMedium</item>
     </style>
 
     <style name="Theme.Qbit" parent="Base.Theme.Qbit" />

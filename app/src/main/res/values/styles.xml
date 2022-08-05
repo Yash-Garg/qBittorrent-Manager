@@ -7,6 +7,10 @@
         <item name="fontFamily">@font/space_grotesk</item>
     </style>
 
+    <style name="BodyMedium" parent="TitleMedium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/space_grotesk</item>
