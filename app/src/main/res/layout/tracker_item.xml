@@ -6,5 +6,6 @@
     android:clickable="true"
     android:focusable="true"
     android:maxLines="1"
+    android:textAppearance="@style/BodyMedium"
     android:paddingHorizontal="24dp"
     android:paddingVertical="18dp" />

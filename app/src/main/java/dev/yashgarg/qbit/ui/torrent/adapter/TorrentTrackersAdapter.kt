@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.data.models.TrackerStatus
 import javax.inject.Inject
 import qbittorrent.models.TorrentTracker
 
@@ -26,6 +27,7 @@ class TorrentTrackersAdapter @Inject constructor() :
     }
 
     override fun getItemCount(): Int = trackerList.size
+
     @SuppressLint("NotifyDataSetChanged")
     fun updateTrackers(trackers: List<TorrentTracker>) {
         trackerList = trackers
@@ -34,11 +36,27 @@ class TorrentTrackersAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tracker = trackerList.elementAt(position)
+        val context = holder.itemView.context
 
         with(holder) {
             trackerUrl.text = tracker.url
-            // TODO: Set tracker status indicator according to the status values
-            // https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-trackers
+            when (TrackerStatus.statusOf(tracker.status)) {
+                TrackerStatus.DISABLED -> {
+                    trackerUrl.setTextColor(context.getColor(R.color.red))
+                }
+                TrackerStatus.UPDATING -> {
+                    trackerUrl.setTextColor(context.getColor(R.color.yellow))
+                }
+                TrackerStatus.NOT_CONTACTED -> {
+                    trackerUrl.setTextColor(context.getColor(R.color.red))
+                }
+                TrackerStatus.CONTACTED_WORKING -> {
+                    trackerUrl.setTextColor(context.getColor(R.color.green))
+                }
+                TrackerStatus.CONTACTED_NOT_WORKING -> {
+                    trackerUrl.setTextColor(context.getColor(R.color.red))
+                }
+            }
         }
     }
 }

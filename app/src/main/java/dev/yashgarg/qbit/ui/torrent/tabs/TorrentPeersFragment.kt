@@ -33,7 +33,7 @@ class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
 
         binding.peersComposeView.setContent {
             val state by viewModel.uiState.collectAsState()
-            Mdc3Theme { PeersListView(state) }
+            Mdc3Theme(setTextColors = true, setDefaultFontFamily = true) { PeersListView(state) }
         }
     }
 }
