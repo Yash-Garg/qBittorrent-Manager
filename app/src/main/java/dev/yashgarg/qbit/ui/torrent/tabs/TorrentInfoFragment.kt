@@ -40,6 +40,8 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
             if (!state.loading) {
                 val torrent = requireNotNull(state.torrent)
                 val props = requireNotNull(state.torrentProperties)
+                loader.visibility = View.GONE
+                infoConstraintLayout.visibility = View.VISIBLE
 
                 connections.subtitle =
                     getString(R.string.connections_sub)
@@ -92,6 +94,9 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
                 category.subtitle = torrent.category.ifEmpty { getString(R.string.unspecified) }
                 torrentHash.subtitle = torrent.hash
                 comment.subtitle = props.comment.ifEmpty { getString(R.string.unspecified) }
+            } else {
+                infoConstraintLayout.visibility = View.GONE
+                loader.visibility = View.VISIBLE
             }
         }
     }

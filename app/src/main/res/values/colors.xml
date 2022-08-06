@@ -13,11 +13,11 @@
 
     <color name="md_theme_dark_primary">#DAB9FF</color>
     <color name="md_theme_dark_onPrimary">#431672</color>
-    <color name="md_theme_dark_primaryContainer">#8552BF</color>
+    <color name="md_theme_dark_primaryContainer">#7240AA</color>
     <color name="md_theme_dark_onPrimaryContainer">#EFDBFF</color>
     <color name="md_theme_dark_secondary">#DAB9FF</color>
     <color name="md_theme_dark_onSecondary">#431672</color>
-    <color name="md_theme_dark_secondaryContainer">#8552BF</color>
+    <color name="md_theme_dark_secondaryContainer">#7240AA</color>
     <color name="md_theme_dark_onSecondaryContainer">#EFDBFF</color>
     <color name="md_theme_dark_error">#FFB4AB</color>
     <color name="md_theme_dark_errorContainer">#93000A</color>

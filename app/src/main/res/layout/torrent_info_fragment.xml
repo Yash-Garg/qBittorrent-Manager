@@ -6,9 +6,25 @@
     android:fillViewport="true"
     android:scrollbars="vertical">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loader"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:trackThickness="4dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/info_constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/transfer"
@@ -264,4 +280,5 @@
             app:layout_constraintTop_toBottomOf="@id/torrent_hash"
             app:title="@string/comment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>
