@@ -8,10 +8,7 @@ import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
@@ -54,7 +51,7 @@ constructor(
 
     private suspend fun syncData() {
         client
-            .syncMainData()
+            .observeMainData()
             .catch { emitException(ClientConnectionError()) }
             .collect { mainData ->
                 _uiState.update { state ->

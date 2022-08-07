@@ -3,21 +3,19 @@ package dev.yashgarg.qbit.data.manager
 import android.util.Log
 import arrow.core.Either
 import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.logging.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import qbittorrent.QBittorrentClient
-
-enum class ConfigStatus {
-    EXISTS,
-    DOES_NOT_EXIST
-}
 
 @Singleton
 class ClientManager
@@ -69,7 +67,7 @@ constructor(
                         }://${config.baseUrl}:${config.port}",
                         config.username,
                         config.password,
-                        mainDataSyncMs = 1000L,
+                        syncInterval = syncInterval,
                         httpClient = httpClient,
                         dispatcher = Dispatchers.Default,
                     )
@@ -79,6 +77,18 @@ constructor(
 
     companion object {
         const val tag = "qbit-client"
-        val httpClient = HttpClient { install(HttpTimeout) { connectTimeoutMillis = 3000 } }
+        val syncInterval = 1.seconds
+        val httpClient = HttpClient {
+            install(HttpTimeout) { connectTimeoutMillis = 3000 }
+            install(Logging) {
+                logger =
+                    object : Logger {
+                        override fun log(message: String) {
+                            Log.i("QbitClient", message)
+                        }
+                    }
+                level = LogLevel.NONE
+            }
+        }
     }
 }

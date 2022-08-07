@@ -65,7 +65,7 @@ class TorrentListAdapter @Inject constructor() :
             when (torrent.state) {
                 Torrent.State.PAUSED_DL -> {
                     peers.text = context.getString(R.string.paused)
-                    peers.setTextColor(context.getColor(R.color.yellowish))
+                    peers.setTextColor(context.getColor(R.color.yellow))
                     speed.visibility = View.GONE
                 }
                 Torrent.State.UPLOADING,
@@ -82,7 +82,7 @@ class TorrentListAdapter @Inject constructor() :
                             torrent.connectedSeeds,
                             torrent.seedsInSwarm,
                         )
-                    peers.setTextColor(context.getColor(R.color.accent))
+                    peers.setTextColor(context.getColor(R.color.md_theme_dark_seed))
                     speed.visibility = View.VISIBLE
                     eta.visibility = View.VISIBLE
                 }
@@ -95,11 +95,22 @@ class TorrentListAdapter @Inject constructor() :
                 }
                 Torrent.State.PAUSED_UP -> {
                     peers.text = context.getString(R.string.completed)
-                    peers.setTextColor(context.getColor(R.color.accent))
+                    peers.setTextColor(context.getColor(R.color.md_theme_dark_seed))
                     speed.visibility = View.GONE
                     eta.visibility = View.GONE
                 }
-                else -> {}
+                // TODO: Add remaining changes to left-out branches
+                Torrent.State.ERROR -> {}
+                Torrent.State.MISSING_FILES -> {}
+                Torrent.State.QUEUED_UP -> {}
+                Torrent.State.CHECKING_UP -> {}
+                Torrent.State.ALLOCATING -> {}
+                Torrent.State.META_DL -> {}
+                Torrent.State.CHECKING_DL -> {}
+                Torrent.State.CHECKING_RESUME_DATA -> {}
+                Torrent.State.MOVING -> {}
+                Torrent.State.UNKNOWN -> {}
+                else -> throw IllegalArgumentException("Invalid torrent state received")
             }
         }
     }

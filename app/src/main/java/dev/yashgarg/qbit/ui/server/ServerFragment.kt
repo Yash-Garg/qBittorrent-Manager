@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -43,11 +44,13 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onStop() {
         super.onStop()
         binding.refreshLayout.isEnabled = false
+        binding.torrentRv.adapter = null
     }
 
     override fun onResume() {
         super.onResume()
         binding.refreshLayout.isEnabled = true
+        binding.torrentRv.adapter = torrentListAdapter
     }
 
     private fun setupDialogResultListener() {
@@ -85,6 +88,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         true
                     }
                     R.id.speed_toggle -> {
+                        findNavController().navigate(R.id.action_serverFragment_to_versionFragment)
                         true
                     }
                     else -> false
@@ -108,6 +112,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 errorTv.visibility = View.VISIBLE
                 torrentRv.visibility = View.GONE
                 refreshLayout.isRefreshing = false
+                emptyTv.visibility = View.GONE
             } else if (!state.dataLoading) {
                 errorTv.visibility = View.GONE
                 listLoader.visibility = View.GONE

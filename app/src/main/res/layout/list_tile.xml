@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="12dp">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/TitleMediumBold"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -54,7 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/lightGrey"
             android:fitsSystemWindows="true"
             app:fabAlignmentMode="end"
             app:hideOnScroll="true"
@@ -64,8 +63,7 @@
             android:id="@+id/addTorrentFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/purple"
-            android:contentDescription="TODO"
+            android:contentDescription="@null"
             android:src="@drawable/add"
             app:layout_anchor="@id/bottomBar" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

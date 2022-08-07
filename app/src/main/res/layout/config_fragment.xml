@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true">
@@ -13,7 +14,6 @@
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/materialDark"
             android:fitsSystemWindows="true"
             app:layout_constraintBottom_toTopOf="@id/server_name_til"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:hint="Server name"
+            android:hint="@string/server_name"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="5dp"
-            android:hint="Host or IP"
+            android:hint="@string/host_or_ip"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/type_dropdown"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="5dp"
-            android:hint="Port"
+            android:hint="@string/port"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="5dp"
-            android:hint="Username"
+            android:hint="@string/username"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@id/server_port_til"
             app:layout_constraintStart_toStartOf="@id/server_port_til"
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="5dp"
-            android:hint="Password"
+            android:hint="@string/password"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@id/server_username_til"
@@ -158,8 +158,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:editable="false"
-                android:hint="Type"
-                android:textAlignment="center" />
+                android:hint="@string/type"
+                android:textAlignment="textStart"
+                tools:ignore="Deprecated" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,7 +172,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="25dp"
-            android:text="Save and test config"
+            android:text="@string/save_and_test_cfg"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

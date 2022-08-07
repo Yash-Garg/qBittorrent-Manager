@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="SmallBoldFont" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
@@ -8,16 +7,42 @@
         <item name="fontFamily">@font/space_grotesk</item>
     </style>
 
+    <style name="BodyMedium" parent="TitleMedium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+    </style>
+
+    <style name="TitleMediumBold" parent="TitleMedium">
+        <item name="android:textSize">17sp</item>
+        <item name="fontWeight">500</item>
+    </style>
+
+    <style name="TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">.05</item>
+    </style>
+
+    <style name="TabMedium" parent="TitleMedium">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="PopupMenu" parent="Widget.Material3.PopupMenu">
-        <item name="android:popupBackground">@color/lightBluishGrey</item>
+        <item name="android:popupBackground">@color/md_theme_dark_bluegray_surface</item>
     </style>
 
     <style name="ProgressBarTheme" parent="ThemeOverlay.Material3.Dark">
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/md_theme_dark_seed</item>
     </style>
 
     <style name="CustomCardTheme" parent="Widget.Material3.CardView.Filled">
-        <item name="cardBackgroundColor">@color/bluishGrey</item>
+        <item name="cardBackgroundColor">@color/md_theme_dark_bluegray_surface_darker</item>
         <item name="cardElevation">4dp</item>
         <item name="cardCornerRadius">5dp</item>
         <item name="android:layout_width">match_parent</item>

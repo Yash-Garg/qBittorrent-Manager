@@ -4,41 +4,50 @@ axAppcompat = "1.4.2"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.0"
 googleMaterial = "1.7.0-alpha03"
-androidApplication = "7.4.0-alpha08"
-androidLibrary = "7.4.0-alpha08"
+androidApplication = "7.4.0-alpha09"
+androidLibrary = "7.4.0-alpha09"
 hilt = "2.43"
 ktor = "2.0.3"
 lifecycle = "2.5.0"
+qbit = "1.0.0-alpha03"
 kotlin = "1.7.10"
 room = "2.5.0-alpha02"
-spotless = "6.8.0"
+spotless = "6.9.0"
 
 [libraries]
 arrow-core = "io.arrow-kt:arrow-core:1.1.2"
-
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-
 androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "axNavigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "axNavigation" }
-
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
+
+compose-activity = "androidx.activity:activity-compose:1.6.0-alpha05"
+compose-bonsai = "cafe.adriel.bonsai:bonsai-core:1.2.0"
+compose-compiler = "androidx.compose.compiler:compiler:1.3.0-rc01"
+compose-foundation = "androidx.compose.foundation:foundation:1.3.0-alpha02"
+compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha15"
+compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.2.0-alpha01-dev620"
+compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0.15"
 
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-qbittorrent-client = "org.drewcarlson:qbittorrent-client:0.6.2"
-square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
+qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
+qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
+square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 testing-junit = "junit:junit:4.13.2"
 
 [plugins]
@@ -46,6 +55,9 @@ android-application = { id = "com.android.application", version.ref = "androidAp
 android-library = { id = "com.android.library", version.ref = "androidLibrary" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNavigation" }
+
+[bundles]
+compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]

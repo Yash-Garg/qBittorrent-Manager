@@ -1,4 +1,6 @@
 <resources>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="sm_margin">8dp</dimen>
+    <dimen name="med_text">12sp</dimen>
+    <dimen name="lg_heading">20sp</dimen>
 </resources>

@@ -10,7 +10,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.data.manager.ClientManager
-import dev.yashgarg.qbit.data.manager.ConfigStatus
+import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.databinding.HomeFragmentBinding
 import dev.yashgarg.qbit.utils.viewBinding
 import javax.inject.Inject
