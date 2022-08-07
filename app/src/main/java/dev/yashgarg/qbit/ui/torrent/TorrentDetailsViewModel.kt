@@ -48,19 +48,26 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                             state.copy(
                                 loading = false,
                                 torrent = info,
-                                contentTree =
-                                    TransformUtils.transformFilesToTree(
-                                        client.getTorrentFiles(hash),
-                                        0
-                                    ),
                                 trackers = client.getTrackers(hash) ?: emptyList(),
                                 torrentProperties = client.getTorrentProperties(hash)
                             )
                         }
+                        getContent()
                     }
                     .collect()
             }
             .invokeOnCompletion { handleCompletion(it) }
+    }
+
+    private fun getContent() {
+        viewModelScope.launch {
+            val files = client.getTorrentFiles(requireNotNull(hash))
+            val contentTree = TransformUtils.transformFilesToTree(files, 0)
+
+            _uiState.update { state ->
+                state.copy(contentLoading = false, contentTree = contentTree)
+            }
+        }
     }
 
     private suspend fun syncPeers() {

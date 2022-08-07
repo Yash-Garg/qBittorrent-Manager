@@ -9,6 +9,7 @@ androidLibrary = "7.4.0-alpha09"
 hilt = "2.43"
 ktor = "2.0.3"
 lifecycle = "2.5.0"
+qbit = "1.0.0-alpha03"
 kotlin = "1.7.10"
 room = "2.5.0-alpha02"
 spotless = "6.9.0"
@@ -42,7 +43,8 @@ google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", vers
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
-qbittorrent-client = "org.drewcarlson:qbittorrent-client:1.0.0-alpha03"
+qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
+qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 testing-junit = "junit:junit:4.13.2"
 

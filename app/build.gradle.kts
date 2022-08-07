@@ -92,6 +92,7 @@ dependencies {
     implementation(libs.qbittorrent.client)
 
     implementation(projects.uiCompose)
+    implementation(projects.common)
 
     debugImplementation(libs.square.leakcanary)
     testImplementation(libs.testing.junit)

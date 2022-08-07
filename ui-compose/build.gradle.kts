@@ -19,4 +19,7 @@ android {
     }
 }
 
-dependencies { api(libs.bundles.compose) }
+dependencies {
+    api(libs.bundles.compose)
+    implementation(projects.common)
+}
