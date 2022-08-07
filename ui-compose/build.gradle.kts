@@ -21,5 +21,7 @@ android {
 
 dependencies {
     api(libs.bundles.compose)
+    implementation(libs.compose.material.icons)
+    implementation(libs.compose.bonsai)
     implementation(projects.common)
 }

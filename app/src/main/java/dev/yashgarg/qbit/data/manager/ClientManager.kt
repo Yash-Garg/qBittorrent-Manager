@@ -87,7 +87,7 @@ constructor(
                             Log.i("QbitClient", message)
                         }
                     }
-                level = LogLevel.INFO
+                level = LogLevel.NONE
             }
         }
     }

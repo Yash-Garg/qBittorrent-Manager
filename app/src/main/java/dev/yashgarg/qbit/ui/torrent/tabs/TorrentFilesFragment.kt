@@ -10,7 +10,7 @@ import com.google.android.material.composethemeadapter3.Mdc3Theme
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.TorrentFilesFragmentBinding
 import dev.yashgarg.qbit.ui.compose.Center
-import dev.yashgarg.qbit.ui.compose.ContentTreeView
+import dev.yashgarg.qbit.ui.compose.TorrentContentTreeView
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsState
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
 import dev.yashgarg.qbit.utils.viewBinding
@@ -33,7 +33,8 @@ class TorrentFilesFragment : Fragment(R.layout.torrent_files_fragment) {
 @Composable
 fun FilesListView(state: TorrentDetailsState) {
     if (state.contentTree.isNotEmpty()) {
-        ContentTreeView(state.contentTree)
+        TorrentContentTreeView(state.contentTree)
+        // ContentTreeView(state.contentTree)
     } else {
         Center { Text("No content found") }
     }
