@@ -3,6 +3,7 @@ package dev.yashgarg.qbit.data.manager
 import android.util.Log
 import arrow.core.Either
 import dev.yashgarg.qbit.data.daos.ConfigDao
+import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
@@ -15,11 +16,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import qbittorrent.QBittorrentClient
-
-enum class ConfigStatus {
-    EXISTS,
-    DOES_NOT_EXIST
-}
 
 @Singleton
 class ClientManager

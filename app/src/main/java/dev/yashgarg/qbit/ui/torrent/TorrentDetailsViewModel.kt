@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.utils.TorrentRemovedError
+import dev.yashgarg.qbit.utils.TransformUtils
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -47,7 +48,11 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                             state.copy(
                                 loading = false,
                                 torrent = info,
-                                torrentFiles = client.getTorrentFiles(hash),
+                                contentTree =
+                                    TransformUtils.transformFilesToTree(
+                                        client.getTorrentFiles(hash),
+                                        0
+                                    ),
                                 trackers = client.getTrackers(hash) ?: emptyList(),
                                 torrentProperties = client.getTorrentProperties(hash)
                             )

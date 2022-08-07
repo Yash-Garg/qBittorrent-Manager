@@ -38,13 +38,11 @@ class TorrentFilesFragment : Fragment(R.layout.torrent_files_fragment) {
 
 @Composable
 fun FilesListView(state: TorrentDetailsState) {
-    if (state.torrentFiles.isNotEmpty()) {
+    if (state.contentTree.isNotEmpty()) {
         LazyColumn {
-            itemsIndexed(state.torrentFiles) { _, file ->
-                val pathSplit = file.name.split("/")
-                val fileName = pathSplit.subList(1, pathSplit.size).joinToString("/")
+            itemsIndexed(state.contentTree) { _, item ->
                 Text(
-                    fileName,
+                    item.name,
                     modifier = Modifier.padding(8.dp),
                 )
             }

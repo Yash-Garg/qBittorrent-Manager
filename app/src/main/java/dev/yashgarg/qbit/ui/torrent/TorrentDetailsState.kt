@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.torrent
 
+import dev.yashgarg.qbit.data.models.ContentTreeItem
 import qbittorrent.models.*
 
 data class TorrentDetailsState(
@@ -7,7 +8,7 @@ data class TorrentDetailsState(
     val peersLoading: Boolean = true,
     val peers: TorrentPeers? = null,
     val torrent: Torrent? = null,
-    val torrentFiles: List<TorrentFile> = emptyList(),
+    val contentTree: List<ContentTreeItem> = emptyList(),
     val trackers: List<TorrentTracker> = emptyList(),
     val torrentProperties: TorrentProperties? = null,
     val error: Exception? = null
