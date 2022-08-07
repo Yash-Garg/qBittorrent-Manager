@@ -1,6 +1,8 @@
 package dev.yashgarg.qbit.ui.compose
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Text
@@ -8,12 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.yashgarg.qbit.data.models.ContentTreeItem
 
 @Composable
 fun ContentTreeView(nodes: List<ContentTreeItem>) {
     val expandedItems = remember { mutableStateListOf<ContentTreeItem>() }
-    expandedItems.addAll(nodes)
     LazyColumn {
         nodes(
             nodes,
@@ -48,11 +50,16 @@ fun LazyListScope.node(
     isExpanded: (ContentTreeItem) -> Boolean,
     toggleExpanded: (ContentTreeItem) -> Unit,
 ) {
-    item { Text(node.name, Modifier.clickable { toggleExpanded(node) }) }
+    item {
+        Text(
+            node.name,
+            modifier = Modifier.fillMaxSize().clickable { toggleExpanded(node) }.padding(16.dp)
+        )
+    }
     if (isExpanded(node)) {
-        node.children?.let {
+        node.children?.let { childNodes ->
             nodes(
-                it,
+                childNodes,
                 isExpanded = isExpanded,
                 toggleExpanded = toggleExpanded,
             )
