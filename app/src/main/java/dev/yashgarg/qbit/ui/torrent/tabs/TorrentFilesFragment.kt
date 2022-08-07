@@ -41,10 +41,11 @@ fun FilesListView(state: TorrentDetailsState) {
     if (state.torrentFiles.isNotEmpty()) {
         LazyColumn {
             itemsIndexed(state.torrentFiles) { _, file ->
+                val pathSplit = file.name.split("/")
+                val fileName = pathSplit.subList(1, pathSplit.size).joinToString("/")
                 Text(
-                    "${file.index}. ${file.name}",
+                    fileName,
                     modifier = Modifier.padding(8.dp),
-                    softWrap = true
                 )
             }
         }

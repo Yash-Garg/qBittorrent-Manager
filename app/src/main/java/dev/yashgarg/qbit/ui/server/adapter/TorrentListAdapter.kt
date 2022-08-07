@@ -99,7 +99,18 @@ class TorrentListAdapter @Inject constructor() :
                     speed.visibility = View.GONE
                     eta.visibility = View.GONE
                 }
-                else -> {}
+                // TODO: Add remaining changes to left-out branches
+                Torrent.State.ERROR -> {}
+                Torrent.State.MISSING_FILES -> {}
+                Torrent.State.QUEUED_UP -> {}
+                Torrent.State.CHECKING_UP -> {}
+                Torrent.State.ALLOCATING -> {}
+                Torrent.State.META_DL -> {}
+                Torrent.State.CHECKING_DL -> {}
+                Torrent.State.CHECKING_RESUME_DATA -> {}
+                Torrent.State.MOVING -> {}
+                Torrent.State.UNKNOWN -> {}
+                else -> throw IllegalArgumentException("Invalid torrent state received")
             }
         }
     }

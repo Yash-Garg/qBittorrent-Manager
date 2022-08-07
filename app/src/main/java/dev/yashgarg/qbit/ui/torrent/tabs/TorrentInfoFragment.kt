@@ -86,7 +86,7 @@ class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
                 lastComplete.subtitle = props.lastSeen.toDate()
                 priority.subtitle = torrent.priority.toString()
                 totalSize.subtitle = props.totalSize.toHumanReadable()
-                createdBy.subtitle = props.createdBy
+                createdBy.subtitle = props.createdBy.ifEmpty { getString(R.string.unspecified) }
                 addedOn.subtitle = props.additionDate.toDate()
                 completedOn.subtitle = props.completionDate.toDate()
                 createdOn.subtitle = props.creationDate.toDate()
