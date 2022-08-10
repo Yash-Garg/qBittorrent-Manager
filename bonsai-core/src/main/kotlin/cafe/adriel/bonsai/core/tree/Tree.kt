@@ -1,5 +1,6 @@
 package cafe.adriel.bonsai.core.tree
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composition
 import androidx.compose.runtime.Immutable
@@ -17,7 +18,7 @@ import cafe.adriel.bonsai.core.tree.extension.SelectableTreeHandler
 
 @Immutable
 @TreeMarker
-public data class TreeScope
+data class TreeScope
 internal constructor(
     val depth: Int,
     internal val isExpanded: Boolean = false,
@@ -25,12 +26,13 @@ internal constructor(
 )
 
 @Stable
-public class Tree<T> internal constructor(public val nodes: List<Node<T>>) :
+class Tree<T> internal constructor(val nodes: List<Node<T>>) :
     ExpandableTree<T> by ExpandableTreeHandler(nodes),
     SelectableTree<T> by SelectableTreeHandler(nodes)
 
+@SuppressLint("ComposableNaming")
 @Composable
-public fun <T> Tree(content: @Composable TreeScope.() -> Unit): Tree<T> {
+fun <T> Tree(content: @Composable TreeScope.() -> Unit): Tree<T> {
     val applier = remember { TreeApplier<T>() }
     val compositionContext = rememberCompositionContext()
     val composition =
