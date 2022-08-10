@@ -64,7 +64,10 @@ android {
     }
 }
 
-kapt { correctErrorTypes = true }
+kapt {
+    correctErrorTypes = true
+    arguments { arg("room.schemaLocation", "$projectDir/schemas") }
+}
 
 dependencies {
     implementation(libs.arrow.core)
