@@ -1,5 +1,8 @@
 package dev.yashgarg.qbit.data.models
 
+import androidx.annotation.Keep
+
+@Keep
 enum class FilePriority {
     NOT_DOWNLOAD,
     NORMAL,

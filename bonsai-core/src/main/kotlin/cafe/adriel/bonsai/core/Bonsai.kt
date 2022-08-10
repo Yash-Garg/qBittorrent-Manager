@@ -1,11 +1,9 @@
 package cafe.adriel.bonsai.core
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -90,7 +88,7 @@ fun <T> Bonsai(
         }
 
     with(scope) {
-        LazyColumn(modifier = modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
             items(tree.nodes, { it.key }) { node -> Node(node) }
         }
     }

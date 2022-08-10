@@ -94,7 +94,7 @@ internal class TreeApplier<T> : AbstractApplier<Node<T>?>(null) {
 
     override fun move(from: Int, to: Int, count: Int) {
         check(current == null)
-        (children as MutableList<Node<T>?>).move(from, to, count)
+        @Suppress("UNCHECKED_CAST") (children as MutableList<Node<T>?>).move(from, to, count)
     }
 
     override fun onClear() {

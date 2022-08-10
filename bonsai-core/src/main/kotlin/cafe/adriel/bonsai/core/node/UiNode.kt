@@ -7,12 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import cafe.adriel.bonsai.core.BonsaiScope
@@ -71,7 +67,7 @@ private fun <T> BonsaiScope<T>.NodeContent(node: Node<T>) {
                 }
                 .then(clickableNode(node))
                 .padding(style.nodePadding)
-                .requiredHeight(style.nodeIconSize)
+                .defaultMinSize(minHeight = style.nodeIconSize)
     ) {
         with(node) {
             iconComponent(node)
@@ -117,6 +113,8 @@ internal fun <T> BonsaiScope<T>.DefaultNodeName(node: Node<T>) {
     BasicText(
         text = node.name,
         style = style.nodeNameTextStyle,
-        modifier = Modifier.padding(start = style.nodeNameStartPadding)
+        modifier = Modifier.padding(start = style.nodeNameStartPadding),
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis
     )
 }

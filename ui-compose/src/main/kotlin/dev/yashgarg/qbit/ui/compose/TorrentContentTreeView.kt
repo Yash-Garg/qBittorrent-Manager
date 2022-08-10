@@ -31,7 +31,7 @@ fun TorrentContentTreeView(nodes: List<ContentTreeItem>) {
     Bonsai(
         tree,
         style = torrentContentStyle(),
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         onLongClick = null,
     )
 }
@@ -64,7 +64,7 @@ private fun TreeScope.ContentTree(nodes: List<ContentTreeItem>) {
 private fun TreeScope.ContentNode(node: ContentTreeItem) {
     // If [node.item] is null, therefore it is a directory
     if (node.item == null) {
-        Branch(node.name) { node.children?.reversed()?.let { ContentTree(it) } }
+        Branch(node.name) { node.children?.let { ContentTree(it) } }
     } else {
         Leaf(node.name)
     }

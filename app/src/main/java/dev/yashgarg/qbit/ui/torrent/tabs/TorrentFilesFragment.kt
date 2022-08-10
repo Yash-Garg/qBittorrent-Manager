@@ -34,7 +34,6 @@ class TorrentFilesFragment : Fragment(R.layout.torrent_files_fragment) {
 fun FilesListView(state: TorrentDetailsState) {
     if (state.contentTree.isNotEmpty()) {
         TorrentContentTreeView(state.contentTree)
-        // ContentTreeView(state.contentTree)
     } else {
         Center { Text("No content found") }
     }
