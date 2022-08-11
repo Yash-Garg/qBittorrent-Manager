@@ -31,7 +31,6 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
 compose-activity = "androidx.activity:activity-compose:1.6.0-beta01"
-compose-bonsai = "cafe.adriel.bonsai:bonsai-core:1.2.0"
 compose-compiler = "androidx.compose.compiler:compiler:1.3.0"
 compose-foundation = "androidx.compose.foundation:foundation:1.3.0-alpha03"
 compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha16"
