@@ -1,6 +1,6 @@
 [versions]
 axCore = "1.8.0"
-axAppcompat = "1.4.2"
+axAppcompat = "1.5.0"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.1"
 googleMaterial = "1.7.0-alpha03"
