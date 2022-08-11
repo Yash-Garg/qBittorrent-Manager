@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Qbit"
         android:usesCleartextTraffic="true"
-        tools:targetApi="32">
+        tools:targetApi="33">
         <activity
             android:name=".MainActivity"
             android:exported="true"

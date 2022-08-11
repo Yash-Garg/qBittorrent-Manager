@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.yashgarg.qbit.ui.compose"
+    namespace = "cafe.adriel.bonsai.core"
     compileSdk = 33
 
     buildFeatures {
@@ -22,6 +22,4 @@ android {
 dependencies {
     api(libs.bundles.compose)
     implementation(libs.compose.material.icons)
-    implementation(projects.common)
-    implementation(projects.bonsaiCore)
 }

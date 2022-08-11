@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ServerConfig
 
-@Database(entities = [ServerConfig::class], version = 1, exportSchema = false)
+@Database(entities = [ServerConfig::class], version = 1, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun configDao(): ConfigDao
 
