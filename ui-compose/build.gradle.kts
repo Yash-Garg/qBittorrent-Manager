@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "dev.yashgarg.qbit.ui.compose"
-    compileSdk = 32
+    compileSdk = 33
 
     buildFeatures {
         compose = true

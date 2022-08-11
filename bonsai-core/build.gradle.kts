@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "cafe.adriel.bonsai.core"
-    compileSdk = 32
+    compileSdk = 33
 
     buildFeatures {
         compose = true

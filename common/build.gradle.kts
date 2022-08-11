@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "dev.yashgarg.qbit.common"
-    compileSdk = 32
+    compileSdk = 33
 }
 
 dependencies {
