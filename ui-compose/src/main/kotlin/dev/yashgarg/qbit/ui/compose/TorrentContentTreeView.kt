@@ -26,7 +26,6 @@ import dev.yashgarg.qbit.ui.compose.theme.SpaceGrotesk
 @Composable
 fun TorrentContentTreeView(nodes: List<ContentTreeItem>) {
     val tree = Tree<ContentTreeItem> { ContentTree(nodes) }
-    tree.expandRoot()
 
     Bonsai(
         tree,
