@@ -3,7 +3,7 @@ axCore = "1.8.0"
 axAppcompat = "1.5.0"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.1"
-googleMaterial = "1.7.0-alpha03"
+googleMaterial = "1.7.0-beta01"
 androidApplication = "7.4.0-alpha09"
 androidLibrary = "7.4.0-alpha09"
 hilt = "2.43.2"
@@ -35,7 +35,7 @@ compose-compiler = "androidx.compose.compiler:compiler:1.3.0"
 compose-foundation = "androidx.compose.foundation:foundation:1.3.0-alpha03"
 compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha16"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.2.0-alpha01-dev620"
-compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0.15"
+compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0.16"
 
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
