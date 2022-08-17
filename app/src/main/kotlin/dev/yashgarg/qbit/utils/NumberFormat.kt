@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.utils
 
+import android.os.Build
 import java.text.CharacterIterator
 import java.text.StringCharacterIterator
 import java.time.Instant
@@ -29,7 +30,12 @@ private object NumberFormat {
 
     fun millisToDate(millis: Long, zoneId: ZoneId?): String {
         val millisEpoch = millis * 1000
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")
+        val formatter =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss")
+            } else {
+                TODO("VERSION.SDK_INT < O")
+            }
         val instant = Instant.ofEpochMilli(millisEpoch)
         val date = LocalDateTime.ofInstant(instant, zoneId ?: ZoneId.systemDefault())
         return formatter.format(date).trim()

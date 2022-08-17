@@ -3,7 +3,7 @@ package dev.yashgarg.qbit.utils
 import dev.yashgarg.qbit.data.models.ContentTreeItem
 import qbittorrent.models.TorrentFile
 
-object TransformUtils {
+object TransformUtil {
     private const val FILE_KEY = "/FILE/"
     private const val UNWANTED_FILE = ".unwanted"
 

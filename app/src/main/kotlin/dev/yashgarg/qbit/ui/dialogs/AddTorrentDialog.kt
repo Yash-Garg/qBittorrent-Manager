@@ -15,12 +15,24 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.utils.PermissionUtil
-import dev.yashgarg.qbit.utils.TextUtils
+import dev.yashgarg.qbit.utils.TextUtil
 
 class AddTorrentDialog : DialogFragment() {
+    private val filePickerLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                dismiss()
+                Toast.makeText(requireContext(), uri.path.toString(), Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "No file selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            Toast.makeText(requireContext(), "Permissions: $isGranted", Toast.LENGTH_SHORT).show()
+            if (!isGranted) {
+                Toast.makeText(requireContext(), "Permission denied!", Toast.LENGTH_SHORT).show()
+            }
         }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -45,7 +57,7 @@ class AddTorrentDialog : DialogFragment() {
             val magnetTiet = dialog.findViewById<TextInputEditText>(R.id.magnet_tiet)
 
             magnetTil?.setEndIconOnClickListener {
-                val clipText = TextUtils.getClipboardText(requireContext())
+                val clipText = TextUtil.getClipboardText(requireContext())
                 magnetTiet?.setText(clipText)
             }
 
@@ -64,17 +76,19 @@ class AddTorrentDialog : DialogFragment() {
             }
 
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-                if (PermissionUtil.canReadStorage(requireContext())) {
-                    Toast.makeText(requireContext(), "Permission granted", Toast.LENGTH_SHORT)
-                        .show()
-                    // TODO: Open file picker for particular extension
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                }
+                checkPermissionsAndLaunchPicker()
             }
         }
 
         return dialog
+    }
+
+    private fun checkPermissionsAndLaunchPicker() {
+        if (PermissionUtil.canReadStorage(requireContext())) {
+            filePickerLauncher.launch(TORRENT_MIMETYPE)
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
     }
 
     companion object {
@@ -82,5 +96,6 @@ class AddTorrentDialog : DialogFragment() {
         const val TAG = "AddTorrentDialogFragment"
         const val ADD_TORRENT_KEY = "add_torrent"
         const val TORRENT_KEY = "torrent"
+        const val TORRENT_MIMETYPE = "application/x-bittorrent"
     }
 }
