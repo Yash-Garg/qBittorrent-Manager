@@ -3,6 +3,7 @@ package dev.yashgarg.qbit.ui.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
@@ -11,6 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.utils.PermissionUtil
 import dev.yashgarg.qbit.utils.TextUtils
 
 class AddTorrentDialog : DialogFragment() {
@@ -19,11 +21,14 @@ class AddTorrentDialog : DialogFragment() {
 
         val alertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
 
-        alertDialogBuilder.setTitle("Add Magnet Link")
-        alertDialogBuilder.setView(R.layout.edit_text)
-        alertDialogBuilder.setNeutralButton("Upload File", null)
-        alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-        alertDialogBuilder.setPositiveButton("Add", null)
+        // TODO: Switch to string resources below
+        alertDialogBuilder.apply {
+            setTitle("Add Magnet Link")
+            setView(R.layout.edit_text)
+            setNeutralButton("Upload File", null)
+            setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            setPositiveButton("Add", null)
+        }
 
         val dialog = alertDialogBuilder.create()
 
@@ -49,6 +54,16 @@ class AddTorrentDialog : DialogFragment() {
                 }
 
                 magnetTiet?.doAfterTextChanged { magnetTil?.error = null }
+            }
+
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+                if (PermissionUtil.canReadStorage(requireContext())) {
+                    Toast.makeText(requireContext(), "Permission granted", Toast.LENGTH_SHORT)
+                        .show()
+                    // TODO: Open file picker for particular extension
+                } else {
+                    PermissionUtil.requestPermissions()
+                }
             }
         }
 
