@@ -16,6 +16,4 @@ object PermissionUtil {
                 PackageManager.PERMISSION_GRANTED
         }
     }
-
-    fun requestPermissions() {}
 }

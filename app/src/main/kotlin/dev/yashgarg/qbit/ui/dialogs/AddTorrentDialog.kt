@@ -1,9 +1,11 @@
 package dev.yashgarg.qbit.ui.dialogs
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
@@ -16,6 +18,11 @@ import dev.yashgarg.qbit.utils.PermissionUtil
 import dev.yashgarg.qbit.utils.TextUtils
 
 class AddTorrentDialog : DialogFragment() {
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            Toast.makeText(requireContext(), "Permissions: $isGranted", Toast.LENGTH_SHORT).show()
+        }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
 
@@ -62,7 +69,7 @@ class AddTorrentDialog : DialogFragment() {
                         .show()
                     // TODO: Open file picker for particular extension
                 } else {
-                    PermissionUtil.requestPermissions()
+                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
             }
         }
