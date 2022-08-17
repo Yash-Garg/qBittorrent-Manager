@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.server
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +43,23 @@ constructor(
     }
 
     fun addTorrent(url: String) {
-        viewModelScope.launch { client.addTorrent { urls.add(url) } }
+        viewModelScope.launch {
+            try {
+                client.addTorrent { urls.add(url) }
+            } catch (e: Exception) {
+                Log.e(this::class.simpleName, e.toString())
+            }
+        }
+    }
+
+    fun addFile(bytes: ByteArray) {
+        viewModelScope.launch {
+            try {
+                client.addTorrent { rawTorrents["torrent_file"] = bytes }
+            } catch (e: Exception) {
+                Log.e(this::class.simpleName, e.toString())
+            }
+        }
     }
 
     private fun emitException(e: Exception) {

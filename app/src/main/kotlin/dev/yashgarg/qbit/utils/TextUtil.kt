@@ -5,7 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.core.content.ContextCompat.getSystemService
 
-object TextUtils {
+object TextUtil {
     fun getClipboardText(context: Context): String {
         var pasteData = ""
         val clipboard = getSystemService(context, ClipboardManager::class.java)

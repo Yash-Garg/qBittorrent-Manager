@@ -21,7 +21,7 @@ import cafe.adriel.bonsai.core.tree.extension.SelectableTreeHandler
 data class TreeScope
 internal constructor(
     val depth: Int,
-    internal val isExpanded: Boolean = false,
+    internal val isExpanded: Boolean = true,
     internal val expandMaxDepth: Int = 0
 )
 

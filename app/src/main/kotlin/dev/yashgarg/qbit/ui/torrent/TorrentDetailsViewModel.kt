@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.utils.TorrentRemovedError
-import dev.yashgarg.qbit.utils.TransformUtils
+import dev.yashgarg.qbit.utils.TransformUtil
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -62,7 +62,7 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
     private fun getContent() {
         viewModelScope.launch {
             val files = client.getTorrentFiles(requireNotNull(hash))
-            val contentTree = TransformUtils.transformFilesToTree(files, 0)
+            val contentTree = TransformUtil.transformFilesToTree(files, 0)
 
             _uiState.update { state ->
                 state.copy(contentLoading = false, contentTree = contentTree)
