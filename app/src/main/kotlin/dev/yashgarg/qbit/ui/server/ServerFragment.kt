@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.server
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -60,6 +61,16 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         ) { _, bundle ->
             val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
             viewModel.addTorrent(requireNotNull(url))
+        }
+
+        childFragmentManager.setFragmentResultListener(
+            AddTorrentDialog.ADD_TORRENT_FILE_KEY,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val uri = bundle.getString(AddTorrentDialog.TORRENT_KEY)
+            requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
+                viewModel.addFile(requireNotNull(stream).readBytes())
+            }
         }
     }
 

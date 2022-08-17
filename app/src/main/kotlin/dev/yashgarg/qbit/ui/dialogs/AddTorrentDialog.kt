@@ -21,8 +21,8 @@ class AddTorrentDialog : DialogFragment() {
     private val filePickerLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
+                setFragmentResult(ADD_TORRENT_FILE_KEY, bundleOf(TORRENT_KEY to uri.toString()))
                 dismiss()
-                Toast.makeText(requireContext(), uri.path.toString(), Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "No file selected", Toast.LENGTH_SHORT).show()
             }
@@ -95,6 +95,7 @@ class AddTorrentDialog : DialogFragment() {
         fun newInstance(): AddTorrentDialog = AddTorrentDialog()
         const val TAG = "AddTorrentDialogFragment"
         const val ADD_TORRENT_KEY = "add_torrent"
+        const val ADD_TORRENT_FILE_KEY = "add_torrent_file"
         const val TORRENT_KEY = "torrent"
         const val TORRENT_MIMETYPE = "application/x-bittorrent"
     }
