@@ -5,7 +5,6 @@ import arrow.core.Either
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.di.ApplicationScope
-import dev.yashgarg.qbit.utils.ClientConnectionError
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.logging.*
@@ -44,15 +43,15 @@ constructor(
         }
     }
 
-    suspend fun checkAndGetClient(): Either<QBittorrentClient, Exception> {
+    suspend fun checkAndGetClient(): Either<QBittorrentClient, Throwable> {
         val client = getClient()
         return try {
             Log.i(tag, "Client App Version - ${client.getVersion()}")
             this.client = client
             Either.Left(client)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             Log.e(this::class.simpleName, e.toString())
-            Either.Right(ClientConnectionError())
+            Either.Right(e)
         }
     }
 

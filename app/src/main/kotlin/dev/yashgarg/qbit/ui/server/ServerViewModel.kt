@@ -1,15 +1,21 @@
 package dev.yashgarg.qbit.ui.server
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
-import dev.yashgarg.qbit.utils.ClientConnectionError
+import dev.yashgarg.qbit.utils.ExceptionHandler
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
@@ -42,34 +48,41 @@ constructor(
         }
     }
 
-    fun addTorrent(url: String) {
+    fun addTorrentUrl(url: String) {
         viewModelScope.launch {
-            try {
-                client.addTorrent { urls.add(url) }
-            } catch (e: Exception) {
-                Log.e(this::class.simpleName, e.toString())
+            when (
+                val result: Result<Unit, Throwable> = runCatching {
+                    client.addTorrent { urls.add(url) }
+                }
+            ) {
+                is Ok -> return@launch
+                is Err -> emitException(result.error)
             }
         }
     }
 
-    fun addFile(bytes: ByteArray) {
+    fun addTorrentFile(bytes: ByteArray) {
         viewModelScope.launch {
-            try {
-                client.addTorrent { rawTorrents["torrent_file"] = bytes }
-            } catch (e: Exception) {
-                Log.e(this::class.simpleName, e.toString())
+            when (
+                val result: Result<Unit, Throwable> = runCatching {
+                    client.addTorrent { rawTorrents["torrent_file"] = bytes }
+                }
+            ) {
+                is Ok -> return@launch
+                is Err -> emitException(result.error)
             }
         }
     }
 
-    private fun emitException(e: Exception) {
-        _uiState.update { state -> state.copy(hasError = true, error = e) }
+    private fun emitException(e: Throwable, toast: Boolean = false) {
+        val error = ExceptionHandler.mapException(e)
+        _uiState.update { state -> state.copy(hasError = true, error = error) }
     }
 
     private suspend fun syncData() {
         client
             .observeMainData()
-            .catch { emitException(ClientConnectionError()) }
+            .catch { e -> emitException(e) }
             .collect { mainData ->
                 _uiState.update { state ->
                     state.copy(
