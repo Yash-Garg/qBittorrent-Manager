@@ -36,6 +36,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -99,4 +100,6 @@ dependencies {
 
     debugImplementation(libs.square.leakcanary)
     testImplementation(libs.testing.junit)
+
+    coreLibraryDesugaring(libs.tools.desugar)
 }
