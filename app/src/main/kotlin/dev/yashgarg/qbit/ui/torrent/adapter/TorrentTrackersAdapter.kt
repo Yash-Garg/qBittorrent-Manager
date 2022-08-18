@@ -14,7 +14,12 @@ import qbittorrent.models.TorrentTracker
 class TorrentTrackersAdapter @Inject constructor() :
     RecyclerView.Adapter<TorrentTrackersAdapter.ViewHolder>() {
 
-    private var trackerList = emptyList<TorrentTracker>()
+    var trackerList = emptyList<TorrentTracker>()
+        @SuppressLint("NotifyDataSetChanged")
+        set(value) {
+            notifyDataSetChanged()
+            field = value
+        }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val trackerUrl: TextView = view.findViewById(R.id.trackerName)
@@ -27,12 +32,6 @@ class TorrentTrackersAdapter @Inject constructor() :
     }
 
     override fun getItemCount(): Int = trackerList.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateTrackers(trackers: List<TorrentTracker>) {
-        trackerList = trackers
-        notifyDataSetChanged()
-    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tracker = trackerList.elementAt(position)
