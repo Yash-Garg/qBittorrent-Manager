@@ -98,7 +98,8 @@ dependencies {
     implementation(projects.uiCompose)
     implementation(projects.common)
 
-    debugImplementation(libs.square.leakcanary)
+    debugImplementation(libs.tools.leakcanary)
+    implementation(libs.tools.kotlin.result)
     testImplementation(libs.testing.junit)
 
     coreLibraryDesugaring(libs.tools.desugar)

@@ -7,5 +7,5 @@ data class ServerState(
     val data: MainData? = null,
     val serverName: String? = null,
     val hasError: Boolean = false,
-    val error: Exception? = null
+    val error: Throwable? = null
 )
