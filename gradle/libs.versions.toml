@@ -48,6 +48,7 @@ qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.re
 qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
 square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
 testing-junit = "junit:junit:4.13.2"
+tools-desugar = "com.android.tools:desugar_jdk_libs:1.2.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidApplication" }
