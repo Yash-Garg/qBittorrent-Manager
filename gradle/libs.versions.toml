@@ -4,15 +4,15 @@ axAppcompat = "1.5.0"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.1"
 googleMaterial = "1.7.0-beta01"
-androidApplication = "7.4.0-alpha09"
-androidLibrary = "7.4.0-alpha09"
+androidApplication = "7.4.0-alpha10"
+androidLibrary = "7.4.0-alpha10"
 hilt = "2.43.2"
 ktor = "2.1.0"
 lifecycle = "2.5.1"
 qbit = "1.0.0-alpha03"
 kotlin = "1.7.10"
-room = "2.5.0-alpha02"
-spotless = "6.9.1"
+room = "2.5.0-alpha03"
+spotless = "6.10.0"
 
 [libraries]
 arrow-core = "io.arrow-kt:arrow-core:1.1.2"
@@ -30,12 +30,12 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
-compose-activity = "androidx.activity:activity-compose:1.6.0-beta01"
+compose-activity = "androidx.activity:activity-compose:1.6.0-rc01"
 compose-compiler = "androidx.compose.compiler:compiler:1.3.0"
-compose-foundation = "androidx.compose.foundation:foundation:1.3.0-alpha03"
-compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha16"
+compose-foundation = "androidx.compose.foundation:foundation:1.3.0-beta01"
+compose-material3 = "androidx.compose.material3:material3:1.0.0-beta01"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.2.0-alpha01-dev620"
-compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0.16"
+compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0.17"
 
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
