@@ -13,7 +13,7 @@ class NumberFormatTest {
 
     @Test
     fun testCorrectSizeIsValid() {
-        assertTrue(bytes.toHumanReadable() == "1.5 GiB")
+        assertTrue(bytes.toHumanReadable() == "1.49 GiB")
     }
 
     @Test

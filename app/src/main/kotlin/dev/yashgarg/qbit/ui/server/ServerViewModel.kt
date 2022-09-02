@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
@@ -50,11 +49,7 @@ constructor(
 
     fun addTorrentUrl(url: String) {
         viewModelScope.launch {
-            when (
-                val result: Result<Unit, Throwable> = runCatching {
-                    client.addTorrent { urls.add(url) }
-                }
-            ) {
+            when (val result = runCatching { client.addTorrent { urls.add(url) } }) {
                 is Ok -> return@launch
                 is Err -> emitException(result.error)
             }
@@ -64,7 +59,7 @@ constructor(
     fun addTorrentFile(bytes: ByteArray) {
         viewModelScope.launch {
             when (
-                val result: Result<Unit, Throwable> = runCatching {
+                val result = runCatching {
                     client.addTorrent { rawTorrents["torrent_file"] = bytes }
                 }
             ) {
@@ -74,7 +69,7 @@ constructor(
         }
     }
 
-    private fun emitException(e: Throwable, toast: Boolean = false) {
+    private fun emitException(e: Throwable) {
         val error = ExceptionHandler.mapException(e)
         _uiState.update { state -> state.copy(hasError = true, error = error) }
     }
