@@ -13,6 +13,7 @@ import com.google.android.material.transition.MaterialElevationScale
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.TorrentDetailsFragmentBinding
+import dev.yashgarg.qbit.ui.dialogs.RemoveTorrentDialog
 import dev.yashgarg.qbit.ui.torrent.adapter.TorrentDetailsAdapter
 import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.viewBinding
@@ -68,10 +69,31 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                     true
                 }
                 R.id.remove_torrent -> {
+                    RemoveTorrentDialog.newInstance()
+                        .show(childFragmentManager, RemoveTorrentDialog.TAG)
+                    childFragmentManager.setFragmentResultListener(
+                        RemoveTorrentDialog.REMOVE_TORRENT_KEY,
+                        viewLifecycleOwner
+                    ) { _, bundle ->
+                        val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
+                        viewModel.removeTorrent(torrent.hash, deleteFiles)
+                        Toast.makeText(requireContext(), "Removed torrent", Toast.LENGTH_SHORT)
+                            .show()
+                        requireParentFragment().parentFragmentManager.popBackStackImmediate()
+                    }
                     true
                 }
                 R.id.copy_magnet -> {
                     ClipboardUtil.copyToClipboard(requireContext(), torrent.hash, torrent.magnetUri)
+                    true
+                }
+                R.id.force_recheck -> {
+                    true
+                }
+                R.id.force_reannounce -> {
+                    true
+                }
+                R.id.rename_magnet -> {
                     true
                 }
                 else -> false

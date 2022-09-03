@@ -99,7 +99,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         true
                     }
                     R.id.speed_toggle -> {
-                        findNavController().navigate(R.id.action_serverFragment_to_versionFragment)
                         true
                     }
                     else -> false

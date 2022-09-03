@@ -44,6 +44,10 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         }
     }
 
+    fun removeTorrent(hash: String, deleteFiles: Boolean = false) {
+        viewModelScope.launch { client.deleteTorrents(listOf(hash), deleteFiles) }
+    }
+
     private suspend fun syncTorrentFlow() {
         val hash = requireNotNull(hash)
         viewModelScope
