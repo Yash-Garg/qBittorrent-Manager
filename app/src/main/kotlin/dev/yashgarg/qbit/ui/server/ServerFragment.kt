@@ -60,7 +60,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             viewLifecycleOwner
         ) { _, bundle ->
             val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            viewModel.addTorrent(requireNotNull(url))
+            viewModel.addTorrentUrl(requireNotNull(url))
         }
 
         childFragmentManager.setFragmentResultListener(
@@ -69,7 +69,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         ) { _, bundle ->
             val uri = bundle.getString(AddTorrentDialog.TORRENT_KEY)
             requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
-                viewModel.addFile(requireNotNull(stream).readBytes())
+                viewModel.addTorrentFile(requireNotNull(stream).readBytes())
             }
         }
     }
@@ -134,7 +134,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     emptyTv.visibility = View.GONE
                     torrentRv.apply {
                         visibility = View.VISIBLE
-                        torrentListAdapter.setData(state.data!!.torrents)
+                        torrentListAdapter.torrentsList = state.data!!.torrents
                     }
                 }
                 refreshLayout.isRefreshing = false

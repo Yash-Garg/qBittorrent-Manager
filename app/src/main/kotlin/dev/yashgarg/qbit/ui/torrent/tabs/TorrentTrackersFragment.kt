@@ -40,10 +40,8 @@ class TorrentTrackersFragment : Fragment(R.layout.torrent_trackers_fragment) {
     }
 
     private fun render(state: TorrentDetailsState) {
-        with(binding) {
-            if (!state.loading) {
-                torrentTrackersAdapter.updateTrackers(state.trackers)
-            }
+        if (!state.loading) {
+            torrentTrackersAdapter.trackerList = state.trackers
         }
     }
 }

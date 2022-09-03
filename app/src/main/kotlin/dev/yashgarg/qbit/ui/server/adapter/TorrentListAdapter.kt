@@ -17,7 +17,13 @@ import qbittorrent.models.Torrent
 class TorrentListAdapter @Inject constructor() :
     RecyclerView.Adapter<TorrentListAdapter.ViewHolder>() {
 
-    private var torrentsList = emptyMap<String, Torrent>()
+    var torrentsList = emptyMap<String, Torrent>()
+        @SuppressLint("NotifyDataSetChanged")
+        set(value) {
+            notifyDataSetChanged()
+            field = value
+        }
+
     var onItemClick: ((String) -> Unit)? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -113,12 +119,6 @@ class TorrentListAdapter @Inject constructor() :
                 else -> throw IllegalArgumentException("Invalid torrent state received")
             }
         }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(torrents: Map<String, Torrent>) {
-        torrentsList = torrents
-        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = torrentsList.size

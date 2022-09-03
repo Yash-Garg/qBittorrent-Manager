@@ -76,19 +76,15 @@ class AddTorrentDialog : DialogFragment() {
             }
 
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-                checkPermissionsAndLaunchPicker()
+                if (PermissionUtil.canReadStorage(requireContext())) {
+                    filePickerLauncher.launch(TORRENT_MIMETYPE)
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
             }
         }
 
         return dialog
-    }
-
-    private fun checkPermissionsAndLaunchPicker() {
-        if (PermissionUtil.canReadStorage(requireContext())) {
-            filePickerLauncher.launch(TORRENT_MIMETYPE)
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
     }
 
     companion object {

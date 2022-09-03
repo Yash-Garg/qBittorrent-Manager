@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -38,15 +38,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             clientManager.configStatus.collect { status ->
                 if (status == ConfigStatus.EXISTS) {
                     // TODO: Just for testing purposes, remove this afterwards
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_homeFragment_to_serverFragment)
-                } else {
-                    binding.addServerFab.setOnClickListener {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_homeFragment_to_configFragment)
-                    }
+                    findNavController().navigate(R.id.action_homeFragment_to_serverFragment)
                 }
             }
+        }
+
+        binding.addServerFab.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_configFragment)
         }
     }
 

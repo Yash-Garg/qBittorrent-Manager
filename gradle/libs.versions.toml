@@ -46,7 +46,11 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
 qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
-square-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
+
+tools-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
+tools-desugar = "com.android.tools:desugar_jdk_libs:1.2.0"
+tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
+
 testing-junit = "junit:junit:4.13.2"
 
 [plugins]
