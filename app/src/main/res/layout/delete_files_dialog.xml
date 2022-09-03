@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/deleteFiles_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal"
     android:paddingHorizontal="10dp">
 
@@ -14,6 +18,7 @@
         android:id="@+id/deleteFiles_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
         android:text="Also delete files?"
         android:textSize="16sp" />
 

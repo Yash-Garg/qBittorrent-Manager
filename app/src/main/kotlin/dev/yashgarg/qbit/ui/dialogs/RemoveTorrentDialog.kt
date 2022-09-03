@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
@@ -25,7 +26,12 @@ class RemoveTorrentDialog : DialogFragment() {
         val dialog = alertDialogBuilder.create()
 
         dialog.setOnShowListener {
+            val deleteFilesLL = dialog.findViewById<LinearLayout>(R.id.deleteFiles_ll)
             val deleteFilesCheckBox = dialog.findViewById<CheckBox>(R.id.deleteFiles_box)
+
+            deleteFilesLL?.setOnClickListener {
+                deleteFilesCheckBox?.isChecked = !deleteFilesCheckBox!!.isChecked
+            }
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 setFragmentResult(
