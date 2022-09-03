@@ -48,6 +48,14 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         viewModelScope.launch { client.deleteTorrents(listOf(hash), deleteFiles) }
     }
 
+    fun forceRecheck(hash: String) {
+        viewModelScope.launch { client.recheckTorrents(listOf(hash)) }
+    }
+
+    fun forceReannounce(hash: String) {
+        viewModelScope.launch { client.reannounceTorrents(listOf(hash)) }
+    }
+
     private suspend fun syncTorrentFlow() {
         val hash = requireNotNull(hash)
         viewModelScope

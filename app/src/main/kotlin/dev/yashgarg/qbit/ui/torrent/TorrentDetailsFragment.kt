@@ -88,9 +88,11 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                     true
                 }
                 R.id.force_recheck -> {
+                    viewModel.forceRecheck(torrent.hash)
                     true
                 }
                 R.id.force_reannounce -> {
+                    viewModel.forceReannounce(torrent.hash)
                     true
                 }
                 R.id.rename_magnet -> {
