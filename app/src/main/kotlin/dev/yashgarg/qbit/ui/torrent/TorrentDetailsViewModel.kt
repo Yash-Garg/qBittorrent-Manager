@@ -37,6 +37,13 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         }
     }
 
+    fun toggleTorrent(pause: Boolean, hash: String) {
+        val hashes = listOf(hash)
+        viewModelScope.launch {
+            if (pause) client.pauseTorrents(hashes) else client.resumeTorrents(hashes)
+        }
+    }
+
     private suspend fun syncTorrentFlow() {
         val hash = requireNotNull(hash)
         viewModelScope

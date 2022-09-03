@@ -16,7 +16,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/copy_magnet"
-        android:title="Copy Magnet"
+        android:title="Copy magnet"
         app:showAsAction="never" />
     <item
         android:id="@+id/force_recheck"

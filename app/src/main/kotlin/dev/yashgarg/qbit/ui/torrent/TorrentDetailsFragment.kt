@@ -2,6 +2,7 @@ package dev.yashgarg.qbit.ui.torrent
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -57,9 +58,13 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.pause_torrent -> {
+                    viewModel.toggleTorrent(true, torrent.hash)
+                    Toast.makeText(requireContext(), "Paused", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.resume_torrent -> {
+                    viewModel.toggleTorrent(false, torrent.hash)
+                    Toast.makeText(requireContext(), "Resumed", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.remove_torrent -> {
