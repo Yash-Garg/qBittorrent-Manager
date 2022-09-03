@@ -18,4 +18,4 @@ plugins {
 
 val clean by tasks.existing(Delete::class) { delete(rootProject.buildDir) }
 
-afterEvaluate { clean.dependsOn("copyGitHooks") }
+afterEvaluate { clean.dependsOn(tasks.copyGitHooks) }

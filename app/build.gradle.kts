@@ -1,5 +1,16 @@
 @file:Suppress("UnstableApiUsage")
 
+import java.io.ByteArrayOutputStream
+
+val commitHash: String by lazy {
+    val stdout = ByteArrayOutputStream()
+    exec {
+        commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir)
+        standardOutput = stdout
+    }
+    stdout.toString().trim()
+}
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -18,10 +29,11 @@ android {
         minSdk = 24
         targetSdk = 33
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1"
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "${defaultConfig.applicationId}-$commitHash")
     }
 
     buildTypes {
