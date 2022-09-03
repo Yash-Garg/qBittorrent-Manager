@@ -14,8 +14,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.PermissionUtil
-import dev.yashgarg.qbit.utils.TextUtil
 
 class AddTorrentDialog : DialogFragment() {
     private val filePickerLauncher =
@@ -57,7 +57,7 @@ class AddTorrentDialog : DialogFragment() {
             val magnetTiet = dialog.findViewById<TextInputEditText>(R.id.magnet_tiet)
 
             magnetTil?.setEndIconOnClickListener {
-                val clipText = TextUtil.getClipboardText(requireContext())
+                val clipText = ClipboardUtil.getClipboardText(requireContext())
                 magnetTiet?.setText(clipText)
             }
 

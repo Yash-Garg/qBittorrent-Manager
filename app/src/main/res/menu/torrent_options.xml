@@ -3,18 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/pause_item"
-        android:icon="@drawable/pause"
+        android:id="@+id/pause_torrent"
         android:title="Pause"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
-        android:id="@+id/resume_item"
-        android:icon="@drawable/play"
+        android:id="@+id/resume_torrent"
         android:title="Resume"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
-        android:id="@+id/remove_item"
-        android:icon="@drawable/delete"
-        android:title="Remove"
-        app:showAsAction="always" />
+        android:id="@+id/remove_torrent"
+        android:title="Delete"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/copy_magnet"
+        android:title="Copy Magnet"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/force_recheck"
+        android:title="Force Recheck"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/force_reannounce"
+        android:title="Force Reannounce"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/rename_magnet"
+        android:title="Rename"
+        app:showAsAction="never" />
 </menu>

@@ -13,9 +13,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.TorrentDetailsFragmentBinding
 import dev.yashgarg.qbit.ui.torrent.adapter.TorrentDetailsAdapter
+import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import qbittorrent.models.Torrent
 
 @AndroidEntryPoint
 class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
@@ -51,6 +53,27 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
         observeFlows()
     }
 
+    private fun setupMenu(torrent: Torrent) {
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.pause_torrent -> {
+                    true
+                }
+                R.id.resume_torrent -> {
+                    true
+                }
+                R.id.remove_torrent -> {
+                    true
+                }
+                R.id.copy_magnet -> {
+                    ClipboardUtil.copyToClipboard(requireContext(), torrent.hash, torrent.magnetUri)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
     private fun observeFlows() {
         viewModel.uiState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -66,6 +89,7 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                 } else {
                     val torrent = requireNotNull(state.torrent)
                     toolbar.title = torrent.name
+                    setupMenu(torrent)
                 }
             }
         }
