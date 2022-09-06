@@ -31,6 +31,7 @@ class RenameTorrentDialog(private val title: String) : DialogFragment() {
             val nameTil = dialog.findViewById<TextInputLayout>(R.id.torrentName_til)
             val nameTiet = dialog.findViewById<TextInputEditText>(R.id.torrentName_tiet)
             nameTiet?.setText(title)
+            nameTiet?.setSelection(title.length)
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 if (!nameTiet?.text.isNullOrEmpty()) {
