@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -76,7 +76,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             torrentListAdapter.onItemClick = { hash ->
                 val action =
                     ServerFragmentDirections.actionServerFragmentToTorrentInfoFragment(hash)
-                requireView().findNavController().navigate(action)
+                findNavController().navigate(action)
             }
 
             torrentRv.adapter = torrentListAdapter

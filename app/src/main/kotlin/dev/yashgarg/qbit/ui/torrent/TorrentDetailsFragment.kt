@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialElevationScale
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,7 +106,7 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                 val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
                 viewModel.removeTorrent(torrent.hash, deleteFiles)
                 Toast.makeText(requireContext(), "Removed torrent", Toast.LENGTH_SHORT).show()
-                requireParentFragment().parentFragmentManager.popBackStackImmediate()
+                findNavController().navigateUp()
             }
 
             setFragmentResultListener(RenameTorrentDialog.RENAME_TORRENT_KEY, viewLifecycleOwner) {
@@ -129,7 +130,7 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
         with(binding) {
             if (!state.loading) {
                 if (state.error != null) {
-                    requireParentFragment().parentFragmentManager.popBackStackImmediate()
+                    findNavController().navigateUp()
                 } else {
                     val torrent = requireNotNull(state.torrent)
                     toolbar.title = torrent.name
