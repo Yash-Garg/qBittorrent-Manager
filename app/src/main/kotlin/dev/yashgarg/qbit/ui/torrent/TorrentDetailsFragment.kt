@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.TorrentDetailsFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.RemoveTorrentDialog
+import dev.yashgarg.qbit.ui.dialogs.RenameTorrentDialog
 import dev.yashgarg.qbit.ui.torrent.adapter.TorrentDetailsAdapter
 import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.viewBinding
@@ -56,6 +57,7 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
     }
 
     private fun setupMenu(torrent: Torrent) {
+        setupDialogListeners(torrent)
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.pause_torrent -> {
@@ -71,16 +73,6 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                 R.id.remove_torrent -> {
                     RemoveTorrentDialog.newInstance()
                         .show(childFragmentManager, RemoveTorrentDialog.TAG)
-                    childFragmentManager.setFragmentResultListener(
-                        RemoveTorrentDialog.REMOVE_TORRENT_KEY,
-                        viewLifecycleOwner
-                    ) { _, bundle ->
-                        val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
-                        viewModel.removeTorrent(torrent.hash, deleteFiles)
-                        Toast.makeText(requireContext(), "Removed torrent", Toast.LENGTH_SHORT)
-                            .show()
-                        requireParentFragment().parentFragmentManager.popBackStackImmediate()
-                    }
                     true
                 }
                 R.id.copy_magnet -> {
@@ -96,9 +88,32 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                     true
                 }
                 R.id.rename_magnet -> {
+                    RenameTorrentDialog.newInstance(torrent.name)
+                        .show(childFragmentManager, RenameTorrentDialog.TAG)
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    private fun setupDialogListeners(torrent: Torrent) {
+        childFragmentManager.apply {
+            setFragmentResultListener(RemoveTorrentDialog.REMOVE_TORRENT_KEY, viewLifecycleOwner) {
+                _,
+                bundle ->
+                val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
+                viewModel.removeTorrent(torrent.hash, deleteFiles)
+                Toast.makeText(requireContext(), "Removed torrent", Toast.LENGTH_SHORT).show()
+                requireParentFragment().parentFragmentManager.popBackStackImmediate()
+            }
+
+            setFragmentResultListener(RenameTorrentDialog.RENAME_TORRENT_KEY, viewLifecycleOwner) {
+                _,
+                bundle ->
+                val torrentName = bundle.getString(RenameTorrentDialog.RENAME_KEY)
+                viewModel.renameTorrent(requireNotNull(torrentName), torrent.hash)
+                Toast.makeText(requireContext(), "Renamed torrent", Toast.LENGTH_SHORT).show()
             }
         }
     }

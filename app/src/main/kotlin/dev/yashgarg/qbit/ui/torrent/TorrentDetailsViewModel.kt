@@ -56,6 +56,10 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         viewModelScope.launch { client.reannounceTorrents(listOf(hash)) }
     }
 
+    fun renameTorrent(torrentName: String, torrentHash: String) {
+        viewModelScope.launch { client.setTorrentName(torrentHash, torrentName) }
+    }
+
     private suspend fun syncTorrentFlow() {
         val hash = requireNotNull(hash)
         viewModelScope
