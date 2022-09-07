@@ -1,35 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:ignore="HardcodedText" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/pause_torrent"
-        android:title="Pause"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/resume_torrent"
-        android:title="Resume"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/remove_torrent"
-        android:title="Delete"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/copy_magnet"
-        android:title="Copy magnet"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/force_recheck"
-        android:title="Force Recheck"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/force_reannounce"
-        android:title="Force Reannounce"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/rename_magnet"
-        android:title="Rename"
-        app:showAsAction="never" />
+        android:id="@+id/overflow_menu"
+        android:icon="@drawable/more_vert"
+        android:title="More options"
+        app:showAsAction="always"
+        tools:ignore="HardcodedText" />
 </menu>

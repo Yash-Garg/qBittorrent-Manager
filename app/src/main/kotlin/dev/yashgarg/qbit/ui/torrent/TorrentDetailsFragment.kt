@@ -21,6 +21,7 @@ import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.saket.cascade.CascadePopupMenu
 import qbittorrent.models.Torrent
 
 @AndroidEntryPoint
@@ -59,42 +60,66 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
 
     private fun setupMenu(torrent: Torrent) {
         setupDialogListeners(torrent)
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.pause_torrent -> {
+        binding.toolbar.findViewById<View>(R.id.overflow_menu).setOnClickListener { view ->
+            val popupMenu = CascadePopupMenu(requireContext(), view)
+            popupMenu.menu.apply {
+                add("Pause").setOnMenuItemClickListener {
                     viewModel.toggleTorrent(true, torrent.hash)
                     Toast.makeText(requireContext(), "Paused", Toast.LENGTH_SHORT).show()
                     true
                 }
-                R.id.resume_torrent -> {
+                add("Resume").setOnMenuItemClickListener {
                     viewModel.toggleTorrent(false, torrent.hash)
                     Toast.makeText(requireContext(), "Resumed", Toast.LENGTH_SHORT).show()
                     true
                 }
-                R.id.remove_torrent -> {
+                add("Delete").setOnMenuItemClickListener {
                     RemoveTorrentDialog.newInstance()
                         .show(childFragmentManager, RemoveTorrentDialog.TAG)
                     true
                 }
-                R.id.copy_magnet -> {
-                    ClipboardUtil.copyToClipboard(requireContext(), torrent.hash, torrent.magnetUri)
-                    true
+                addSubMenu("Copy").also {
+                    it.setIcon(R.drawable.content_copy)
+                    it.add("Name").setOnMenuItemClickListener {
+                        ClipboardUtil.copyToClipboard(
+                            requireContext(),
+                            "torrent-name",
+                            torrent.name
+                        )
+                        true
+                    }
+                    it.add("Info hash").setOnMenuItemClickListener {
+                        ClipboardUtil.copyToClipboard(
+                            requireContext(),
+                            "torrent-hash",
+                            torrent.hash
+                        )
+                        true
+                    }
+                    it.add("Magnet link").setOnMenuItemClickListener {
+                        ClipboardUtil.copyToClipboard(
+                            requireContext(),
+                            "torrent-magnet",
+                            torrent.magnetUri
+                        )
+                        true
+                    }
                 }
-                R.id.force_recheck -> {
+                add("Force recheck").setOnMenuItemClickListener {
                     viewModel.forceRecheck(torrent.hash)
                     true
                 }
-                R.id.force_reannounce -> {
+                add("Force reannounce").setOnMenuItemClickListener {
                     viewModel.forceReannounce(torrent.hash)
                     true
                 }
-                R.id.rename_magnet -> {
+                add("Rename").setOnMenuItemClickListener {
                     RenameTorrentDialog.newInstance(torrent.name)
                         .show(childFragmentManager, RenameTorrentDialog.TAG)
                     true
                 }
-                else -> false
             }
+            popupMenu.show()
         }
     }
 

@@ -20,10 +20,15 @@ object ClipboardUtil {
         return pasteData
     }
 
-    fun copyToClipboard(context: Context, label: String, text: String) {
+    fun copyToClipboard(
+        context: Context,
+        label: String,
+        text: String,
+        message: String = "Copied to clipboard!"
+    ) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(label, text)
         clipboard.setPrimaryClip(clip)
-        Toast.makeText(context, "Copied magnet uri to clipboard", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
