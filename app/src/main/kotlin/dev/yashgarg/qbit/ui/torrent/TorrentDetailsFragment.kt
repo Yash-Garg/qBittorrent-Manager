@@ -63,23 +63,23 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
         binding.toolbar.findViewById<View>(R.id.overflow_menu).setOnClickListener { view ->
             val popupMenu = CascadePopupMenu(requireContext(), view)
             popupMenu.menu.apply {
-                add("Pause").setOnMenuItemClickListener {
+                add("Pause").setIcon(R.drawable.twotone_pause_24).setOnMenuItemClickListener {
                     viewModel.toggleTorrent(true, torrent.hash)
                     Toast.makeText(requireContext(), "Paused", Toast.LENGTH_SHORT).show()
                     true
                 }
-                add("Resume").setOnMenuItemClickListener {
+                add("Resume").setIcon(R.drawable.twotone_play_arrow_24).setOnMenuItemClickListener {
                     viewModel.toggleTorrent(false, torrent.hash)
                     Toast.makeText(requireContext(), "Resumed", Toast.LENGTH_SHORT).show()
                     true
                 }
-                add("Delete").setOnMenuItemClickListener {
+                add("Delete").setIcon(R.drawable.twotone_delete_24).setOnMenuItemClickListener {
                     RemoveTorrentDialog.newInstance()
                         .show(childFragmentManager, RemoveTorrentDialog.TAG)
                     true
                 }
                 addSubMenu("Copy").also {
-                    it.setIcon(R.drawable.content_copy)
+                    it.setIcon(R.drawable.twotone_content_copy_24)
                     it.add("Name").setOnMenuItemClickListener {
                         ClipboardUtil.copyToClipboard(
                             requireContext(),
@@ -105,19 +105,25 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                         true
                     }
                 }
-                add("Force recheck").setOnMenuItemClickListener {
-                    viewModel.forceRecheck(torrent.hash)
-                    true
-                }
-                add("Force reannounce").setOnMenuItemClickListener {
-                    viewModel.forceReannounce(torrent.hash)
-                    true
-                }
-                add("Rename").setOnMenuItemClickListener {
-                    RenameTorrentDialog.newInstance(torrent.name)
-                        .show(childFragmentManager, RenameTorrentDialog.TAG)
-                    true
-                }
+                add("Force recheck")
+                    .setIcon(R.drawable.twotone_find_in_page_24)
+                    .setOnMenuItemClickListener {
+                        viewModel.forceRecheck(torrent.hash)
+                        true
+                    }
+                add("Force reannounce")
+                    .setIcon(R.drawable.twotone_restore_page_24)
+                    .setOnMenuItemClickListener {
+                        viewModel.forceReannounce(torrent.hash)
+                        true
+                    }
+                add("Rename")
+                    .setIcon(R.drawable.twotone_drive_file_rename_outline_24)
+                    .setOnMenuItemClickListener {
+                        RenameTorrentDialog.newInstance(torrent.name)
+                            .show(childFragmentManager, RenameTorrentDialog.TAG)
+                        true
+                    }
             }
             popupMenu.show()
         }
