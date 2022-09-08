@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/pause_item"
-        android:icon="@drawable/pause"
-        android:title="Pause"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/resume_item"
-        android:icon="@drawable/play"
-        android:title="Resume"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/remove_item"
-        android:icon="@drawable/delete"
-        android:title="Remove"
-        app:showAsAction="always" />
+        android:id="@+id/overflow_menu"
+        android:icon="@drawable/more_vert"
+        android:title="More options"
+        app:showAsAction="always"
+        tools:ignore="HardcodedText" />
 </menu>

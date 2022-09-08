@@ -37,6 +37,29 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         }
     }
 
+    fun toggleTorrent(pause: Boolean, hash: String) {
+        val hashes = listOf(hash)
+        viewModelScope.launch {
+            if (pause) client.pauseTorrents(hashes) else client.resumeTorrents(hashes)
+        }
+    }
+
+    fun removeTorrent(hash: String, deleteFiles: Boolean = false) {
+        viewModelScope.launch { client.deleteTorrents(listOf(hash), deleteFiles) }
+    }
+
+    fun forceRecheck(hash: String) {
+        viewModelScope.launch { client.recheckTorrents(listOf(hash)) }
+    }
+
+    fun forceReannounce(hash: String) {
+        viewModelScope.launch { client.reannounceTorrents(listOf(hash)) }
+    }
+
+    fun renameTorrent(torrentName: String, torrentHash: String) {
+        viewModelScope.launch { client.setTorrentName(torrentHash, torrentName) }
+    }
+
     private suspend fun syncTorrentFlow() {
         val hash = requireNotNull(hash)
         viewModelScope

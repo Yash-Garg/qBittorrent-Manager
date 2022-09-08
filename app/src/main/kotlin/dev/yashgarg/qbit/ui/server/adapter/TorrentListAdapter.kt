@@ -62,7 +62,7 @@ class TorrentListAdapter @Inject constructor() :
                     torrent.size.toHumanReadable(),
                     (torrent.progress * 100).toInt(),
                 )
-            eta.text = if (torrent.eta == 8640000.toLong()) null else torrent.eta.toTime()
+            eta.text = if (torrent.eta == 8640000L) null else torrent.eta.toTime()
 
             cardView.setOnClickListener {
                 onItemClick?.invoke(torrentsList.keys.elementAt(position))
@@ -73,12 +73,14 @@ class TorrentListAdapter @Inject constructor() :
                     peers.text = context.getString(R.string.paused)
                     peers.setTextColor(context.getColor(R.color.yellow))
                     speed.visibility = View.GONE
+                    eta.visibility = View.GONE
                 }
                 Torrent.State.UPLOADING,
                 Torrent.State.FORCED_UP -> {
                     peers.text = context.getString(R.string.seeding)
                     peers.setTextColor(context.getColor(R.color.green))
                     speed.visibility = View.VISIBLE
+                    eta.visibility = View.GONE
                 }
                 Torrent.State.DOWNLOADING,
                 Torrent.State.FORCED_DL -> {
