@@ -1,5 +1,5 @@
 [versions]
-axCore = "1.8.0"
+axCore = "1.9.0"
 axAppcompat = "1.5.1"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.2"
