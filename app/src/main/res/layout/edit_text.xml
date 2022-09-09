@@ -11,7 +11,7 @@
         android:id="@+id/magnet_til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/content_paste"
+        app:endIconDrawable="@drawable/twotone_content_paste_24"
         app:endIconMode="custom"
         app:errorEnabled="true">
 
