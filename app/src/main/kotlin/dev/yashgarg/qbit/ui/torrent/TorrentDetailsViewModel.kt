@@ -25,15 +25,12 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
 
     init {
         viewModelScope.launch {
-            val clientResponse = clientManager.checkAndGetClient()
-            clientResponse.fold(
-                {
-                    client = it
-                    syncTorrentFlow()
-                    syncPeers()
-                },
-                { e -> Log.e(this::class.java.simpleName, e.toString()) }
-            )
+            val clientResult = clientManager.checkAndGetClient()
+            clientResult?.let {
+                client = it
+                syncTorrentFlow()
+                syncPeers()
+            }
         }
     }
 

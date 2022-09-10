@@ -15,7 +15,6 @@ room = "2.5.0-alpha03"
 spotless = "6.10.0"
 
 [libraries]
-arrow-core = "io.arrow-kt:arrow-core:1.1.2"
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }

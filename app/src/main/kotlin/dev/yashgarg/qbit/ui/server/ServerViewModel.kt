@@ -8,6 +8,7 @@ import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
+import dev.yashgarg.qbit.utils.ClientConnectionError
 import dev.yashgarg.qbit.utils.ExceptionHandler
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -36,14 +37,13 @@ constructor(
 
     fun refresh() {
         coroutineScope.launch {
-            val clientResponse = clientManager.checkAndGetClient()
-            clientResponse.fold(
-                {
-                    client = it
-                    syncData()
-                },
-                { e -> emitException(e) }
-            )
+            val clientResult = clientManager.checkAndGetClient()
+            if (clientResult != null) {
+                client = clientResult
+                syncData()
+            } else {
+                emitException(ClientConnectionError())
+            }
         }
     }
 

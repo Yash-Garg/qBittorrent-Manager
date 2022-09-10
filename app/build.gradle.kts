@@ -83,8 +83,6 @@ kapt {
 }
 
 dependencies {
-    implementation(libs.arrow.core)
-
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)

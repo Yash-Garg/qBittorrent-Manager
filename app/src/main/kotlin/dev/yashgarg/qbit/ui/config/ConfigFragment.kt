@@ -13,6 +13,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
@@ -137,12 +139,12 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
                             binding.serverPasswordTil.editText?.text.toString(),
                         )
 
-                    connectionResponse.fold(
-                        { version ->
+                    when (connectionResponse) {
+                        is Ok -> {
                             checkSnackbar.dismiss()
                             Toast.makeText(
                                     context,
-                                    "Success! Client app version is $version",
+                                    "Success! Client app version is ${connectionResponse.value}",
                                     Toast.LENGTH_LONG
                                 )
                                 .show()
@@ -157,16 +159,16 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
                             )
 
                             findNavController().navigateUp()
-                        },
-                        { error ->
+                        }
+                        is Err -> {
                             Snackbar.make(
                                     requireView(),
-                                    "Failed! ${error.message}",
+                                    "Failed! ${connectionResponse.error.message}",
                                     Snackbar.LENGTH_LONG
                                 )
                                 .show()
                         }
-                    )
+                    }
                     enableFields(true)
                 }
             }
