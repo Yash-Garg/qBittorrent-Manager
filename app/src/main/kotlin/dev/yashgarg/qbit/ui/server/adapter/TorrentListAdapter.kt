@@ -118,6 +118,7 @@ class TorrentListAdapter @Inject constructor() :
                 Torrent.State.CHECKING_RESUME_DATA -> {}
                 Torrent.State.MOVING -> {}
                 Torrent.State.UNKNOWN -> {}
+                Torrent.State.QUEUED_DL -> {}
                 else -> throw IllegalArgumentException("Invalid torrent state received")
             }
         }
