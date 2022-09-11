@@ -10,11 +10,15 @@ import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import dev.yashgarg.qbit.utils.ExceptionHandler
+import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
+import qbittorrent.QBittorrentException
 
 @HiltViewModel
 class ServerViewModel
@@ -30,21 +34,24 @@ constructor(
     val status = _status.asSharedFlow()
 
     private lateinit var client: QBittorrentClient
+    private var syncJob: Job? = null
 
     init {
         refresh()
     }
 
     fun refresh() {
-        coroutineScope.launch {
-            val clientResult = clientManager.checkAndGetClient()
-            if (clientResult != null) {
-                client = clientResult
-                syncData()
-            } else {
-                emitException(ClientConnectionError())
+        syncJob?.cancel()
+        syncJob =
+            coroutineScope.launch {
+                val clientResult = clientManager.checkAndGetClient()
+                if (clientResult != null) {
+                    client = clientResult
+                    syncData()
+                } else {
+                    emitException(ClientConnectionError())
+                }
             }
-        }
     }
 
     fun addTorrentUrl(url: String) {
@@ -73,7 +80,14 @@ constructor(
     private suspend fun syncData() {
         client
             .observeMainData()
-            .catch { e -> emitException(e) }
+            .retryWhen { cause, attempt ->
+                if ((cause as QBittorrentException).cause is UnknownHostException) {
+                    emitException(cause)
+                    println("Retrying $attempt")
+                    delay(1000)
+                    true
+                } else false
+            }
             .collect { mainData ->
                 _uiState.update { state ->
                     state.copy(
