@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.utils.TorrentRemovedError
@@ -21,6 +24,9 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
     private val _uiState = MutableStateFlow(TorrentDetailsState())
     val uiState = _uiState.asStateFlow()
 
+    private val _status = MutableSharedFlow<String>()
+    val status = _status.asSharedFlow()
+
     private val hash by lazy { state.get<String>("torrentHash") }
 
     init {
@@ -37,24 +43,51 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
     fun toggleTorrent(pause: Boolean, hash: String) {
         val hashes = listOf(hash)
         viewModelScope.launch {
-            if (pause) client.pauseTorrents(hashes) else client.resumeTorrents(hashes)
+            when (
+                runCatching {
+                    if (pause) client.pauseTorrents(hashes) else client.resumeTorrents(hashes)
+                }
+            ) {
+                is Ok -> _status.emit("${if (pause) "Paused" else "Resumed"} $hash")
+                is Err -> _status.emit("Failed to ${if (pause) "pause" else "resume"} $hash")
+            }
         }
     }
 
     fun removeTorrent(hash: String, deleteFiles: Boolean = false) {
-        viewModelScope.launch { client.deleteTorrents(listOf(hash), deleteFiles) }
+        viewModelScope.launch {
+            when (runCatching { client.deleteTorrents(listOf(hash), deleteFiles) }) {
+                is Ok -> return@launch
+                is Err -> _status.emit("Failed to remove $hash")
+            }
+        }
     }
 
     fun forceRecheck(hash: String) {
-        viewModelScope.launch { client.recheckTorrents(listOf(hash)) }
+        viewModelScope.launch {
+            when (runCatching { client.recheckTorrents(listOf(hash)) }) {
+                is Ok -> _status.emit("Rechecking $hash")
+                is Err -> _status.emit("Failed to recheck torrent")
+            }
+        }
     }
 
     fun forceReannounce(hash: String) {
-        viewModelScope.launch { client.reannounceTorrents(listOf(hash)) }
+        viewModelScope.launch {
+            when (runCatching { client.reannounceTorrents(listOf(hash)) }) {
+                is Ok -> _status.emit("Reannouncing $hash")
+                is Err -> _status.emit("Failed to reannounce torrent")
+            }
+        }
     }
 
     fun renameTorrent(torrentName: String, torrentHash: String) {
-        viewModelScope.launch { client.setTorrentName(torrentHash, torrentName) }
+        viewModelScope.launch {
+            when (runCatching { client.setTorrentName(torrentHash, torrentName) }) {
+                is Ok -> _status.emit("Successfully renamed $torrentHash")
+                is Err -> _status.emit("Failed to rename torrent")
+            }
+        }
     }
 
     private suspend fun syncTorrentFlow() {

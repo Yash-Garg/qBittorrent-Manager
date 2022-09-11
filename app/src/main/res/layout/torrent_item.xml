@@ -43,15 +43,18 @@
                     style="@style/SmallBoldFont"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
 
                 <TextView
                     android:id="@+id/eta_tv"
                     style="@style/SmallBoldFont"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="end" />
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1" />
 
             </LinearLayout>
 
@@ -81,7 +84,9 @@
                     style="@style/SmallBoldFont"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
 
                 <TextView
                     android:id="@+id/speed_tv"
@@ -89,7 +94,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1" />
 
             </LinearLayout>
 

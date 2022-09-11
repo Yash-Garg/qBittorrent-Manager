@@ -12,10 +12,7 @@ import dev.yashgarg.qbit.utils.ClientConnectionError
 import dev.yashgarg.qbit.utils.ExceptionHandler
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
 
@@ -28,6 +25,9 @@ constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ServerState())
     val uiState = _uiState.asStateFlow()
+
+    private val _status = MutableSharedFlow<String>()
+    val status = _status.asSharedFlow()
 
     private lateinit var client: QBittorrentClient
 
@@ -49,22 +49,18 @@ constructor(
 
     fun addTorrentUrl(url: String) {
         viewModelScope.launch {
-            when (val result = runCatching { client.addTorrent { urls.add(url) } }) {
-                is Ok -> return@launch
-                is Err -> emitException(result.error)
+            when (runCatching { client.addTorrent { urls.add(url) } }) {
+                is Ok -> _status.emit("Successfully added torrent")
+                is Err -> _status.emit("Failed to add torrent url")
             }
         }
     }
 
     fun addTorrentFile(bytes: ByteArray) {
         viewModelScope.launch {
-            when (
-                val result = runCatching {
-                    client.addTorrent { rawTorrents["torrent_file"] = bytes }
-                }
-            ) {
-                is Ok -> return@launch
-                is Err -> emitException(result.error)
+            when (runCatching { client.addTorrent { rawTorrents["torrent_file"] = bytes } }) {
+                is Ok -> _status.emit("Successfully added file")
+                is Err -> _status.emit("Failed to add file")
             }
         }
     }

@@ -3,6 +3,7 @@ package dev.yashgarg.qbit.ui.server
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -110,6 +111,11 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         viewModel.uiState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach(::render)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.status
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
