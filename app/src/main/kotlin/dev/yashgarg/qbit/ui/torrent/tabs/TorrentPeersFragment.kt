@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +24,7 @@ import dev.yashgarg.qbit.ui.compose.Center
 import dev.yashgarg.qbit.ui.compose.ListTile
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsState
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
+import dev.yashgarg.qbit.utils.CountryFlags
 import dev.yashgarg.qbit.utils.viewBinding
 
 class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
@@ -60,12 +60,11 @@ fun PeersListView(state: TorrentDetailsState) {
                     subtitle = "Connection: ${peer.connection}",
                     suffix = {
                         Text(
-                            peer.countryCode.uppercase(),
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.bodyMedium
+                            CountryFlags.getCountryFlagByCountryCode(peer.countryCode),
+                            style = MaterialTheme.typography.titleLarge
                         )
                     },
+                    onClick = {}
                 )
             }
         }
