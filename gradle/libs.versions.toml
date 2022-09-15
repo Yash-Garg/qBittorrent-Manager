@@ -12,7 +12,7 @@ lifecycle = "2.5.1"
 qbit = "1.0.0-alpha04"
 kotlin = "1.7.10"
 room = "2.5.0-alpha03"
-spotless = "6.10.0"
+spotless = "6.11.0"
 
 [libraries]
 arrow-core = "io.arrow-kt:arrow-core:1.1.2"
