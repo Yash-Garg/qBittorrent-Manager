@@ -41,7 +41,9 @@ class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
                 setDefaultFontFamily = true,
                 readShapes = true,
                 readColorScheme = true
-            ) { PeersListView(state) }
+            ) {
+                PeersListView(state)
+            }
         }
     }
 }
