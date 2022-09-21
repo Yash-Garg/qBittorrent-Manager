@@ -1,6 +1,7 @@
 package dev.yashgarg.qbit.ui.config
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -19,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.databinding.ConfigFragmentBinding
 import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
@@ -161,6 +163,7 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
                             findNavController().navigateUp()
                         }
                         is Err -> {
+                            Log.e(ClientManager.tag, connectionResponse.error.toString())
                             Snackbar.make(
                                     requireView(),
                                     "Failed! ${connectionResponse.error.message}",

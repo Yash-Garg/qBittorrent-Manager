@@ -78,7 +78,7 @@ constructor(
         }
 
     companion object {
-        const val tag = "qbit-client"
+        const val tag = "ClientManager"
         val syncInterval = 1.seconds
         val httpClient = HttpClient {
             install(HttpTimeout) { connectTimeoutMillis = 3000 }

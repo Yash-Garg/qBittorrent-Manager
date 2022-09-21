@@ -3,6 +3,7 @@ package dev.yashgarg.qbit
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                         findNavController(this@MainActivity, R.id.nav_host_fragment)
                             .navigate(R.id.action_homeFragment_to_serverFragment)
                     }
-                    ConfigStatus.DOES_NOT_EXIST -> {}
+                    ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                 }
             }
         }

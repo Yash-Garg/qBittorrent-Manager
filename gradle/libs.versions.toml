@@ -4,12 +4,11 @@ axAppcompat = "1.5.1"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.2"
 googleMaterial = "1.7.0-rc01"
-androidApplication = "7.4.0-alpha10"
-androidLibrary = "7.4.0-alpha10"
+agp = "8.0.0-alpha01"
 hilt = "2.43.2"
 ktor = "2.1.1"
 lifecycle = "2.5.1"
-qbit = "1.0.0-alpha04"
+qbit = "1.0.0-SNAPSHOT"
 kotlin = "1.7.10"
 room = "2.5.0-alpha03"
 spotless = "6.10.0"
@@ -55,8 +54,8 @@ tools-lottie = "com.airbnb.android:lottie:5.2.0"
 testing-junit = "junit:junit:4.13.2"
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidApplication" }
-android-library = { id = "com.android.library", version.ref = "androidLibrary" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
