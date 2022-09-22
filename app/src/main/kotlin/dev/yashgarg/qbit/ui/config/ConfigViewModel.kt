@@ -2,7 +2,8 @@ package dev.yashgarg.qbit.ui.config
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import arrow.core.Either
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.manager.ClientManager
@@ -187,8 +188,8 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
         baseUrl: String,
         username: String,
         password: String
-    ): Either<String, Exception> {
-        return try {
+    ): Result<String, Throwable> {
+        return runCatching {
             val client =
                 QBittorrentClient(
                     baseUrl,
@@ -197,10 +198,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                     httpClient = ClientManager.httpClient,
                     dispatcher = Dispatchers.Default
                 )
-
-            Either.Left(client.getVersion())
-        } catch (e: Exception) {
-            Either.Right(e)
+            client.getVersion()
         }
     }
 }

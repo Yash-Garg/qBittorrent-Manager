@@ -1,6 +1,5 @@
 package dev.yashgarg.qbit.ui.version
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,14 +20,11 @@ class VersionViewModel @Inject constructor(private val clientManager: ClientMana
 
     init {
         viewModelScope.launch {
-            val clientResponse = clientManager.checkAndGetClient()
-            clientResponse.fold(
-                {
-                    client = it
-                    getVersions()
-                },
-                { e -> Log.e(VersionViewModel::class.simpleName, e.toString()) }
-            )
+            val clientResult = clientManager.checkAndGetClient()
+            clientResult?.let {
+                client = it
+                getVersions()
+            }
         }
     }
 

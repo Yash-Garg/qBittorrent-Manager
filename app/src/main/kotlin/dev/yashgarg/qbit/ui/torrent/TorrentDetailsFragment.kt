@@ -65,12 +65,10 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
             popupMenu.menu.apply {
                 add("Pause").setIcon(R.drawable.twotone_pause_24).setOnMenuItemClickListener {
                     viewModel.toggleTorrent(true, torrent.hash)
-                    Toast.makeText(requireContext(), "Paused", Toast.LENGTH_SHORT).show()
                     true
                 }
                 add("Resume").setIcon(R.drawable.twotone_play_arrow_24).setOnMenuItemClickListener {
                     viewModel.toggleTorrent(false, torrent.hash)
-                    Toast.makeText(requireContext(), "Resumed", Toast.LENGTH_SHORT).show()
                     true
                 }
                 add("Delete").setIcon(R.drawable.twotone_delete_24).setOnMenuItemClickListener {
@@ -136,7 +134,12 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                 bundle ->
                 val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
                 viewModel.removeTorrent(torrent.hash, deleteFiles)
-                Toast.makeText(requireContext(), "Removed torrent", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                        requireContext(),
+                        "Successfully removed ${torrent.hash}",
+                        Toast.LENGTH_SHORT
+                    )
+                    .show()
                 findNavController().navigateUp()
             }
 
@@ -145,7 +148,6 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                 bundle ->
                 val torrentName = bundle.getString(RenameTorrentDialog.RENAME_KEY)
                 viewModel.renameTorrent(requireNotNull(torrentName), torrent.hash)
-                Toast.makeText(requireContext(), "Renamed torrent", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -154,6 +156,11 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
         viewModel.uiState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach(::render)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.status
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 

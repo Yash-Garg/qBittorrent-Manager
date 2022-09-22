@@ -25,7 +25,7 @@
         android:contentDescription=""
         android:text="@string/add_server"
         android:textSize="16sp"
-        app:icon="@drawable/add" />
+        app:icon="@drawable/twotone_add_24" />
 
     <TextView
         android:id="@+id/textView"

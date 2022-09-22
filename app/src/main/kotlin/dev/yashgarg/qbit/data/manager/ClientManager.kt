@@ -1,7 +1,9 @@
 package dev.yashgarg.qbit.data.manager
 
 import android.util.Log
-import arrow.core.Either
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.runCatching
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.di.ApplicationScope
@@ -43,15 +45,16 @@ constructor(
         }
     }
 
-    suspend fun checkAndGetClient(): Either<QBittorrentClient, Throwable> {
-        val client = getClient()
-        return try {
-            Log.i(tag, "Client App Version - ${client.getVersion()}")
-            this.client = client
-            Either.Left(client)
-        } catch (e: Throwable) {
-            Log.e(this::class.simpleName, e.toString())
-            Either.Right(e)
+    suspend fun checkAndGetClient(): QBittorrentClient? {
+        return when (val result = runCatching { getClient() }) {
+            is Ok -> {
+                this.client = result.value
+                client
+            }
+            is Err -> {
+                Log.e(this::class.simpleName, result.error.toString())
+                null
+            }
         }
     }
 
@@ -75,7 +78,7 @@ constructor(
         }
 
     companion object {
-        const val tag = "qbit-client"
+        const val tag = "ClientManager"
         val syncInterval = 1.seconds
         val httpClient = HttpClient {
             install(HttpTimeout) { connectTimeoutMillis = 3000 }

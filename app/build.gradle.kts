@@ -1,4 +1,4 @@
-@file:Suppress("UnstableApiUsage")
+@file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 
 import java.io.ByteArrayOutputStream
 
@@ -12,12 +12,12 @@ val commitHash: String by lazy {
 }
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    kotlin("plugin.serialization")
-    id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {
@@ -83,8 +83,6 @@ kapt {
 }
 
 dependencies {
-    implementation(libs.arrow.core)
-
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)

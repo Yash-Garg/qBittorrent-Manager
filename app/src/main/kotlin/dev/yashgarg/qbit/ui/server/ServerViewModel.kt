@@ -8,15 +8,17 @@ import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.di.ApplicationScope
+import dev.yashgarg.qbit.utils.ClientConnectionError
 import dev.yashgarg.qbit.utils.ExceptionHandler
+import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
+import qbittorrent.QBittorrentException
 
 @HiltViewModel
 class ServerViewModel
@@ -28,43 +30,44 @@ constructor(
     private val _uiState = MutableStateFlow(ServerState())
     val uiState = _uiState.asStateFlow()
 
+    private val _status = MutableSharedFlow<String>()
+    val status = _status.asSharedFlow()
+
     private lateinit var client: QBittorrentClient
+    private var syncJob: Job? = null
 
     init {
         refresh()
     }
 
     fun refresh() {
-        coroutineScope.launch {
-            val clientResponse = clientManager.checkAndGetClient()
-            clientResponse.fold(
-                {
-                    client = it
+        syncJob?.cancel()
+        syncJob =
+            coroutineScope.launch {
+                val clientResult = clientManager.checkAndGetClient()
+                if (clientResult != null) {
+                    client = clientResult
                     syncData()
-                },
-                { e -> emitException(e) }
-            )
-        }
+                } else {
+                    emitException(ClientConnectionError())
+                }
+            }
     }
 
     fun addTorrentUrl(url: String) {
         viewModelScope.launch {
-            when (val result = runCatching { client.addTorrent { urls.add(url) } }) {
-                is Ok -> return@launch
-                is Err -> emitException(result.error)
+            when (runCatching { client.addTorrent { urls.add(url) } }) {
+                is Ok -> _status.emit("Successfully added torrent")
+                is Err -> _status.emit("Failed to add torrent url")
             }
         }
     }
 
     fun addTorrentFile(bytes: ByteArray) {
         viewModelScope.launch {
-            when (
-                val result = runCatching {
-                    client.addTorrent { rawTorrents["torrent_file"] = bytes }
-                }
-            ) {
-                is Ok -> return@launch
-                is Err -> emitException(result.error)
+            when (runCatching { client.addTorrent { rawTorrents["torrent_file"] = bytes } }) {
+                is Ok -> _status.emit("Successfully added file")
+                is Err -> _status.emit("Failed to add file")
             }
         }
     }
@@ -77,7 +80,14 @@ constructor(
     private suspend fun syncData() {
         client
             .observeMainData()
-            .catch { e -> emitException(e) }
+            .retryWhen { cause, attempt ->
+                if ((cause as QBittorrentException).cause is UnknownHostException) {
+                    emitException(cause)
+                    println("Retrying $attempt")
+                    delay(1000)
+                    true
+                } else false
+            }
             .collect { mainData ->
                 _uiState.update { state ->
                     state.copy(
