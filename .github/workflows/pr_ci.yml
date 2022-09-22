@@ -29,6 +29,35 @@ jobs:
         uses: gradle/gradle-build-action@v2.3.0
         with:
           arguments: spotlessCheck
+          gradle-home-cache-cleanup: true
+          
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.5.0
+        with:
+          distribution: "zulu"
+          java-version: "11"
+          cache: "gradle"
+
+      - name: Run unit tests
+        uses: gradle/gradle-build-action@v2.3.0
+        with:
+          arguments: test
+          gradle-home-cache-cleanup: true
+
+      - name: (Fail-only) Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test report
+          path: app/build/reports
 
   build-apks:
     runs-on: ubuntu-latest
@@ -52,6 +81,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.3.0
         with:
           arguments: assembleDebug
+          gradle-home-cache-cleanup: true
       
       - name: Upload debug APKs
         uses: actions/upload-artifact@v3
