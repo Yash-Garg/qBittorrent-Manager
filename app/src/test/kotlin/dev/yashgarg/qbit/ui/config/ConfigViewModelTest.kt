@@ -1,5 +1,7 @@
 package dev.yashgarg.qbit.ui.config
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConnectionType
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +11,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ConfigViewModelTest {
     private lateinit var viewModel: ConfigViewModel
+    private val baseUrl: String by lazy { System.getenv("base_url") }
 
     @Mock private lateinit var cfgDao: ConfigDao
 
@@ -44,6 +47,23 @@ class ConfigViewModelTest {
             assertTrue(
                 viewModel.validationEvents.first() == ConfigViewModel.ValidationEvent.Success
             )
+        }
+    }
+
+    @Test
+    fun `check if client is connected and returns version`() {
+        runTest {
+            val response =
+                viewModel.testConfig(
+                    baseUrl,
+                    "admin",
+                    "windhoes",
+                )
+
+            when (response) {
+                is Ok -> assertEquals(response.value, "v4.4.5")
+                is Err -> throw response.error
+            }
         }
     }
 

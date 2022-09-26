@@ -54,6 +54,8 @@ jobs:
         with:
           arguments: test
           gradle-home-cache-cleanup: true
+        env:
+          base_url: ${{ secrets.BASE_URL }}
 
       - name: (Fail-only) Upload test report
         if: failure()
