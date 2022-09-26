@@ -112,7 +112,7 @@ dependencies {
     implementation(libs.tools.kotlin.result)
     implementation(libs.tools.cascade)
     implementation(libs.tools.lottie)
-    testImplementation(libs.testing.junit)
 
+    testImplementation(libs.bundles.testing)
     coreLibraryDesugaring(libs.tools.desugar)
 }

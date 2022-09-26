@@ -10,6 +10,7 @@ ktor = "2.1.1"
 lifecycle = "2.5.1"
 qbit = "1.0.0-SNAPSHOT"
 kotlin = "1.7.10"
+mockito = "4.8.0"
 room = "2.5.0-alpha03"
 spotless = "6.11.0"
 
@@ -51,7 +52,10 @@ tools-desugar = "com.android.tools:desugar_jdk_libs:2.0.0"
 tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
 tools-lottie = "com.airbnb.android:lottie:5.2.0"
 
-testing-junit = "junit:junit:4.13.2"
+junit = "junit:junit:4.13.2"
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:4.0.0"
+kotlin-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -64,3 +68,4 @@ navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNa
 
 [bundles]
 compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]
+testing = ["junit", "mockito-core", "mockito-kotlin", "kotlin-coroutines-test"]
