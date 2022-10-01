@@ -25,6 +25,8 @@ import org.junit.Test
 class ConfigViewModelTest {
 
     private val baseUrl: String by lazy { System.getenv("base_url") }
+    private val password: String by lazy { System.getenv("password") }
+
     private val config =
         ServerConfig(
             0,
@@ -32,7 +34,7 @@ class ConfigViewModelTest {
             baseUrl,
             443,
             "admin",
-            "windhoes",
+            password,
             ConnectionType.HTTPS,
         )
 
