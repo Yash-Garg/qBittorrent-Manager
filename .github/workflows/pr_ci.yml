@@ -2,6 +2,10 @@ name: Android CI
 
 on: pull_request
 
+env:
+  base_url: ${{ secrets.BASE_URL }}
+  password: ${{ secrets.PASSWORD }}
+
 concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
@@ -30,7 +34,7 @@ jobs:
         with:
           arguments: spotlessCheck
           gradle-home-cache-cleanup: true
-          
+
   unit-tests:
     runs-on: ubuntu-latest
     steps:
@@ -54,16 +58,13 @@ jobs:
         with:
           arguments: test
           gradle-home-cache-cleanup: true
-        env:
-          base_url: ${{ secrets.BASE_URL }}
-          password: ${{ secrets.PASSWORD }}
 
       - name: (Fail-only) Upload test report
         if: failure()
         uses: actions/upload-artifact@v3
         with:
-          name: Test report
-          path: app/build/reports/
+          name: Unit tests report
+          path: app/build/reports/tests/
 
   build-apks:
     runs-on: ubuntu-latest
@@ -94,3 +95,55 @@ jobs:
         with:
           name: Debug APKs
           path: app/build/outputs/apk/debug/*.apk
+
+  instrumentation-tests:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 29, 30, 31 ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.5.1
+        with:
+          distribution: "zulu"
+          java-version: "11"
+          cache: "gradle"
+
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: AVD cache
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Restart ADB server
+        run: adb kill-server && adb start-server
+
+      - name: Run androidTests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          disable-animations: true
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          arch: x86_64
+          script: ./gradlew :app:connectedDebugAndroidTest
+
+      - name: (Fail-only) Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Android tests report
+          path: app/build/reports/androidTests/

@@ -4,6 +4,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dev.yashgarg.qbit.BuildConfig
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConnectionType
 import dev.yashgarg.qbit.data.models.ServerConfig
@@ -24,17 +25,14 @@ import org.junit.Test
 @HiltAndroidTest
 class ConfigViewModelTest {
 
-    private val baseUrl: String by lazy { System.getenv("base_url") }
-    private val password: String by lazy { System.getenv("password") }
-
     private val config =
         ServerConfig(
             0,
             "TestServer",
-            baseUrl,
+            BuildConfig.BASE_URL,
             443,
             "admin",
-            password,
+            BuildConfig.PASSWORD,
             ConnectionType.HTTPS,
         )
 
