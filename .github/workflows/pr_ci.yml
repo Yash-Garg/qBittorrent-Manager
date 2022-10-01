@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Test report
-          path: app/build/reports
+          path: app/build/reports/
 
   build-apks:
     runs-on: ubuntu-latest

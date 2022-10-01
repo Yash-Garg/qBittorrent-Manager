@@ -2,9 +2,12 @@ package dev.yashgarg.qbit.ui.config
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConnectionType
 import dev.yashgarg.qbit.data.models.ServerConfig
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -14,15 +17,13 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(MockitoJUnitRunner::class)
+@HiltAndroidTest
 class ConfigViewModelTest {
-    private lateinit var viewModel: ConfigViewModel
+
     private val baseUrl: String by lazy { System.getenv("base_url") }
     private val config =
         ServerConfig(
@@ -35,16 +36,20 @@ class ConfigViewModelTest {
             ConnectionType.HTTPS,
         )
 
-    @Mock private lateinit var cfgDao: ConfigDao
+    @get:Rule var hiltRule = HiltAndroidRule(this)
+
+    private lateinit var viewModel: ConfigViewModel
+    @Inject lateinit var configDao: ConfigDao
 
     @Before
     fun setUp() {
         Dispatchers.setMain(Dispatchers.Unconfined)
-        viewModel = ConfigViewModel(cfgDao)
+        hiltRule.inject()
+        viewModel = ConfigViewModel(configDao)
     }
 
     @Test
-    fun `check if form is valid by passing the details`() {
+    fun checkFormValidation() {
         runTest {
             viewModel.validateForm(
                 config.serverName,
@@ -62,7 +67,7 @@ class ConfigViewModelTest {
     }
 
     @Test
-    fun `check if client is connected and returns version`() {
+    fun checkClientConnection() {
         runTest {
             val response =
                 viewModel.testConfig(
@@ -72,7 +77,17 @@ class ConfigViewModelTest {
                 )
 
             when (response) {
-                is Ok -> assertEquals(response.value, "v4.4.5")
+                is Ok -> {
+                    viewModel.insert(
+                        config.serverName,
+                        config.baseUrl,
+                        config.port.toString(),
+                        config.connectionType.toString().lowercase(),
+                        config.username,
+                        config.password
+                    )
+                    assertEquals(response.value, "v4.4.5")
+                }
                 is Err -> throw response.error
             }
         }
