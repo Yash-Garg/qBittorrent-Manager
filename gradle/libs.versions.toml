@@ -3,6 +3,7 @@ axCore = "1.9.0"
 axAppcompat = "1.5.1"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.2"
+axTest = "1.4.0"
 googleMaterial = "1.7.0-rc01"
 agp = "8.0.0-alpha02"
 hilt = "2.44"
@@ -10,6 +11,7 @@ ktor = "2.1.2"
 lifecycle = "2.5.1"
 qbit = "1.0.0-SNAPSHOT"
 kotlin = "1.7.10"
+mockito = "4.8.0"
 room = "2.5.0-alpha03"
 spotless = "6.11.0"
 
@@ -25,6 +27,8 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "axTest" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "axTest" }
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
@@ -38,6 +42,7 @@ compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+google-dagger-hilt-compiler-android = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
@@ -51,7 +56,8 @@ tools-desugar = "com.android.tools:desugar_jdk_libs:2.0.0"
 tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
 tools-lottie = "com.airbnb.android:lottie:5.2.0"
 
-testing-junit = "junit:junit:4.13.2"
+junit = "junit:junit:4.13.2"
+kotlin-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -64,3 +70,5 @@ navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNa
 
 [bundles]
 compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]
+testing = ["junit"]
+testing-android = ["androidx-test-rules", "androidx-test-runner", "google-dagger-hilt-compiler-android", "kotlin-coroutines-test"]

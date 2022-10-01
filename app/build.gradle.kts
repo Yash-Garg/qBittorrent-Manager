@@ -32,7 +32,7 @@ android {
         versionName = "0.1"
 
         multiDexEnabled = true
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "dev.yashgarg.qbit.CustomTestRunner"
         setProperty("archivesBaseName", "${defaultConfig.applicationId}-$commitHash")
     }
 
@@ -112,7 +112,9 @@ dependencies {
     implementation(libs.tools.kotlin.result)
     implementation(libs.tools.cascade)
     implementation(libs.tools.lottie)
-    testImplementation(libs.testing.junit)
 
+    kaptAndroidTest(libs.google.dagger.hilt.compiler.android)
+    testImplementation(libs.bundles.testing)
+    androidTestImplementation(libs.bundles.testing.android)
     coreLibraryDesugaring(libs.tools.desugar)
 }

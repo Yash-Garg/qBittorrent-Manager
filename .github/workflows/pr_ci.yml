@@ -54,13 +54,16 @@ jobs:
         with:
           arguments: test
           gradle-home-cache-cleanup: true
+        env:
+          base_url: ${{ secrets.BASE_URL }}
+          password: ${{ secrets.PASSWORD }}
 
       - name: (Fail-only) Upload test report
         if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: Test report
-          path: app/build/reports
+          path: app/build/reports/
 
   build-apks:
     runs-on: ubuntu-latest
