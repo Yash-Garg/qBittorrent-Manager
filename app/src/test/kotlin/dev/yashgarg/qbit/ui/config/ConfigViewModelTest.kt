@@ -4,6 +4,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConnectionType
+import dev.yashgarg.qbit.data.models.ServerConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -23,6 +24,16 @@ import org.mockito.junit.MockitoJUnitRunner
 class ConfigViewModelTest {
     private lateinit var viewModel: ConfigViewModel
     private val baseUrl: String by lazy { System.getenv("base_url") }
+    private val config =
+        ServerConfig(
+            0,
+            "TestServer",
+            baseUrl,
+            443,
+            "admin",
+            "windhoes",
+            ConnectionType.HTTPS,
+        )
 
     @Mock private lateinit var cfgDao: ConfigDao
 
@@ -36,12 +47,12 @@ class ConfigViewModelTest {
     fun `check if form is valid by passing the details`() {
         runTest {
             viewModel.validateForm(
-                "TestServer",
-                "127.0.0.1",
-                "55455",
-                ConnectionType.HTTP.toString().lowercase(),
-                "yash",
-                "adminadmin"
+                config.serverName,
+                config.baseUrl,
+                config.port.toString(),
+                config.connectionType.toString().lowercase(),
+                config.username,
+                config.password
             )
 
             assertTrue(
@@ -55,9 +66,9 @@ class ConfigViewModelTest {
         runTest {
             val response =
                 viewModel.testConfig(
-                    baseUrl,
-                    "admin",
-                    "windhoes",
+                    "${config.connectionType}://${config.baseUrl}",
+                    config.username,
+                    config.password,
                 )
 
             when (response) {
