@@ -107,11 +107,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Echo Variables
-        run: |
-          echo "$base_url"
-          echo "$password"
-
       - name: Set up JDK
         uses: actions/setup-java@v3.5.1
         with:

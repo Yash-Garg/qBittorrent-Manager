@@ -34,6 +34,10 @@ android {
         multiDexEnabled = true
         testInstrumentationRunner = "dev.yashgarg.qbit.CustomTestRunner"
         setProperty("archivesBaseName", "${defaultConfig.applicationId}-$commitHash")
+
+        // Set some buildConfig fields for using in androidTests
+        buildConfigField("String", "BASE_URL", "\"${System.getenv("base_url")}\"")
+        buildConfigField("String", "PASSWORD", "\"${System.getenv("password")}\"")
     }
 
     buildTypes {
