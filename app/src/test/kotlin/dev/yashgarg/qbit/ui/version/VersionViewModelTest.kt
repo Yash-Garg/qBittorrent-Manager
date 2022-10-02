@@ -1,7 +1,7 @@
 package dev.yashgarg.qbit.ui.version
 
 import dev.yashgarg.qbit.FakeClientManager
-import dev.yashgarg.qbit.MainCoroutineRule
+import dev.yashgarg.qbit.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
@@ -17,7 +17,7 @@ class VersionViewModelTest {
     private lateinit var viewModel: VersionViewModel
     private val clientManager = FakeClientManager()
 
-    @get:Rule var mainCoroutineRule = MainCoroutineRule()
+    @get:Rule val mainDispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {
@@ -25,12 +25,10 @@ class VersionViewModelTest {
     }
 
     @Test
-    fun `check if client versions are correct`() {
-        mainCoroutineRule.testScope.runTest {
-            viewModel.uiState.drop(1).first().apply {
-                assertEquals(appVersion, "v4.4.5")
-                assertEquals(apiVersion, "2.8.5")
-            }
+    fun `check if client versions are correct`() = runTest {
+        viewModel.uiState.drop(1).first().apply {
+            assertEquals(appVersion, "v4.4.5")
+            assertEquals(apiVersion, "2.8.5")
         }
     }
 }

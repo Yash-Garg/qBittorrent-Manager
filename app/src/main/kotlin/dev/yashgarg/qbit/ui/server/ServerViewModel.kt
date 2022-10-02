@@ -7,12 +7,10 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.runCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
-import dev.yashgarg.qbit.di.ApplicationScope
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import dev.yashgarg.qbit.utils.ExceptionHandler
 import java.net.UnknownHostException
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -21,12 +19,7 @@ import qbittorrent.QBittorrentClient
 import qbittorrent.QBittorrentException
 
 @HiltViewModel
-class ServerViewModel
-@Inject
-constructor(
-    private val clientManager: ClientManager,
-    @ApplicationScope private val coroutineScope: CoroutineScope,
-) : ViewModel() {
+class ServerViewModel @Inject constructor(private val clientManager: ClientManager) : ViewModel() {
     private val _uiState = MutableStateFlow(ServerState())
     val uiState = _uiState.asStateFlow()
 
@@ -43,7 +36,7 @@ constructor(
     fun refresh() {
         syncJob?.cancel()
         syncJob =
-            coroutineScope.launch {
+            viewModelScope.launch {
                 val clientResult = clientManager.checkAndGetClient()
                 if (clientResult != null) {
                     client = clientResult

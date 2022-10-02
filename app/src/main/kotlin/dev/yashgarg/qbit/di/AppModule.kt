@@ -28,7 +28,7 @@ class AppModule {
     @ApplicationScope @Provides fun provideCoroutineScope() = MainScope()
 
     @Provides
-    fun provideMainClientManager(clientManager: ClientManagerImpl): ClientManager = clientManager
+    fun provideClientManager(clientManager: ClientManagerImpl): ClientManager = clientManager
 }
 
 @Qualifier @Retention(AnnotationRetention.BINARY) annotation class ApplicationScope
