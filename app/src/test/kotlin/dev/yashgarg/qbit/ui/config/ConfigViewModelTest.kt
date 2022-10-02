@@ -2,10 +2,9 @@ package dev.yashgarg.qbit.ui.config
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import dev.yashgarg.qbit.FakeClientManager
 import dev.yashgarg.qbit.MainCoroutineRule
 import dev.yashgarg.qbit.data.daos.ConfigDao
-import dev.yashgarg.qbit.data.models.ConnectionType
-import dev.yashgarg.qbit.data.models.ServerConfig
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -21,19 +20,9 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ConfigViewModelTest {
     private lateinit var viewModel: ConfigViewModel
-    private val baseUrl: String by lazy { System.getenv("base_url") }
-    private val password: String by lazy { System.getenv("password") }
 
-    private val config =
-        ServerConfig(
-            0,
-            "TestServer",
-            baseUrl,
-            443,
-            "admin",
-            password,
-            ConnectionType.HTTPS,
-        )
+    private val clientManager = FakeClientManager()
+    private val config = clientManager.config
 
     @Mock private lateinit var cfgDao: ConfigDao
 
