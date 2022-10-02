@@ -2,55 +2,51 @@ package dev.yashgarg.qbit.ui.config
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import dev.yashgarg.qbit.BuildConfig
+import dev.yashgarg.qbit.MainCoroutineRule
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConnectionType
 import dev.yashgarg.qbit.data.models.ServerConfig
-import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@HiltAndroidTest
+@RunWith(MockitoJUnitRunner::class)
 class ConfigViewModelTest {
+    private lateinit var viewModel: ConfigViewModel
+    private val baseUrl: String by lazy { System.getenv("base_url") }
+    private val password: String by lazy { System.getenv("password") }
 
     private val config =
         ServerConfig(
             0,
             "TestServer",
-            BuildConfig.BASE_URL,
+            baseUrl,
             443,
             "admin",
-            BuildConfig.PASSWORD,
+            password,
             ConnectionType.HTTPS,
         )
 
-    @get:Rule var hiltRule = HiltAndroidRule(this)
+    @Mock private lateinit var cfgDao: ConfigDao
 
-    private lateinit var viewModel: ConfigViewModel
-    @Inject lateinit var configDao: ConfigDao
+    @get:Rule var mainCoroutineRule = MainCoroutineRule()
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        hiltRule.inject()
-        viewModel = ConfigViewModel(configDao)
+        viewModel = ConfigViewModel(cfgDao)
     }
 
     @Test
-    fun checkFormValidation() {
-        runTest {
+    fun `check if form is valid by passing the details`() {
+        mainCoroutineRule.testScope.runTest {
             viewModel.validateForm(
                 config.serverName,
                 config.baseUrl,
@@ -67,8 +63,8 @@ class ConfigViewModelTest {
     }
 
     @Test
-    fun checkClientConnection() {
-        runTest {
+    fun `check if client is connected and returns version`() {
+        mainCoroutineRule.testScope.runTest {
             val response =
                 viewModel.testConfig(
                     "${config.connectionType}://${config.baseUrl}",
@@ -77,24 +73,9 @@ class ConfigViewModelTest {
                 )
 
             when (response) {
-                is Ok -> {
-                    viewModel.insert(
-                        config.serverName,
-                        config.baseUrl,
-                        config.port.toString(),
-                        config.connectionType.toString().lowercase(),
-                        config.username,
-                        config.password
-                    )
-                    assertEquals(response.value, "v4.4.5")
-                }
+                is Ok -> assertEquals(response.value, "v4.4.5")
                 is Err -> throw response.error
             }
         }
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 }

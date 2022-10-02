@@ -27,8 +27,6 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "axTest" }
-androidx-test-rules = { module = "androidx.test:rules", version.ref = "axTest" }
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
@@ -42,7 +40,6 @@ compose-theme-adapter = "com.google.android.material:compose-theme-adapter-3:1.0
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-google-dagger-hilt-compiler-android = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
@@ -58,6 +55,8 @@ tools-lottie = "com.airbnb.android:lottie:5.2.0"
 
 junit = "junit:junit:4.13.2"
 kotlin-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:4.0.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -70,5 +69,4 @@ navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNa
 
 [bundles]
 compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]
-testing = ["junit"]
-testing-android = ["androidx-test-rules", "androidx-test-runner", "google-dagger-hilt-compiler-android", "kotlin-coroutines-test"]
+testing = ["junit", "mockito-core", "mockito-kotlin", "kotlin-coroutines-test"]
