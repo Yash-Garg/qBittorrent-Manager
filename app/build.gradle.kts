@@ -32,12 +32,8 @@ android {
         versionName = "0.1"
 
         multiDexEnabled = true
-        testInstrumentationRunner = "dev.yashgarg.qbit.CustomTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "${defaultConfig.applicationId}-$commitHash")
-
-        // Set some buildConfig fields for using in androidTests
-        buildConfigField("String", "BASE_URL", "\"${System.getenv("base_url")}\"")
-        buildConfigField("String", "PASSWORD", "\"${System.getenv("password")}\"")
     }
 
     buildTypes {
@@ -117,8 +113,6 @@ dependencies {
     implementation(libs.tools.cascade)
     implementation(libs.tools.lottie)
 
-    kaptAndroidTest(libs.google.dagger.hilt.compiler.android)
     testImplementation(libs.bundles.testing)
-    androidTestImplementation(libs.bundles.testing.android)
     coreLibraryDesugaring(libs.tools.desugar)
 }

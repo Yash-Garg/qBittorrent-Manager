@@ -15,18 +15,19 @@ import javax.inject.Singleton
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import qbittorrent.QBittorrentClient
 
 @Singleton
-class ClientManager
+class ClientManagerImpl
 @Inject
 constructor(
     private val configDao: ConfigDao,
     @ApplicationScope coroutineScope: CoroutineScope,
-) {
+) : ClientManager {
     private val _configStatus = MutableSharedFlow<ConfigStatus>()
-    val configStatus = _configStatus.asSharedFlow()
+    override val configStatus = _configStatus.asSharedFlow()
 
     private var client: QBittorrentClient? = null
 
@@ -45,7 +46,7 @@ constructor(
         }
     }
 
-    suspend fun checkAndGetClient(): QBittorrentClient? {
+    override suspend fun checkAndGetClient(): QBittorrentClient? {
         return when (val result = runCatching { getClient() }) {
             is Ok -> {
                 this.client = result.value
@@ -70,13 +71,18 @@ constructor(
                             if (config.port != 443) ":${config.port}" else "",
                         config.username,
                         config.password,
-                        syncInterval = syncInterval,
-                        httpClient = httpClient,
+                        syncInterval = ClientManager.syncInterval,
+                        httpClient = ClientManager.httpClient,
                         dispatcher = Dispatchers.Default,
                     )
             }
             return@withContext requireNotNull(client)
         }
+}
+
+interface ClientManager {
+    val configStatus: SharedFlow<ConfigStatus>
+    suspend fun checkAndGetClient(): QBittorrentClient?
 
     companion object {
         const val tag = "ClientManager"
