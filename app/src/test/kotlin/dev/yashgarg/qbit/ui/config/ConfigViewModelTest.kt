@@ -3,7 +3,7 @@ package dev.yashgarg.qbit.ui.config
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import dev.yashgarg.qbit.FakeClientManager
-import dev.yashgarg.qbit.MainCoroutineRule
+import dev.yashgarg.qbit.MainDispatcherRule
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -26,7 +26,7 @@ class ConfigViewModelTest {
 
     @Mock private lateinit var cfgDao: ConfigDao
 
-    @get:Rule var mainCoroutineRule = MainCoroutineRule()
+    @get:Rule val mainDispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {
@@ -34,37 +34,31 @@ class ConfigViewModelTest {
     }
 
     @Test
-    fun `check if form is valid by passing the details`() {
-        mainCoroutineRule.testScope.runTest {
-            viewModel.validateForm(
-                config.serverName,
-                config.baseUrl,
-                config.port.toString(),
-                config.connectionType.toString().lowercase(),
-                config.username,
-                config.password
-            )
+    fun `check if form is valid by passing the details`() = runTest {
+        viewModel.validateForm(
+            config.serverName,
+            config.baseUrl,
+            config.port.toString(),
+            config.connectionType.toString().lowercase(),
+            config.username,
+            config.password
+        )
 
-            assertTrue(
-                viewModel.validationEvents.first() == ConfigViewModel.ValidationEvent.Success
-            )
-        }
+        assertTrue(viewModel.validationEvents.first() == ConfigViewModel.ValidationEvent.Success)
     }
 
     @Test
-    fun `check if client is connected and returns version`() {
-        mainCoroutineRule.testScope.runTest {
-            val response =
-                viewModel.testConfig(
-                    "${config.connectionType}://${config.baseUrl}",
-                    config.username,
-                    config.password,
-                )
+    fun `check if client is connected and returns version`() = runTest {
+        val response =
+            viewModel.testConfig(
+                "${config.connectionType}://${config.baseUrl}",
+                config.username,
+                config.password,
+            )
 
-            when (response) {
-                is Ok -> assertEquals(response.value, "v4.4.5")
-                is Err -> throw response.error
-            }
+        when (response) {
+            is Ok -> assertEquals(response.value, "v4.4.5")
+            is Err -> throw response.error
         }
     }
 }
