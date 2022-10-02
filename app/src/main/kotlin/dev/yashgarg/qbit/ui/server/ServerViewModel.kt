@@ -56,18 +56,22 @@ constructor(
 
     fun addTorrentUrl(url: String) {
         viewModelScope.launch {
-            when (runCatching { client.addTorrent { urls.add(url) } }) {
+            when (val result = runCatching { client.addTorrent { urls.add(url) } }) {
                 is Ok -> _status.emit("Successfully added torrent")
-                is Err -> _status.emit("Failed to add torrent url")
+                is Err -> _status.emit(result.error.message ?: "Failed to add torrent url")
             }
         }
     }
 
     fun addTorrentFile(bytes: ByteArray) {
         viewModelScope.launch {
-            when (runCatching { client.addTorrent { rawTorrents["torrent_file"] = bytes } }) {
+            when (
+                val result = runCatching {
+                    client.addTorrent { rawTorrents["torrent_file"] = bytes }
+                }
+            ) {
                 is Ok -> _status.emit("Successfully added file")
-                is Err -> _status.emit("Failed to add file")
+                is Err -> _status.emit(result.error.message ?: "Failed to add file")
             }
         }
     }
