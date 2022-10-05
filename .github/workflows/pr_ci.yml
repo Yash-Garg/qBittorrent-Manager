@@ -1,18 +1,21 @@
 name: Android CI
 
-on: pull_request
+on: [ push, pull_request ]
 
 env:
   base_url: ${{ secrets.BASE_URL }}
   password: ${{ secrets.PASSWORD }}
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   check-codestyle:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.1.0
@@ -36,7 +39,10 @@ jobs:
           gradle-home-cache-cleanup: true
 
   unit-tests:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.1.0
@@ -45,7 +51,7 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-        
+
       - name: Set up JDK
         uses: actions/setup-java@v3.5.1
         with:
@@ -67,7 +73,10 @@ jobs:
           path: app/build/reports/tests/
 
   build-apks:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.1.0
@@ -89,7 +98,7 @@ jobs:
         with:
           arguments: assembleDebug
           gradle-home-cache-cleanup: true
-      
+
       - name: Upload debug APKs
         uses: actions/upload-artifact@v3
         with:
