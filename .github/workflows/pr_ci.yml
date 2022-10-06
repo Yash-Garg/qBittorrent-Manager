@@ -1,6 +1,10 @@
 name: Android CI
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
 
 env:
   base_url: ${{ secrets.BASE_URL }}
