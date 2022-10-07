@@ -1,6 +1,7 @@
 [versions]
 axCore = "1.9.0"
 axAppcompat = "1.5.1"
+axActivity = "1.6.0"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.2"
 axTest = "1.4.0"
@@ -17,6 +18,7 @@ spotless = "6.11.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
