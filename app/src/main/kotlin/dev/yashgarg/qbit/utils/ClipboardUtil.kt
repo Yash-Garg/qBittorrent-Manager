@@ -24,7 +24,7 @@ object ClipboardUtil {
         context: Context,
         label: String,
         text: String,
-        message: String = "Copied to clipboard!"
+        message: String = "Copied to clipboard"
     ) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(label, text)

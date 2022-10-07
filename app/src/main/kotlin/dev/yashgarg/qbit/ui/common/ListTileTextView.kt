@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.utils.ClipboardUtil
 
 class ListTileTextView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private var titleTv: TextView
@@ -27,6 +28,15 @@ class ListTileTextView(context: Context, attrs: AttributeSet) : LinearLayout(con
         try {
             titleTv.text = typedArr.getString(R.styleable.ListTileTextView_title)
             subtitleTv.text = subtitle
+
+            this.setOnLongClickListener {
+                ClipboardUtil.copyToClipboard(
+                    context,
+                    titleTv.text.toString(),
+                    "${titleTv.text} | $subtitle"
+                )
+                true
+            }
         } finally {
             typedArr.recycle()
         }
