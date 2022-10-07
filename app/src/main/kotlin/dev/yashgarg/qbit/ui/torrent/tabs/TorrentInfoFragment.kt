@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.R as AppR
+import dev.yashgarg.qbit.common.R
 import dev.yashgarg.qbit.databinding.TorrentInfoFragmentBinding
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsState
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
@@ -17,7 +18,7 @@ import dev.yashgarg.qbit.utils.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class TorrentInfoFragment : Fragment(R.layout.torrent_info_fragment) {
+class TorrentInfoFragment : Fragment(AppR.layout.torrent_info_fragment) {
     private val binding by viewBinding(TorrentInfoFragmentBinding::bind)
     private val viewModel by
         viewModels<TorrentDetailsViewModel>(ownerProducer = { requireParentFragment() })
