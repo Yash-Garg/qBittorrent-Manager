@@ -21,7 +21,7 @@ import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
-import dev.yashgarg.qbit.utils.StatusWorker
+import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
 
 @AndroidEntryPoint

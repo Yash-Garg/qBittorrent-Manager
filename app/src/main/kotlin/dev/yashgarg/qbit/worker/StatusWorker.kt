@@ -1,4 +1,4 @@
-package dev.yashgarg.qbit.utils
+package dev.yashgarg.qbit.worker
 
 import android.content.Context
 import androidx.core.app.NotificationCompat.Action
@@ -14,6 +14,7 @@ import dagger.assisted.AssistedInject
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.notifications.AppNotificationManager
+import dev.yashgarg.qbit.utils.toHumanReadable
 
 @HiltWorker
 class StatusWorker
@@ -41,7 +42,7 @@ constructor(
                     AppNotificationManager.createNotification(
                         applicationContext,
                         "Server State: Connected",
-                        "DL: ${state.dlInfoSpeed.toHumanReadable()} | UL: ${state.upInfoSpeed.toHumanReadable()}",
+                        "DL: ${state.dlInfoSpeed.toHumanReadable()}/s | UL: ${state.upInfoSpeed.toHumanReadable()}/s",
                         R.drawable.baseline_sync,
                         true,
                         listOf(Action(null, "Close", intent))
