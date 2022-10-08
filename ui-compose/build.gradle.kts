@@ -9,6 +9,8 @@ android {
     namespace = "dev.yashgarg.qbit.ui.compose"
     compileSdk = 33
 
+    defaultConfig { minSdk = 24 }
+
     buildFeatures {
         compose = true
         composeOptions {
@@ -21,6 +23,7 @@ android {
 
 dependencies {
     api(libs.bundles.compose)
+    implementation(libs.androidx.glance)
     implementation(libs.compose.material.icons)
     implementation(projects.common)
     implementation(projects.bonsaiCore)

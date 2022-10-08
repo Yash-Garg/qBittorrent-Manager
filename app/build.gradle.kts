@@ -29,7 +29,7 @@ android {
         minSdk = 24
         targetSdk = 33
         versionCode = 1
-        versionName = "0.1"
+        versionName = "0.1-$commitHash"
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -40,6 +40,7 @@ android {
         release {
             isShrinkResources = true
             isMinifyEnabled = true
+            versionNameSuffix = "-release"
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -86,6 +87,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.glance)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
