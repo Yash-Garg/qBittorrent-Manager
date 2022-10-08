@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
+import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,11 +52,18 @@ class MainActivity : AppCompatActivity() {
             clientManager.configStatus.collect { status ->
                 when (status) {
                     ConfigStatus.EXISTS -> {
+                        val constraints =
+                            Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.CONNECTED)
+                                .build()
+
                         WorkManager.getInstance(applicationContext)
                             .enqueueUniqueWork(
                                 "status_update",
                                 ExistingWorkPolicy.REPLACE,
-                                OneTimeWorkRequestBuilder<StatusWorker>().build()
+                                OneTimeWorkRequestBuilder<StatusWorker>()
+                                    .setConstraints(constraints)
+                                    .build()
                             )
 
                         findNavController(this@MainActivity, R.id.nav_host_fragment)
