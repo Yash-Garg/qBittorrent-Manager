@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -59,7 +60,8 @@ object AppNotificationManager {
         content: String,
         @DrawableRes smallIcon: Int,
         persistent: Boolean = false,
-        actions: List<NotificationCompat.Action> = emptyList()
+        actions: List<NotificationCompat.Action> = emptyList(),
+        contentIntent: PendingIntent? = null
     ): Notification {
         val builder =
             NotificationCompat.Builder(context, context.getString(R.string.status_channel_id))
@@ -67,6 +69,7 @@ object AppNotificationManager {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(contentIntent)
                 .setAutoCancel(!persistent)
                 .setOngoing(persistent)
                 .setOnlyAlertOnce(persistent)
