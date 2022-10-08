@@ -26,7 +26,7 @@ constructor(
     private val configDao: ConfigDao,
     @ApplicationScope coroutineScope: CoroutineScope,
 ) : ClientManager {
-    private val _configStatus = MutableSharedFlow<ConfigStatus>()
+    private val _configStatus = MutableSharedFlow<ConfigStatus>(replay = 1)
     override val configStatus = _configStatus.asSharedFlow()
 
     private var client: QBittorrentClient? = null

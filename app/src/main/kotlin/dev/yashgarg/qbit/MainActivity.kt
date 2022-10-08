@@ -13,9 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
-import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +23,6 @@ import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
 import dev.yashgarg.qbit.utils.StatusWorker
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -48,21 +45,16 @@ class MainActivity : AppCompatActivity() {
             checkPermissions(applicationContext)
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenResumed {
             clientManager.configStatus.collect { status ->
                 when (status) {
                     ConfigStatus.EXISTS -> {
-                        val constraints =
-                            Constraints.Builder()
-                                .setRequiredNetworkType(NetworkType.CONNECTED)
-                                .build()
-
                         WorkManager.getInstance(applicationContext)
                             .enqueueUniqueWork(
                                 "status_update",
                                 ExistingWorkPolicy.REPLACE,
                                 OneTimeWorkRequestBuilder<StatusWorker>()
-                                    .setConstraints(constraints)
+                                    .setConstraints(StatusWorker.constraints)
                                     .build()
                             )
 

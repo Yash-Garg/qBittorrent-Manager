@@ -3,8 +3,10 @@ package dev.yashgarg.qbit.utils
 import android.content.Context
 import androidx.core.app.NotificationCompat.Action
 import androidx.hilt.work.HiltWorker
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
+import androidx.work.NetworkType
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
@@ -47,5 +49,10 @@ constructor(
                 )
             )
         }
+    }
+
+    companion object {
+        val constraints =
+            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
     }
 }
