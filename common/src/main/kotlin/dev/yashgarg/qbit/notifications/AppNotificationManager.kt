@@ -2,6 +2,7 @@ package dev.yashgarg.qbit.notifications
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -52,23 +53,29 @@ object AppNotificationManager {
         }
     }
 
-    // We already check for permissions later in the process, so we can suppress this lint
-    @SuppressLint("MissingPermission")
-    fun sendNotification(
+    fun createNotification(
         context: Context,
         title: String,
         content: String,
-        notificationId: Int,
-        @DrawableRes smallIcon: Int
-    ) {
+        @DrawableRes smallIcon: Int,
+        persistent: Boolean = false,
+    ): Notification {
         val builder =
             NotificationCompat.Builder(context, context.getString(R.string.status_channel_id))
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
+                .setAutoCancel(!persistent)
+                .setOngoing(persistent)
+                .setOnlyAlertOnce(persistent)
 
+        return builder.build()
+    }
+
+    // We already check for permissions later in the process, so we can suppress this lint
+    @SuppressLint("MissingPermission")
+    fun sendNotification(context: Context, notificationId: Int, notification: Notification) {
         val sendNotif =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 checkPermission(context)
@@ -77,9 +84,12 @@ object AppNotificationManager {
             }
 
         if (sendNotif) {
-            with(NotificationManagerCompat.from(context)) {
-                notify(notificationId, builder.build())
-            }
+            updateNotification(context, notificationId, notification)
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun updateNotification(context: Context, notificationId: Int, notification: Notification) {
+        with(NotificationManagerCompat.from(context)) { notify(notificationId, notification) }
     }
 }
