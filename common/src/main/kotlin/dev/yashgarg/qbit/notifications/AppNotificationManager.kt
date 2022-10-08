@@ -1,13 +1,17 @@
 package dev.yashgarg.qbit.notifications
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import dev.yashgarg.qbit.common.R
 
@@ -32,17 +36,50 @@ object AppNotificationManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun checkPermission(context: Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+        } else true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun requestPermission(context: Context, permissionLauncher: ActivityResultLauncher<String>) {
-        val hasPermission =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            } else true
+        val hasPermission = checkPermission(context)
 
         if (!hasPermission) {
             permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    // We already check for permissions later in the process, so we can suppress this lint
+    @SuppressLint("MissingPermission")
+    fun sendNotification(
+        context: Context,
+        title: String,
+        content: String,
+        notificationId: Int,
+        @DrawableRes smallIcon: Int
+    ) {
+        val builder =
+            NotificationCompat.Builder(context, context.getString(R.string.status_channel_id))
+                .setSmallIcon(smallIcon)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+
+        val sendNotif =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                checkPermission(context)
+            } else {
+                true
+            }
+
+        if (sendNotif) {
+            with(NotificationManagerCompat.from(context)) {
+                notify(notificationId, builder.build())
+            }
         }
     }
 }
