@@ -5,9 +5,11 @@ axActivity = "1.6.0"
 axConstraintlayout = "2.1.4"
 axNavigation = "2.5.2"
 axTest = "1.4.0"
+axWork = "2.7.1"
 googleMaterial = "1.7.0-rc01"
 agp = "8.0.0-alpha03"
 hilt = "2.44"
+axHilt = "1.0.0"
 ktor = "2.1.2"
 lifecycle = "2.5.1"
 qbit = "1.0.0-SNAPSHOT"
@@ -29,6 +31,9 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-work-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "axWork" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "axHilt" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "axHilt" }
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 

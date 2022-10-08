@@ -59,6 +59,7 @@ object AppNotificationManager {
         content: String,
         @DrawableRes smallIcon: Int,
         persistent: Boolean = false,
+        actions: List<NotificationCompat.Action> = emptyList()
     ): Notification {
         val builder =
             NotificationCompat.Builder(context, context.getString(R.string.status_channel_id))
@@ -70,6 +71,7 @@ object AppNotificationManager {
                 .setOngoing(persistent)
                 .setOnlyAlertOnce(persistent)
 
+        actions.forEach { builder.addAction(it) }
         return builder.build()
     }
 

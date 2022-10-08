@@ -13,11 +13,15 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
+import dev.yashgarg.qbit.utils.StatusWorker
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -46,6 +50,13 @@ class MainActivity : AppCompatActivity() {
             clientManager.configStatus.collect { status ->
                 when (status) {
                     ConfigStatus.EXISTS -> {
+                        WorkManager.getInstance(applicationContext)
+                            .enqueueUniqueWork(
+                                "status_update",
+                                ExistingWorkPolicy.REPLACE,
+                                OneTimeWorkRequestBuilder<StatusWorker>().build()
+                            )
+
                         findNavController(this@MainActivity, R.id.nav_host_fragment)
                             .navigate(R.id.action_homeFragment_to_serverFragment)
                     }
