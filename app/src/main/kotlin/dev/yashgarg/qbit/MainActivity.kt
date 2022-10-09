@@ -20,10 +20,14 @@ import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConfigStatus
+import dev.yashgarg.qbit.data.preferences.serverPreferencesStore
 import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
 import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -47,22 +51,16 @@ class MainActivity : AppCompatActivity() {
             checkPermissions(applicationContext)
         }
 
+        serverPreferencesStore.data
+            .map { it.showNotification }
+            .onEach(::launchWorkManager)
+            .launchIn(lifecycleScope)
+
         lifecycleScope.launch {
             lifecycle.whenResumed {
                 clientManager.configStatus.collect { status ->
                     when (status) {
                         ConfigStatus.EXISTS -> {
-                            if (AppNotificationManager.checkPermission(applicationContext)) {
-                                WorkManager.getInstance(applicationContext)
-                                    .enqueueUniqueWork(
-                                        "status_update",
-                                        ExistingWorkPolicy.REPLACE,
-                                        OneTimeWorkRequestBuilder<StatusWorker>()
-                                            .setConstraints(StatusWorker.constraints)
-                                            .build()
-                                    )
-                            }
-
                             findNavController(this@MainActivity, R.id.nav_host_fragment)
                                 .navigate(R.id.action_homeFragment_to_serverFragment)
                         }
@@ -81,5 +79,21 @@ class MainActivity : AppCompatActivity() {
             }
 
         AppNotificationManager.requestPermission(context, permissionLauncher)
+    }
+
+    private fun launchWorkManager(show: Boolean) {
+        val workTag = "status_update"
+        val workManager = WorkManager.getInstance(applicationContext)
+        if (show && AppNotificationManager.checkPermission(applicationContext)) {
+            workManager.enqueueUniqueWork(
+                workTag,
+                ExistingWorkPolicy.REPLACE,
+                OneTimeWorkRequestBuilder<StatusWorker>()
+                    .setConstraints(StatusWorker.constraints)
+                    .build()
+            )
+        } else {
+            workManager.cancelAllWorkByTag(workTag)
+        }
     }
 }

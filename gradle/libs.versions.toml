@@ -3,6 +3,7 @@ axCore = "1.9.0"
 axAppcompat = "1.5.1"
 axActivity = "1.6.0"
 axConstraintlayout = "2.1.4"
+axDatastore = "1.0.0"
 axNavigation = "2.5.2"
 axTest = "1.4.0"
 axWork = "2.7.1"
@@ -23,6 +24,7 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" 
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
+androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -50,6 +52,7 @@ google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", vers
 
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
 
 qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
 qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }

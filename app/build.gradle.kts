@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -107,6 +108,7 @@ dependencies {
 
     implementation(libs.ktor.android)
     implementation(libs.ktor.logging)
+    implementation(libs.kotlinx.serialization)
     implementation(libs.qbittorrent.client)
 
     implementation(projects.uiCompose)
