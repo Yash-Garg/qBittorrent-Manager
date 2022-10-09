@@ -52,7 +52,7 @@ constructor(
                     1,
                     AppNotificationManager.createNotification(
                         applicationContext,
-                        "Server State: Connected",
+                        "Server State • Connected",
                         "DL: ${state.dlInfoSpeed.toHumanReadable()}/s | UL: ${state.upInfoSpeed.toHumanReadable()}/s",
                         R.drawable.baseline_sync,
                         true,

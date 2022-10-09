@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">qbittorrent Remote</string>
+    <string name="app_name">qBittorrent Remote</string>
     <string name="add_server">Add server</string>
     <string name="welcome_text">Welcome to qBittorrent Remote</string>
     <string name="press_button">Use the button below to add a server</string>
@@ -74,4 +74,7 @@
     <!-- Notifications -->
     <string name="status_channel_id">qBit-Channel-1</string>
     <string name="status_updates">Status Updates</string>
+
+    <!-- Dialogs -->
+    <string name="peer_details">IP: %1$s\nPort: %2$d\nCountry: %3$s</string>
 </resources>

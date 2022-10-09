@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenResumed
 import androidx.navigation.Navigation.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -23,6 +24,7 @@ import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
 import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -45,23 +47,25 @@ class MainActivity : AppCompatActivity() {
             checkPermissions(applicationContext)
         }
 
-        lifecycleScope.launchWhenResumed {
-            clientManager.configStatus.collect { status ->
-                when (status) {
-                    ConfigStatus.EXISTS -> {
-                        WorkManager.getInstance(applicationContext)
-                            .enqueueUniqueWork(
-                                "status_update",
-                                ExistingWorkPolicy.REPLACE,
-                                OneTimeWorkRequestBuilder<StatusWorker>()
-                                    .setConstraints(StatusWorker.constraints)
-                                    .build()
-                            )
+        lifecycleScope.launch {
+            lifecycle.whenResumed {
+                clientManager.configStatus.collect { status ->
+                    when (status) {
+                        ConfigStatus.EXISTS -> {
+                            WorkManager.getInstance(applicationContext)
+                                .enqueueUniqueWork(
+                                    "status_update",
+                                    ExistingWorkPolicy.REPLACE,
+                                    OneTimeWorkRequestBuilder<StatusWorker>()
+                                        .setConstraints(StatusWorker.constraints)
+                                        .build()
+                                )
 
-                        findNavController(this@MainActivity, R.id.nav_host_fragment)
-                            .navigate(R.id.action_homeFragment_to_serverFragment)
+                            findNavController(this@MainActivity, R.id.nav_host_fragment)
+                                .navigate(R.id.action_homeFragment_to_serverFragment)
+                        }
+                        ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                     }
-                    ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                 }
             }
         }

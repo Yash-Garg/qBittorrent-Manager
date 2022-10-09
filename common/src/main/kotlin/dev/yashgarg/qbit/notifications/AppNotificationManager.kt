@@ -28,7 +28,7 @@ object AppNotificationManager {
                 NotificationChannel(
                     context.getString(R.string.status_channel_id),
                     context.getString(R.string.status_updates),
-                    NotificationManager.IMPORTANCE_HIGH
+                    NotificationManager.IMPORTANCE_DEFAULT
                 )
 
             val notificationManager =
@@ -68,7 +68,7 @@ object AppNotificationManager {
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(contentIntent)
                 .setAutoCancel(!persistent)
                 .setOngoing(persistent)

@@ -11,14 +11,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.composethemeadapter3.Mdc3Theme
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.common.R as CommonR
 import dev.yashgarg.qbit.databinding.TorrentPeersFragmentBinding
 import dev.yashgarg.qbit.ui.compose.Center
 import dev.yashgarg.qbit.ui.compose.ListTile
+import dev.yashgarg.qbit.ui.compose.theme.AppTypography
+import dev.yashgarg.qbit.ui.compose.theme.bodyMediumPrimary
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsState
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
 import dev.yashgarg.qbit.utils.ClipboardUtil
@@ -57,7 +63,7 @@ fun PeersListView(state: TorrentDetailsState) {
     } else {
         val peers = requireNotNull(state.peers).peers.values.toList()
         LazyColumn {
-            itemsIndexed(peers) { _, peer ->
+            itemsIndexed(peers, key = { pos, peer -> "${peer.ip}-$pos" }) { _, peer ->
                 val openDialog = remember { mutableStateOf(false) }
                 val context = LocalContext.current
 
@@ -83,16 +89,37 @@ fun PeersListView(state: TorrentDetailsState) {
 
                 if (openDialog.value) {
                     AlertDialog(
-                        tonalElevation = 10.dp,
+                        tonalElevation = 5.dp,
                         onDismissRequest = { openDialog.value = false },
-                        title = { Text(text = "Peer details") },
-                        text = { Text(text = "Turned on by default") },
+                        title = { Text(text = "Peer details", style = AppTypography.titleLarge) },
+                        text = {
+                            Text(
+                                text =
+                                    String.format(
+                                        stringResource(CommonR.string.peer_details),
+                                        peer.ip,
+                                        peer.port,
+                                        peer.country
+                                    ),
+                                style =
+                                    AppTypography.bodyMedium.copy(
+                                        lineHeight = 25.sp,
+                                        fontSize = 15.sp
+                                    ),
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
                         confirmButton = {
-                            TextButton(onClick = { openDialog.value = false }) { Text("Ban Peer") }
+                            TextButton(onClick = { openDialog.value = false }) {
+                                Text("Ban Peer", style = bodyMediumPrimary)
+                            }
                         },
                         dismissButton = {
-                            TextButton(onClick = { openDialog.value = false }) { Text("Dismiss") }
-                        }
+                            TextButton(onClick = { openDialog.value = false }) {
+                                Text("Dismiss", style = bodyMediumPrimary)
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
