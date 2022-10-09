@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenResumed
 import androidx.navigation.Navigation.findNavController
@@ -20,7 +21,7 @@ import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConfigStatus
-import dev.yashgarg.qbit.data.preferences.serverPreferencesStore
+import dev.yashgarg.qbit.data.models.ServerPreferences
 import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
 import dev.yashgarg.qbit.worker.StatusWorker
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     @Inject lateinit var clientManager: ClientManager
+    @Inject lateinit var serverPrefsStore: DataStore<ServerPreferences>
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             checkPermissions(applicationContext)
         }
 
-        serverPreferencesStore.data
+        serverPrefsStore.data
             .map { it.showNotification }
             .onEach(::launchWorkManager)
             .launchIn(lifecycleScope)

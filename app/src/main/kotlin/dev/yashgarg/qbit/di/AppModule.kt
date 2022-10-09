@@ -1,6 +1,10 @@
 package dev.yashgarg.qbit.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -10,9 +14,14 @@ import dagger.hilt.components.SingletonComponent
 import dev.yashgarg.qbit.data.AppDatabase
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.manager.ClientManagerImpl
+import dev.yashgarg.qbit.data.models.ServerPreferences
+import dev.yashgarg.qbit.data.preferences.ServerPreferencesSerializer
 import javax.inject.Qualifier
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,6 +38,22 @@ class AppModule {
 
     @Provides
     fun provideClientManager(clientManager: ClientManagerImpl): ClientManager = clientManager
+
+    @Singleton
+    @Provides
+    fun provideServerPreferencesDataStore(
+        @ApplicationContext appContext: Context
+    ): DataStore<ServerPreferences> {
+        return DataStoreFactory.create(
+            serializer = ServerPreferencesSerializer,
+            corruptionHandler =
+                ReplaceFileCorruptionHandler(produceNewData = { ServerPreferences() }),
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+            produceFile = {
+                appContext.preferencesDataStoreFile(ServerPreferencesSerializer.SERVER_PREFS_NAME)
+            }
+        )
+    }
 }
 
 @Qualifier @Retention(AnnotationRetention.BINARY) annotation class ApplicationScope
