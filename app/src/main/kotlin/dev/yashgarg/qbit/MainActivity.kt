@@ -52,14 +52,16 @@ class MainActivity : AppCompatActivity() {
                 clientManager.configStatus.collect { status ->
                     when (status) {
                         ConfigStatus.EXISTS -> {
-                            WorkManager.getInstance(applicationContext)
-                                .enqueueUniqueWork(
-                                    "status_update",
-                                    ExistingWorkPolicy.REPLACE,
-                                    OneTimeWorkRequestBuilder<StatusWorker>()
-                                        .setConstraints(StatusWorker.constraints)
-                                        .build()
-                                )
+                            if (AppNotificationManager.checkPermission(applicationContext)) {
+                                WorkManager.getInstance(applicationContext)
+                                    .enqueueUniqueWork(
+                                        "status_update",
+                                        ExistingWorkPolicy.REPLACE,
+                                        OneTimeWorkRequestBuilder<StatusWorker>()
+                                            .setConstraints(StatusWorker.constraints)
+                                            .build()
+                                    )
+                            }
 
                             findNavController(this@MainActivity, R.id.nav_host_fragment)
                                 .navigate(R.id.action_homeFragment_to_serverFragment)

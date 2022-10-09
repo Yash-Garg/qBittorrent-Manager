@@ -37,7 +37,6 @@ object AppNotificationManager {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun checkPermission(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
