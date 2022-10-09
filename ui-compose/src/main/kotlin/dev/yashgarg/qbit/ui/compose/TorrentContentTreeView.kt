@@ -24,13 +24,13 @@ import dev.yashgarg.qbit.data.models.ContentTreeItem
 import dev.yashgarg.qbit.ui.compose.theme.SpaceGrotesk
 
 @Composable
-fun TorrentContentTreeView(nodes: List<ContentTreeItem>) {
+fun TorrentContentTreeView(modifier: Modifier = Modifier, nodes: List<ContentTreeItem>) {
     val tree = Tree<ContentTreeItem> { ContentTree(nodes) }
 
     Bonsai(
         tree,
         style = torrentContentStyle(),
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).then(modifier),
         onLongClick = null,
     )
 }

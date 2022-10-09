@@ -8,8 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,8 +42,11 @@ class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        @OptIn(ExperimentalComposeUiApi::class)
         binding.peersComposeView.setContent {
             val state by viewModel.uiState.collectAsState()
+            val scrollState = rememberNestedScrollInteropConnection()
+
             Mdc3Theme(
                 setTextColors = true,
                 readTypography = true,
@@ -48,21 +54,23 @@ class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
                 readShapes = true,
                 readColorScheme = true
             ) {
-                PeersListView(state)
+                PeersListView(state, Modifier.nestedScroll(scrollState))
             }
         }
     }
 }
 
 @Composable
-fun PeersListView(state: TorrentDetailsState) {
+fun PeersListView(state: TorrentDetailsState, modifier: Modifier = Modifier) {
     if (state.peersLoading || state.peers == null) {
-        Center { LinearProgressIndicator(color = colorResource(R.color.md_theme_dark_seed)) }
+        Center(modifier) {
+            LinearProgressIndicator(color = colorResource(R.color.md_theme_dark_seed))
+        }
     } else if (state.peers.peers.isEmpty()) {
-        Center { Text("No peers connected") }
+        Center(modifier) { Text("No peers connected") }
     } else {
         val peers = requireNotNull(state.peers).peers.values.toList()
-        LazyColumn {
+        LazyColumn(modifier) {
             itemsIndexed(peers, key = { pos, peer -> "${peer.ip}-$pos" }) { _, peer ->
                 val openDialog = remember { mutableStateOf(false) }
                 val context = LocalContext.current
