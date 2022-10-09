@@ -123,7 +123,9 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         with(binding) {
             if (state.hasError) {
                 listLoader.visibility = View.GONE
-                errorTv.text = state.error?.message ?: requireContext().getString(R.string.error)
+                errorTv.text =
+                    state.error?.message
+                        ?: requireContext().getString(dev.yashgarg.qbit.common.R.string.error)
                 errorTv.visibility = View.VISIBLE
                 torrentRv.visibility = View.GONE
                 refreshLayout.isRefreshing = false

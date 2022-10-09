@@ -13,4 +13,5 @@ android {
 dependencies {
     api(libs.qbittorrent.models)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity)
 }

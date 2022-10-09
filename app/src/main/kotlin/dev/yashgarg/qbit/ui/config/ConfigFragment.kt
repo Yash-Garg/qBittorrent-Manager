@@ -19,7 +19,8 @@ import com.github.michaelbull.result.Ok
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
-import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.R as AppR
+import dev.yashgarg.qbit.common.R
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.databinding.ConfigFragmentBinding
 import dev.yashgarg.qbit.utils.viewBinding
@@ -28,7 +29,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ConfigFragment : Fragment(R.layout.config_fragment) {
+class ConfigFragment : Fragment(AppR.layout.config_fragment) {
     private val binding by viewBinding(ConfigFragmentBinding::bind)
     private val viewModel by viewModels<ConfigViewModel>()
 
@@ -47,7 +48,7 @@ class ConfigFragment : Fragment(R.layout.config_fragment) {
         watchTextFields()
         setupActionbar()
 
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, connectionTypes)
+        val adapter = ArrayAdapter(requireContext(), AppR.layout.list_item, connectionTypes)
         (binding.typeDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         binding.saveButton.setOnClickListener {

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
+import dev.yashgarg.qbit.common.R as CommonR
 import dev.yashgarg.qbit.utils.toHumanReadable
 import dev.yashgarg.qbit.utils.toTime
 import javax.inject.Inject
@@ -50,14 +51,14 @@ class TorrentListAdapter @Inject constructor() :
             title.text = torrent.name
             speed.text =
                 String.format(
-                    context.getString(R.string.speed_status),
+                    context.getString(CommonR.string.speed_status),
                     torrent.dlspeed.toHumanReadable(),
                     torrent.uploadSpeed.toHumanReadable(),
                 )
             progressBar.progress = (torrent.progress * 100).toInt()
             downloaded.text =
                 String.format(
-                    context.getString(R.string.percent_done),
+                    context.getString(CommonR.string.percent_done),
                     torrent.downloaded.toLong().toHumanReadable(),
                     torrent.size.toHumanReadable(),
                     (torrent.progress * 100).toInt(),
@@ -70,14 +71,14 @@ class TorrentListAdapter @Inject constructor() :
 
             when (torrent.state) {
                 Torrent.State.PAUSED_DL -> {
-                    peers.text = context.getString(R.string.paused)
+                    peers.text = context.getString(CommonR.string.paused)
                     peers.setTextColor(context.getColor(R.color.yellow))
                     speed.visibility = View.GONE
                     eta.visibility = View.GONE
                 }
                 Torrent.State.UPLOADING,
                 Torrent.State.FORCED_UP -> {
-                    peers.text = context.getString(R.string.seeding)
+                    peers.text = context.getString(CommonR.string.seeding)
                     peers.setTextColor(context.getColor(R.color.green))
                     speed.visibility = View.VISIBLE
                     eta.visibility = View.GONE
@@ -86,7 +87,7 @@ class TorrentListAdapter @Inject constructor() :
                 Torrent.State.FORCED_DL -> {
                     peers.text =
                         String.format(
-                            context.getString(R.string.seed_status),
+                            context.getString(CommonR.string.seed_status),
                             torrent.connectedSeeds,
                             torrent.seedsInSwarm,
                         )
@@ -96,13 +97,13 @@ class TorrentListAdapter @Inject constructor() :
                 }
                 Torrent.State.STALLED_DL,
                 Torrent.State.STALLED_UP -> {
-                    peers.text = context.getString(R.string.stalled)
+                    peers.text = context.getString(CommonR.string.stalled)
                     peers.setTextColor(context.getColor(R.color.red))
                     speed.visibility = View.GONE
                     eta.visibility = View.GONE
                 }
                 Torrent.State.PAUSED_UP -> {
-                    peers.text = context.getString(R.string.completed)
+                    peers.text = context.getString(CommonR.string.completed)
                     peers.setTextColor(context.getColor(R.color.md_theme_dark_seed))
                     speed.visibility = View.GONE
                     eta.visibility = View.GONE
