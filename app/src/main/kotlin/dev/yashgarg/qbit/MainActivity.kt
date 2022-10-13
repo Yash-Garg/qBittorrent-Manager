@@ -1,8 +1,6 @@
 package dev.yashgarg.qbit
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -32,41 +30,42 @@ class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var clientManager: ClientManager
 
-    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            checkPermissions(applicationContext)
-        }
+        if (savedInstanceState == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                checkPermissions(applicationContext)
+            }
 
-        lifecycleScope.launch {
-            lifecycle.whenResumed {
-                clientManager.configStatus.collect { status ->
-                    when (status) {
-                        ConfigStatus.EXISTS -> {
-                            if (AppNotificationManager.checkPermission(applicationContext)) {
-                                WorkManager.getInstance(applicationContext)
-                                    .enqueueUniqueWork(
-                                        "status_update",
-                                        ExistingWorkPolicy.REPLACE,
-                                        OneTimeWorkRequestBuilder<StatusWorker>()
-                                            .setConstraints(StatusWorker.constraints)
-                                            .build()
-                                    )
+            lifecycleScope.launch {
+                lifecycle.whenResumed {
+                    clientManager.configStatus.collect { status ->
+                        when (status) {
+                            ConfigStatus.EXISTS -> {
+                                if (AppNotificationManager.checkPermission(applicationContext)) {
+                                    WorkManager.getInstance(applicationContext)
+                                        .enqueueUniqueWork(
+                                            "status_update",
+                                            ExistingWorkPolicy.REPLACE,
+                                            OneTimeWorkRequestBuilder<StatusWorker>()
+                                                .setConstraints(StatusWorker.constraints)
+                                                .build()
+                                        )
+                                }
+
+                                findNavController(this@MainActivity, R.id.nav_host_fragment)
+                                    .navigate(R.id.action_homeFragment_to_serverFragment)
                             }
-
-                            findNavController(this@MainActivity, R.id.nav_host_fragment)
-                                .navigate(R.id.action_homeFragment_to_serverFragment)
+                            ConfigStatus.DOES_NOT_EXIST ->
+                                Log.i(ClientManager.tag, "No config found!")
                         }
-                        ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                     }
                 }
             }
