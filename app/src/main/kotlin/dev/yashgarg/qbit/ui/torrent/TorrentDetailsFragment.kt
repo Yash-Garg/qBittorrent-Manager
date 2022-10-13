@@ -3,6 +3,7 @@ package dev.yashgarg.qbit.ui.torrent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -118,8 +119,10 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                 add("Rename")
                     .setIcon(R.drawable.twotone_drive_file_rename_outline_24)
                     .setOnMenuItemClickListener {
-                        RenameTorrentDialog.newInstance(torrent.name)
-                            .show(childFragmentManager, RenameTorrentDialog.TAG)
+                        val dialog = RenameTorrentDialog.newInstance()
+                        dialog.arguments =
+                            bundleOf(RenameTorrentDialog.TORRENT_NAME_KEY to torrent.name)
+                        dialog.show(childFragmentManager, RenameTorrentDialog.TAG)
                         true
                     }
             }
