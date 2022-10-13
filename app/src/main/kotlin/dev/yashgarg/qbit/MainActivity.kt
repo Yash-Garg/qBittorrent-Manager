@@ -1,8 +1,6 @@
 package dev.yashgarg.qbit
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -38,35 +36,36 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var clientManager: ClientManager
     @Inject lateinit var serverPrefsStore: DataStore<ServerPreferences>
 
-    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            checkPermissions(applicationContext)
-        }
+        if (savedInstanceState == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                checkPermissions(applicationContext)
+            }
 
-        serverPrefsStore.data
-            .map { it.showNotification }
-            .onEach(::launchWorkManager)
-            .launchIn(lifecycleScope)
+            serverPrefsStore.data
+                .map { it.showNotification }
+                .onEach(::launchWorkManager)
+                .launchIn(lifecycleScope)
 
-        lifecycleScope.launch {
-            lifecycle.whenResumed {
-                clientManager.configStatus.collect { status ->
-                    when (status) {
-                        ConfigStatus.EXISTS -> {
-                            findNavController(this@MainActivity, R.id.nav_host_fragment)
-                                .navigate(R.id.action_homeFragment_to_serverFragment)
+            lifecycleScope.launch {
+                lifecycle.whenResumed {
+                    clientManager.configStatus.collect { status ->
+                        when (status) {
+                            ConfigStatus.EXISTS -> {
+                                findNavController(this@MainActivity, R.id.nav_host_fragment)
+                                    .navigate(R.id.action_homeFragment_to_serverFragment)
+                            }
+                            ConfigStatus.DOES_NOT_EXIST ->
+                                Log.i(ClientManager.tag, "No config found!")
                         }
-                        ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                     }
                 }
             }
