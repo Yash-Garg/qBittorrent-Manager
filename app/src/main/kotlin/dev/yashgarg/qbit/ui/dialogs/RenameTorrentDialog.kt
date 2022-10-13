@@ -12,6 +12,8 @@ import com.google.android.material.textfield.TextInputLayout
 import dev.yashgarg.qbit.R
 
 class RenameTorrentDialog : DialogFragment() {
+    private var nameTiet: TextInputEditText? = null
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         val alertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
@@ -24,13 +26,16 @@ class RenameTorrentDialog : DialogFragment() {
             setPositiveButton("Rename", null)
         }
 
-        val title = arguments?.getString(TORRENT_NAME_KEY)
+        val title =
+            savedInstanceState?.getString(TORRENT_NAME_KEY)
+                ?: arguments?.getString(TORRENT_NAME_KEY)
+
         val dialog = alertDialogBuilder.create()
         dialog.window?.setSoftInputMode(5)
 
         dialog.setOnShowListener {
             val nameTil = dialog.findViewById<TextInputLayout>(R.id.torrentName_til)
-            val nameTiet = dialog.findViewById<TextInputEditText>(R.id.torrentName_tiet)
+            nameTiet = dialog.findViewById(R.id.torrentName_tiet)
             nameTiet?.setText(title)
             nameTiet?.setSelection(title?.length ?: 0)
 
@@ -48,6 +53,11 @@ class RenameTorrentDialog : DialogFragment() {
         }
 
         return dialog
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(TORRENT_NAME_KEY, nameTiet?.text.toString())
     }
 
     companion object {
