@@ -15,6 +15,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
+import qbittorrent.models.TorrentPeer
 
 @HiltViewModel
 class TorrentDetailsViewModel
@@ -86,6 +87,16 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
             when (runCatching { client.setTorrentName(torrentHash, torrentName) }) {
                 is Ok -> _status.emit("Successfully renamed $torrentHash")
                 is Err -> _status.emit("Failed to rename torrent")
+            }
+        }
+    }
+
+    fun banPeer(peer: TorrentPeer) {
+        val peerAddr = "${peer.ip}:${peer.port}"
+        viewModelScope.launch {
+            when (runCatching { client.banPeers(listOf(peerAddr)) }) {
+                is Ok -> _status.emit("Successfully banned $peerAddr")
+                is Err -> _status.emit("Failed to ban peer")
             }
         }
     }

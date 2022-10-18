@@ -33,6 +33,7 @@ import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
 import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.CountryFlags
 import dev.yashgarg.qbit.utils.viewBinding
+import qbittorrent.models.TorrentPeer
 
 class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
     private val binding by viewBinding(TorrentPeersFragmentBinding::bind)
@@ -54,14 +55,22 @@ class TorrentPeersFragment : Fragment(R.layout.torrent_peers_fragment) {
                 readShapes = true,
                 readColorScheme = true
             ) {
-                PeersListView(state, Modifier.nestedScroll(scrollState))
+                PeersListView(
+                    state,
+                    Modifier.nestedScroll(scrollState),
+                    onBan = { viewModel.banPeer(it) }
+                )
             }
         }
     }
 }
 
 @Composable
-fun PeersListView(state: TorrentDetailsState, modifier: Modifier = Modifier) {
+fun PeersListView(
+    state: TorrentDetailsState,
+    modifier: Modifier = Modifier,
+    onBan: (TorrentPeer) -> Unit
+) {
     if (state.peersLoading || state.peers == null) {
         Center(modifier) {
             LinearProgressIndicator(color = colorResource(R.color.md_theme_dark_seed))
@@ -118,7 +127,7 @@ fun PeersListView(state: TorrentDetailsState, modifier: Modifier = Modifier) {
                             )
                         },
                         confirmButton = {
-                            TextButton(onClick = { openDialog.value = false }) {
+                            TextButton(onClick = { onBan(peer) }) {
                                 Text("Ban Peer", style = bodyMediumPrimary)
                             }
                         },

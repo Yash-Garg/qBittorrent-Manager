@@ -174,7 +174,10 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
                     findNavController().navigateUp()
                 } else {
                     val torrent = requireNotNull(state.torrent)
-                    toolbar.title = torrent.name
+                    torrent.name.apply {
+                        toolbar.title = this
+                        collapsingToolbar.title = this
+                    }
                     setupMenu(torrent)
                 }
             }

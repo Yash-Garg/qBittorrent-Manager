@@ -134,10 +134,12 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
                 checkSnackbar.show()
 
                 viewLifecycleOwner.lifecycleScope.launch {
+                    val port = binding.serverPortTil.editText?.text.toString()
                     val connectionResponse =
                         viewModel.testConfig(
                             "${binding.typeDropdown.editText?.text.toString().lowercase()}://" +
-                                "${binding.serverHostTil.editText?.text}:${binding.serverPortTil.editText?.text}",
+                                "${binding.serverHostTil.editText?.text}" +
+                                if (port != "443") ":$port" else "",
                             binding.serverUsernameTil.editText?.text.toString(),
                             binding.serverPasswordTil.editText?.text.toString(),
                         )

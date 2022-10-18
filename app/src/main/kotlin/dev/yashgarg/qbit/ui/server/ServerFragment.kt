@@ -65,6 +65,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             viewModel.addTorrentUrl(requireNotNull(url))
         }
 
+        @Suppress("UNCHECKED_CAST")
         childFragmentManager.setFragmentResultListener(
             AddTorrentDialog.ADD_TORRENT_FILE_KEY,
             viewLifecycleOwner
