@@ -1,14 +1,11 @@
 @file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 
-import java.io.ByteArrayOutputStream
-
 val commitHash: String by lazy {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir)
-        standardOutput = stdout
-    }
-    stdout.toString().trim()
+    providers
+        .exec { commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir) }
+        .standardOutput
+        .toString()
+        .trim()
 }
 
 plugins {
