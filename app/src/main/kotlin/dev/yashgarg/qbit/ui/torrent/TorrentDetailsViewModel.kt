@@ -45,58 +45,63 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
         val hashes = listOf(hash)
         viewModelScope.launch {
             when (
-                runCatching {
+                val result = runCatching {
                     if (pause) client.pauseTorrents(hashes) else client.resumeTorrents(hashes)
                 }
             ) {
                 is Ok -> _status.emit("${if (pause) "Paused" else "Resumed"} $hash")
-                is Err -> _status.emit("Failed to ${if (pause) "pause" else "resume"} $hash")
+                is Err ->
+                    _status.emit(
+                        result.error.message
+                            ?: "Failed to ${if (pause) "pause" else "resume"} $hash"
+                    )
             }
         }
     }
 
     fun removeTorrent(hash: String, deleteFiles: Boolean = false) {
         viewModelScope.launch {
-            when (runCatching { client.deleteTorrents(listOf(hash), deleteFiles) }) {
+            when (val result = runCatching { client.deleteTorrents(listOf(hash), deleteFiles) }) {
                 is Ok -> return@launch
-                is Err -> _status.emit("Failed to remove $hash")
+                is Err -> _status.emit(result.error.message ?: "Failed to remove $hash")
             }
         }
     }
 
     fun forceRecheck(hash: String) {
         viewModelScope.launch {
-            when (runCatching { client.recheckTorrents(listOf(hash)) }) {
+            when (val result = runCatching { client.recheckTorrents(listOf(hash)) }) {
                 is Ok -> _status.emit("Rechecking $hash")
-                is Err -> _status.emit("Failed to recheck torrent")
+                is Err -> _status.emit(result.error.message ?: "Failed to recheck torrent")
             }
         }
     }
 
     fun forceReannounce(hash: String) {
         viewModelScope.launch {
-            when (runCatching { client.reannounceTorrents(listOf(hash)) }) {
+            when (val result = runCatching { client.reannounceTorrents(listOf(hash)) }) {
                 is Ok -> _status.emit("Reannouncing $hash")
-                is Err -> _status.emit("Failed to reannounce torrent")
+                is Err -> _status.emit(result.error.message ?: "Failed to reannounce torrent")
             }
         }
     }
 
     fun renameTorrent(torrentName: String, torrentHash: String) {
         viewModelScope.launch {
-            when (runCatching { client.setTorrentName(torrentHash, torrentName) }) {
+            when (val result = runCatching { client.setTorrentName(torrentHash, torrentName) }) {
                 is Ok -> _status.emit("Successfully renamed $torrentHash")
-                is Err -> _status.emit("Failed to rename torrent")
+                is Err -> _status.emit(result.error.message ?: "Failed to rename torrent")
             }
         }
     }
 
     fun banPeer(peer: TorrentPeer) {
         val peerAddr = "${peer.ip}:${peer.port}"
+        Log.i(this::class.java.simpleName, "Peer : $peerAddr")
         viewModelScope.launch {
-            when (runCatching { client.banPeers(listOf(peerAddr)) }) {
+            when (val result = runCatching { client.banPeers(listOf(peerAddr)) }) {
                 is Ok -> _status.emit("Successfully banned $peerAddr")
-                is Err -> _status.emit("Failed to ban peer")
+                is Err -> _status.emit(result.error.message ?: "Failed to ban peer")
             }
         }
     }
