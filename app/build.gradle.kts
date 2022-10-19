@@ -4,7 +4,8 @@ val commitHash: String by lazy {
     providers
         .exec { commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir) }
         .standardOutput
-        .toString()
+        .asText
+        .get()
         .trim()
 }
 
