@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">qBittorrent Remote</string>
+    <string name="app_name">qBittorrent Manager</string>
     <string name="add_server">Add server</string>
-    <string name="welcome_text">Welcome to qBittorrent Remote</string>
+    <string name="welcome_text">Welcome to qBittorrent Manager</string>
     <string name="press_button">Use the button below to add a server</string>
 
     <string name="invalid_url">Please enter a valid host</string>
