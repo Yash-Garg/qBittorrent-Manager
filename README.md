@@ -12,7 +12,5 @@ This is the repository for **_qBittorrent Manager_**, an Android app for managin
   <img width="48%" src="art/screen-3.png">
   <img width="48%" src="art/screen-4.png">
   <img width="48%" src="art/screen-5.png">
-  <img width="48%" src="art/screen-7.png">
-  <img width="48%" src="art/screen-8.png">
-  <img width="48%" src="art/screen-9.png">
+  <img width="48%" src="art/screen-6.png">
 </p>
