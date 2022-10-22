@@ -1,6 +1,7 @@
 package dev.yashgarg.qbit.ui.server
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,6 +18,7 @@ import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
+import java.util.ArrayList
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -38,10 +40,10 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleAddIntent(arguments?.getString(MainActivity.TORRENT_INTENT_KEY))
         setupHandlers()
         observeFlows()
         setupDialogResultListener()
-        intentResolution()
     }
 
     override fun onStop() {
@@ -62,15 +64,26 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             viewLifecycleOwner
         ) { _, bundle ->
             val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            addTorrent(url)
+            viewModel.addTorrentUrl(requireNotNull(url))
         }
 
+        @Suppress("UNCHECKED_CAST")
         childFragmentManager.setFragmentResultListener(
             AddTorrentDialog.ADD_TORRENT_FILE_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
-            val uri = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            addTorrent(uri)
+            val uris =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    bundle.getParcelableArrayList(AddTorrentDialog.TORRENT_KEY, Uri::class.java)
+                } else {
+                    bundle.getStringArrayList(AddTorrentDialog.TORRENT_KEY) as ArrayList<Uri>
+                }
+
+            uris?.forEach { uri ->
+                requireContext().contentResolver.openInputStream(uri).use { stream ->
+                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+                }
+            }
         }
     }
 
@@ -107,12 +120,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         }
     }
 
-    private fun intentResolution() {
-        val uri: String? = arguments?.getString(MainActivity.TORRENT_INTENT_KEY)
-        addTorrent(uri)
-    }
-
-    private fun addTorrent(uri: String?) {
+    private fun handleAddIntent(uri: String?) {
         if (!uri.isNullOrEmpty()) {
             if (
                 uri.startsWith("http://") ||

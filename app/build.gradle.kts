@@ -1,14 +1,12 @@
 @file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 
-import java.io.ByteArrayOutputStream
-
 val commitHash: String by lazy {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir)
-        standardOutput = stdout
-    }
-    stdout.toString().trim()
+    providers
+        .exec { commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir) }
+        .standardOutput
+        .asText
+        .get()
+        .trim()
 }
 
 plugins {
@@ -87,6 +85,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.lifecycle.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -107,6 +106,7 @@ dependencies {
 
     implementation(libs.ktor.android)
     implementation(libs.ktor.logging)
+    implementation(libs.kotlinx.serialization)
     implementation(libs.qbittorrent.client)
 
     implementation(projects.uiCompose)
@@ -116,6 +116,7 @@ dependencies {
     implementation(libs.tools.kotlin.result)
     implementation(libs.tools.cascade)
     implementation(libs.tools.lottie)
+    implementation(libs.tools.whatthestack)
 
     testImplementation(libs.bundles.testing)
     coreLibraryDesugaring(libs.tools.desugar)

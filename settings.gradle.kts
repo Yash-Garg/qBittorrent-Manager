@@ -15,6 +15,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        maven("https://jitpack.io")
     }
 }
 
@@ -28,7 +29,7 @@ gradleEnterprise {
     }
 }
 
-enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

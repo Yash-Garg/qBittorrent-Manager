@@ -19,9 +19,9 @@ import dev.yashgarg.qbit.utils.PermissionUtil
 
 class AddTorrentDialog : DialogFragment() {
     private val filePickerLauncher =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            if (uri != null) {
-                setFragmentResult(ADD_TORRENT_FILE_KEY, bundleOf(TORRENT_KEY to uri.toString()))
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            if (!uris.isNullOrEmpty()) {
+                setFragmentResult(ADD_TORRENT_FILE_KEY, bundleOf(TORRENT_KEY to uris))
                 dismiss()
             } else {
                 Toast.makeText(requireContext(), "No file selected", Toast.LENGTH_SHORT).show()
