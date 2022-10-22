@@ -1,7 +1,9 @@
 name: Android CI
 
 on:
-  pull_request:
+  push:
+    branches:
+      - develop
 
 env:
   base_url: ${{ secrets.BASE_URL }}
@@ -38,6 +40,40 @@ jobs:
         with:
           arguments: spotlessCheck
           gradle-home-cache-cleanup: true
+
+  unit-tests:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.1.0
+        with:
+          fetch-depth: 0
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.6.0
+        with:
+          distribution: "zulu"
+          java-version: "11"
+          cache: "gradle"
+
+      - name: Run unit tests
+        uses: gradle/gradle-build-action@v2.3.3
+        with:
+          arguments: test
+          gradle-home-cache-cleanup: true
+
+      - name: (Fail-only) Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Unit tests report
+          path: app/build/reports/tests/
 
   build-apks:
     strategy:
