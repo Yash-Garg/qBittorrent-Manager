@@ -15,7 +15,7 @@ ktor = "2.1.2"
 lifecycle = "2.5.1"
 qbit = "1.0.0-SNAPSHOT"
 kotlin = "1.7.20"
-mockito = "4.8.0"
+mockito = "4.8.1"
 room = "2.5.0-beta01"
 spotless = "6.11.0"
 
