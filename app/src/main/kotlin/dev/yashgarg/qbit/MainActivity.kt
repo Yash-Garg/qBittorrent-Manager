@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.lifecycleScope
@@ -60,8 +61,9 @@ class MainActivity : AppCompatActivity() {
                     clientManager.configStatus.collect { status ->
                         when (status) {
                             ConfigStatus.EXISTS -> {
+                                val bundle = bundleOf(TORRENT_INTENT_KEY to intent?.data.toString())
                                 findNavController(this@MainActivity, R.id.nav_host_fragment)
-                                    .navigate(R.id.action_homeFragment_to_serverFragment)
+                                    .navigate(R.id.action_homeFragment_to_serverFragment, bundle)
                             }
                             ConfigStatus.DOES_NOT_EXIST ->
                                 Log.i(ClientManager.tag, "No config found!")
@@ -96,5 +98,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             workManager.cancelAllWorkByTag(workTag)
         }
+    }
+
+    companion object {
+        const val TORRENT_INTENT_KEY = "torrent_intent"
     }
 }

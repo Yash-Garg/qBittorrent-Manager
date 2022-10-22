@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import dev.yashgarg.qbit.MainActivity
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
@@ -39,6 +40,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleAddIntent(arguments?.getString(MainActivity.TORRENT_INTENT_KEY))
         setupHandlers()
         observeFlows()
         setupDialogResultListener()
@@ -113,6 +115,22 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         true
                     }
                     else -> false
+                }
+            }
+        }
+    }
+
+    private fun handleAddIntent(uri: String?) {
+        if (!uri.isNullOrEmpty()) {
+            if (
+                uri.startsWith("http://") ||
+                    uri.startsWith("https://") ||
+                    uri.startsWith("magnet:?xt=urn:")
+            ) {
+                viewModel.addTorrentUrl(uri)
+            } else if (uri.startsWith("content://") || uri.startsWith("file://")) {
+                requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
+                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
                 }
             }
         }
