@@ -1,6 +1,7 @@
 package dev.yashgarg.qbit
 
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenResumed
@@ -20,6 +22,7 @@ import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
+import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -60,8 +63,10 @@ class MainActivity : AppCompatActivity() {
                                         )
                                 }
 
+                                val uri: Uri? = intent?.data
+                                val bundle = bundleOf(TORRENT_KEY to uri.toString())
                                 findNavController(this@MainActivity, R.id.nav_host_fragment)
-                                    .navigate(R.id.action_homeFragment_to_serverFragment)
+                                    .navigate(R.id.action_homeFragment_to_serverFragment, bundle)
                             }
                             ConfigStatus.DOES_NOT_EXIST ->
                                 Log.i(ClientManager.tag, "No config found!")
@@ -80,5 +85,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         AppNotificationManager.requestPermission(context, permissionLauncher)
+    }
+
+    companion object {
+        const val TORRENT_KEY = "torrent"
     }
 }

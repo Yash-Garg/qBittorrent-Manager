@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import dev.yashgarg.qbit.MainActivity
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
@@ -25,7 +26,8 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
 
-    @Inject lateinit var torrentListAdapter: TorrentListAdapter
+    @Inject
+    lateinit var torrentListAdapter: TorrentListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         setupHandlers()
         observeFlows()
         setupDialogResultListener()
+        intentResolution()
     }
 
     override fun onStop() {
@@ -60,7 +63,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             viewLifecycleOwner
         ) { _, bundle ->
             val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            viewModel.addTorrentUrl(requireNotNull(url))
+            addTorrent(url)
         }
 
         childFragmentManager.setFragmentResultListener(
@@ -68,9 +71,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             viewLifecycleOwner
         ) { _, bundle ->
             val uri = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
-                viewModel.addTorrentFile(requireNotNull(stream).readBytes())
-            }
+            addTorrent(uri)
         }
     }
 
@@ -95,16 +96,38 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     R.id.category -> {
                         true
                     }
+
                     R.id.sort_list -> {
                         true
                     }
+
                     R.id.speed_toggle -> {
                         true
                     }
+
                     else -> false
                 }
             }
         }
+    }
+
+    private fun intentResolution() {
+        val uri: String? = arguments?.getString(MainActivity.TORRENT_KEY)
+        addTorrent(uri)
+    }
+
+    private fun addTorrent(uri: String?) {
+        if (!uri.isNullOrEmpty()) {
+            if (uri.startsWith("http://") || uri.startsWith("https://") || uri.startsWith("magnet:?xt=urn:")) {
+                viewModel.addTorrentUrl(uri)
+
+            } else if (uri.startsWith("content://") || uri.startsWith("file://")) {
+                requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
+                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+                }
+            }
+        }
+
     }
 
     private fun observeFlows() {
