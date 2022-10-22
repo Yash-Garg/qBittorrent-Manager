@@ -71,7 +71,7 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
 
     private fun emitException(e: Throwable) {
         val error = ExceptionHandler.mapException(e)
-        _uiState.update { state -> state.copy(hasError = true, error = error) }
+        _uiState.update { state -> state.copy(hasError = true, error = error, data = null) }
     }
 
     private suspend fun syncData() {
@@ -85,6 +85,7 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
                     true
                 } else false
             }
+            .catch { emitException(it) }
             .collect { mainData ->
                 _uiState.update { state ->
                     state.copy(
