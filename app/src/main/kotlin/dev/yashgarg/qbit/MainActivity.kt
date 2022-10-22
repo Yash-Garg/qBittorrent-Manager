@@ -1,7 +1,6 @@
 package dev.yashgarg.qbit
 
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -22,7 +21,6 @@ import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
-import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -63,8 +61,7 @@ class MainActivity : AppCompatActivity() {
                                         )
                                 }
 
-                                val uri: Uri? = intent?.data
-                                val bundle = bundleOf(TORRENT_KEY to uri.toString())
+                                val bundle = bundleOf(TORRENT_INTENT_KEY to intent?.data.toString())
                                 findNavController(this@MainActivity, R.id.nav_host_fragment)
                                     .navigate(R.id.action_homeFragment_to_serverFragment, bundle)
                             }
@@ -88,6 +85,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TORRENT_KEY = "torrent"
+        const val TORRENT_INTENT_KEY = "torrent_intent"
     }
 }

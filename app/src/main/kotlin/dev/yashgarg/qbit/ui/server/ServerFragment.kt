@@ -26,8 +26,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
 
-    @Inject
-    lateinit var torrentListAdapter: TorrentListAdapter
+    @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,15 +95,12 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     R.id.category -> {
                         true
                     }
-
                     R.id.sort_list -> {
                         true
                     }
-
                     R.id.speed_toggle -> {
                         true
                     }
-
                     else -> false
                 }
             }
@@ -112,22 +108,24 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     }
 
     private fun intentResolution() {
-        val uri: String? = arguments?.getString(MainActivity.TORRENT_KEY)
+        val uri: String? = arguments?.getString(MainActivity.TORRENT_INTENT_KEY)
         addTorrent(uri)
     }
 
     private fun addTorrent(uri: String?) {
         if (!uri.isNullOrEmpty()) {
-            if (uri.startsWith("http://") || uri.startsWith("https://") || uri.startsWith("magnet:?xt=urn:")) {
+            if (
+                uri.startsWith("http://") ||
+                    uri.startsWith("https://") ||
+                    uri.startsWith("magnet:?xt=urn:")
+            ) {
                 viewModel.addTorrentUrl(uri)
-
             } else if (uri.startsWith("content://") || uri.startsWith("file://")) {
                 requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
                     viewModel.addTorrentFile(requireNotNull(stream).readBytes())
                 }
             }
         }
-
     }
 
     private fun observeFlows() {
