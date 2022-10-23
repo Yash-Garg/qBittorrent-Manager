@@ -26,6 +26,9 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
     private val _status = MutableSharedFlow<String>()
     val status = _status.asSharedFlow()
 
+    private val _intent = MutableSharedFlow<Unit>()
+    val intent = _intent.asSharedFlow()
+
     private lateinit var client: QBittorrentClient
     private var syncJob: Job? = null
 
@@ -95,6 +98,7 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
                         error = null,
                     )
                 }
+                _intent.emit(Unit)
             }
     }
 }
