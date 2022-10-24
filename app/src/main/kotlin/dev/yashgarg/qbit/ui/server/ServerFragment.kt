@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import dev.yashgarg.qbit.MainActivity
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
@@ -39,7 +40,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //        handleAddIntent(arguments?.getString(MainActivity.TORRENT_INTENT_KEY))
         setupHandlers()
         observeFlows()
         setupDialogResultListener()
@@ -86,6 +86,24 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         }
     }
 
+    private fun handleAddIntent() {
+        val uri: String? = arguments?.getString(MainActivity.TORRENT_INTENT_KEY)
+        arguments?.clear()
+        if (!uri.isNullOrEmpty()) {
+            if (
+                uri.startsWith("http://") ||
+                    uri.startsWith("https://") ||
+                    uri.startsWith("magnet:?xt=urn:")
+            ) {
+                viewModel.addTorrentUrl(uri)
+            } else if (uri.startsWith("content://") || uri.startsWith("file://")) {
+                requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
+                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+                }
+            }
+        }
+    }
+
     private fun setupHandlers() {
         with(binding) {
             torrentListAdapter.onItemClick = { hash ->
@@ -119,22 +137,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         }
     }
 
-    private fun handleAddIntent(uri: String?) {
-        if (!uri.isNullOrEmpty()) {
-            if (
-                uri.startsWith("http://") ||
-                    uri.startsWith("https://") ||
-                    uri.startsWith("magnet:?xt=urn:")
-            ) {
-                viewModel.addTorrentUrl(uri)
-            } else if (uri.startsWith("content://") || uri.startsWith("file://")) {
-                requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
-                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
-                }
-            }
-        }
-    }
-
     private fun observeFlows() {
         viewModel.uiState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -144,6 +146,11 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         viewModel.status
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.intent
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { handleAddIntent() }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
