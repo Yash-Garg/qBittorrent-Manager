@@ -39,7 +39,7 @@ androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref =
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
-compose-activity = "androidx.activity:activity-compose:1.6.0"
+compose-activity = "androidx.activity:activity-compose:1.6.1"
 compose-compiler = "androidx.compose.compiler:compiler:1.3.2"
 compose-foundation = "androidx.compose.foundation:foundation:1.3.0-rc01"
 compose-material3 = "androidx.compose.material3:material3:1.0.0-rc01"
