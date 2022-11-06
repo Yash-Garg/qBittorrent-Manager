@@ -51,13 +51,13 @@ class MainActivity : AppCompatActivity() {
                 checkPermissions(applicationContext)
             }
 
-            serverPrefsStore.data
-                .map { it.showNotification }
-                .onEach(::launchWorkManager)
-                .launchIn(lifecycleScope)
-
             lifecycleScope.launch {
-                lifecycle.whenResumed {
+                whenResumed {
+                    serverPrefsStore.data
+                        .map { it.showNotification }
+                        .onEach(::launchWorkManager)
+                        .launchIn(lifecycleScope)
+
                     clientManager.configStatus.collect { status ->
                         when (status) {
                             ConfigStatus.EXISTS -> {

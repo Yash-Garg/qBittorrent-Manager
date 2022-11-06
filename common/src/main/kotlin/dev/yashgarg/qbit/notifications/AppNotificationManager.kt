@@ -67,7 +67,7 @@ object AppNotificationManager {
                 .setSmallIcon(smallIcon)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setContentIntent(contentIntent)
                 .setAutoCancel(!persistent)
                 .setOngoing(persistent)
