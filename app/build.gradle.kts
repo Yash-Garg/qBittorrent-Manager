@@ -26,12 +26,12 @@ android {
         applicationId = "dev.yashgarg.qbit"
         minSdk = 24
         targetSdk = 33
-        versionCode = 4
-        versionName = "0.1-$commitHash"
+        versionCode = 5
+        versionName = "v0.1.$versionCode-$commitHash"
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "${defaultConfig.applicationId}-$commitHash")
+        setProperty("archivesBaseName", "${defaultConfig.applicationId}-$versionName")
     }
 
     buildTypes {
