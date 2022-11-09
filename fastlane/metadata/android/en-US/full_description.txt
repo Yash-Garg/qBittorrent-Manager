@@ -1,0 +1,15 @@
+🚧 APP IS CURRENTLY IN ALPHA STAGE 🚧
+
+This app aims to provide a modern and easy approach to handle your qBittorrent WebUI provided by self-hosted servers (not a standalone downloader).
+
+Features supported:
+✅ Viewing all the files on the server
+✅ Performing various actions (rename, recheck, etc.) on a specific torrent
+✅ Uploading of torrents using files and links
+✅ Persistent notification for connection status of server
+
+Additional features like sorting, searching, server statistics coming soon....
+
+Note: In order to ensure the best user experience, please try to upgrade qBittorrent to 4.3.x or higher.
+
+qBittorrent Manager is completely open sourced at https://github.com/Yash-Garg/qBittorrent-Manager, and any issues can be reported at https://github.com/Yash-Garg/qBittorrent-Manager/issues
