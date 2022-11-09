@@ -1,0 +1,5 @@
+- Fix crash due to invalid tier value caused by qBittorrent WebAPI
+- Fix crashes on some devices caused due to foreground service and layouts
+- Misc. improvements and dependency updates
+
+Please report any issues faced at https://github.com/Yash-Garg/qBittorrent-Manager/issues
