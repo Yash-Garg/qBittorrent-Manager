@@ -57,7 +57,7 @@ kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
 qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
 qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
 
-tools-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.9.1"
+tools-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.10"
 tools-cascade = "me.saket.cascade:cascade:1.3.0"
 tools-desugar = "com.android.tools:desugar_jdk_libs:2.0.0"
 tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
