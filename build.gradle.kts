@@ -6,6 +6,7 @@ import com.android.build.gradle.internal.tasks.factory.dependsOn
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.test) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.hilt) apply false
@@ -14,7 +15,6 @@ plugins {
 
     id("dev.yashgarg.qbit.spotless")
     id("dev.yashgarg.qbit.githooks")
-    id("com.android.test") version "8.0.0-alpha08" apply false
 }
 
 val clean by tasks.existing(Delete::class) { delete(rootProject.buildDir) }
