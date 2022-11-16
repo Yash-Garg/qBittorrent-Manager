@@ -16,6 +16,6 @@
     <item
         android:id="@+id/speed_toggle"
         android:icon="@drawable/twotone_speed_24"
-        android:title="Toggle limits"
+        android:title="Toggle speed limits"
         app:showAsAction="always" />
 </menu>

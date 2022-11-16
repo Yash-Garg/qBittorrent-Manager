@@ -14,6 +14,7 @@ plugins {
 
     id("dev.yashgarg.qbit.spotless")
     id("dev.yashgarg.qbit.githooks")
+    id("com.android.test") version "8.0.0-alpha08" apply false
 }
 
 val clean by tasks.existing(Delete::class) { delete(rootProject.buildDir) }
