@@ -7,15 +7,10 @@ import com.github.michaelbull.result.runCatching
 import dev.yashgarg.qbit.data.daos.ConfigDao
 import dev.yashgarg.qbit.data.models.ConfigStatus
 import dev.yashgarg.qbit.di.ApplicationScope
-import io.ktor.client.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.logging.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import qbittorrent.QBittorrentClient
 
@@ -78,26 +73,4 @@ constructor(
             }
             return@withContext requireNotNull(client)
         }
-}
-
-interface ClientManager {
-    val configStatus: SharedFlow<ConfigStatus>
-    suspend fun checkAndGetClient(): QBittorrentClient?
-
-    companion object {
-        const val tag = "ClientManager"
-        val syncInterval = 1.seconds
-        val httpClient = HttpClient {
-            install(HttpTimeout) { connectTimeoutMillis = 3000 }
-            install(Logging) {
-                logger =
-                    object : Logger {
-                        override fun log(message: String) {
-                            Log.i("QbitClient", message)
-                        }
-                    }
-                level = LogLevel.NONE
-            }
-        }
-    }
 }
