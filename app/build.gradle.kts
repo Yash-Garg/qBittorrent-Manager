@@ -26,7 +26,7 @@ android {
         applicationId = "dev.yashgarg.qbit"
         minSdk = 24
         targetSdk = 33
-        versionCode = 5
+        versionCode = 6
         versionName = "v0.1.$versionCode-$commitHash"
 
         multiDexEnabled = true

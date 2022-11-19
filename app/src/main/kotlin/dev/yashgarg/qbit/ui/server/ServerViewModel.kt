@@ -72,12 +72,38 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
         }
     }
 
+    fun toggleSpeedLimits() {
+        viewModelScope.launch {
+            when (val result = runCatching { client.toggleSpeedLimitsMode() }) {
+                is Ok -> getSpeedLimitMode(true)
+                is Err -> _status.emit(result.error.message ?: "Failed to toggle speed limits")
+            }
+        }
+    }
+
+    private fun getSpeedLimitMode(showToast: Boolean = false) {
+        viewModelScope.launch {
+            when (val result = runCatching { client.getSpeedLimitsMode() }) {
+                is Ok -> {
+                    _uiState.update { it.copy(speedLimitMode = result.value) }
+                    if (showToast) {
+                        _status.emit(
+                            "Alternative speed limits are ${if (result.value == 0) "disabled" else "enabled"}"
+                        )
+                    }
+                }
+                is Err -> _status.emit(result.error.message ?: "Failed to get speed limit mode")
+            }
+        }
+    }
+
     private fun emitException(e: Throwable) {
         val error = ExceptionHandler.mapException(e)
         _uiState.update { state -> state.copy(hasError = true, error = error, data = null) }
     }
 
     private suspend fun syncData() {
+        getSpeedLimitMode()
         client
             .observeMainData()
             .retryWhen { cause, attempt ->

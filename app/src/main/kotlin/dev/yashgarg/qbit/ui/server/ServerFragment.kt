@@ -22,6 +22,7 @@ import java.util.ArrayList
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ServerFragment : Fragment(R.layout.server_fragment) {
@@ -129,6 +130,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         true
                     }
                     R.id.speed_toggle -> {
+                        viewLifecycleOwner.lifecycleScope.launch { viewModel.toggleSpeedLimits() }
                         true
                     }
                     else -> false
