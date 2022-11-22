@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 
+import java.util.*
+
 val commitHash: String by lazy {
     providers
         .exec { commandLine("git").args("rev-parse", "--short", "HEAD").workingDir(projectDir) }
@@ -34,8 +36,29 @@ android {
         setProperty("archivesBaseName", "${defaultConfig.applicationId}-$versionName")
     }
 
+    val keystoreConfigFile = rootProject.layout.projectDirectory.file("key.properties")
+    if (keystoreConfigFile.asFile.exists()) {
+        val contents = providers.fileContents(keystoreConfigFile).asText
+        val keystoreProperties = Properties()
+        keystoreProperties.load(contents.get().byteInputStream())
+        signingConfigs {
+            register("release") {
+                storeFile = file("keystore/qbit-key.jks")
+                storePassword =
+                    System.getenv("SIGNING_STORE_PASSWORD")
+                        ?: keystoreProperties["storePassword"] as String
+                keyPassword =
+                    System.getenv("SIGNING_KEY_PASSWORD")
+                        ?: keystoreProperties["keyPassword"] as String
+                keyAlias =
+                    System.getenv("SIGNING_KEY_ALIAS") ?: keystoreProperties["keyAlias"] as String
+            }
+        }
+        buildTypes.getByName("release") { signingConfig = signingConfigs.getByName("release") }
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
             isShrinkResources = true
             isMinifyEnabled = true
             versionNameSuffix = "-release"

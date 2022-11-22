@@ -3,10 +3,6 @@ name: Android CI
 on:
   pull_request:
 
-env:
-  base_url: ${{ secrets.BASE_URL }}
-  password: ${{ secrets.PASSWORD }}
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
