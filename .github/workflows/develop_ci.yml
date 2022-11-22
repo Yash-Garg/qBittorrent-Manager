@@ -85,6 +85,14 @@ jobs:
         uses: actions/checkout@v3.1.0
         with:
           fetch-depth: 0
+          
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.SIGNING_KEY }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${GITHUB_WORKSPACE}"/app/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/qbit-key.jks
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
@@ -96,14 +104,18 @@ jobs:
           java-version: "11"
           cache: "gradle"
 
-      - name: Build debug APKs
+      - name: Build signed APKs
         uses: gradle/gradle-build-action@v2.3.3
         with:
-          arguments: assembleDebug
+          arguments: assembleRelease
           gradle-home-cache-cleanup: true
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
 
-      - name: Upload debug APKs
+      - name: Upload signed APKs
         uses: actions/upload-artifact@v3
         with:
-          name: Debug APKs
-          path: app/build/outputs/apk/debug/*.apk
+          name: Signed APKs
+          path: app/build/outputs/apk/release/*.apk
