@@ -60,7 +60,7 @@ class TorrentTrackersAdapter @Inject constructor() :
 
     private class TrackerComparator : DiffUtil.ItemCallback<TorrentTracker>() {
         override fun areItemsTheSame(oldItem: TorrentTracker, newItem: TorrentTracker): Boolean {
-            return oldItem.url != newItem.url
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: TorrentTracker, newItem: TorrentTracker): Boolean {
