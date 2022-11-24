@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,6 +24,7 @@ import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.common.R as CommonR
 import dev.yashgarg.qbit.databinding.TorrentPeersFragmentBinding
 import dev.yashgarg.qbit.ui.compose.Center
+import dev.yashgarg.qbit.ui.compose.CenterLinearLoading
 import dev.yashgarg.qbit.ui.compose.ListTile
 import dev.yashgarg.qbit.ui.compose.theme.AppTypography
 import dev.yashgarg.qbit.ui.compose.theme.bodyMediumPrimary
@@ -72,9 +72,7 @@ fun PeersListView(
     onBan: (TorrentPeer) -> Unit
 ) {
     if (state.peersLoading || state.peers == null) {
-        Center(modifier) {
-            LinearProgressIndicator(color = colorResource(R.color.md_theme_dark_seed))
-        }
+        CenterLinearLoading(modifier, R.color.md_theme_dark_seed)
     } else if (state.peers.peers.isEmpty()) {
         Center(modifier) { Text("No peers connected") }
     } else {

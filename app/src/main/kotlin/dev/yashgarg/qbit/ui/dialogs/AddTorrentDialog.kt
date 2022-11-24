@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -51,7 +52,7 @@ class AddTorrentDialog : DialogFragment() {
 
         val dialog = alertDialogBuilder.create()
 
-        dialog.window?.setSoftInputMode(5)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         dialog.setOnShowListener {
             val magnetTil = dialog.findViewById<TextInputLayout>(R.id.magnet_til)
             val magnetTiet = dialog.findViewById<TextInputEditText>(R.id.magnet_tiet)

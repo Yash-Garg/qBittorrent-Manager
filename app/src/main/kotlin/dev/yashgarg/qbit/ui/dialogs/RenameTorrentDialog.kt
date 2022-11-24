@@ -3,6 +3,7 @@ package dev.yashgarg.qbit.ui.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
@@ -31,7 +32,7 @@ class RenameTorrentDialog : DialogFragment() {
                 ?: arguments?.getString(TORRENT_NAME_KEY)
 
         val dialog = alertDialogBuilder.create()
-        dialog.window?.setSoftInputMode(5)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
 
         dialog.setOnShowListener {
             val nameTil = dialog.findViewById<TextInputLayout>(R.id.torrentName_til)
