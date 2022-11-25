@@ -34,8 +34,21 @@ android {
         setProperty("archivesBaseName", "${defaultConfig.applicationId}-$versionName")
     }
 
+    val isGithubCi = System.getenv("GITHUB_CI") != null
+    if (isGithubCi) {
+        signingConfigs {
+            register("release") {
+                storeFile = file("keystore/qbit-key.jks")
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            }
+        }
+        buildTypes.getByName("release") { signingConfig = signingConfigs.getByName("release") }
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
             isShrinkResources = true
             isMinifyEnabled = true
             versionNameSuffix = "-release"
