@@ -17,8 +17,11 @@ import com.google.android.material.textfield.TextInputLayout
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.PermissionUtil
+import dev.yashgarg.qbit.validation.LinkValidator
 
 class AddTorrentDialog : DialogFragment() {
+    private val linkValidator by lazy { LinkValidator() }
+
     private val filePickerLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
             if (!uris.isNullOrEmpty()) {
@@ -63,14 +66,12 @@ class AddTorrentDialog : DialogFragment() {
             }
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                if (!magnetTiet?.text.isNullOrEmpty()) {
-                    setFragmentResult(
-                        ADD_TORRENT_KEY,
-                        bundleOf(TORRENT_KEY to magnetTiet?.text.toString())
-                    )
+                val magnetUri = magnetTiet?.text.toString()
+                if (!magnetTiet?.text.isNullOrEmpty() && linkValidator.isValid(magnetUri)) {
+                    setFragmentResult(ADD_TORRENT_KEY, bundleOf(TORRENT_KEY to magnetUri))
                     dialog.dismiss()
                 } else {
-                    magnetTil?.error = "Please enter a url"
+                    magnetTil?.error = "Please enter a valid link!"
                 }
 
                 magnetTiet?.doAfterTextChanged { magnetTil?.error = null }
