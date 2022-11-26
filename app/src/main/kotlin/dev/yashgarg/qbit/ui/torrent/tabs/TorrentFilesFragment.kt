@@ -14,7 +14,9 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.composethemeadapter3.Mdc3Theme
+import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.ui.compose.Center
+import dev.yashgarg.qbit.ui.compose.CenterLinearLoading
 import dev.yashgarg.qbit.ui.compose.TorrentContentTreeView
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsState
 import dev.yashgarg.qbit.ui.torrent.TorrentDetailsViewModel
@@ -48,9 +50,11 @@ class TorrentFilesFragment : Fragment() {
 
 @Composable
 fun FilesListView(state: TorrentDetailsState, modifier: Modifier = Modifier) {
-    if (state.contentTree.isNotEmpty()) {
-        TorrentContentTreeView(modifier, state.contentTree)
-    } else {
+    if (state.contentLoading) {
+        CenterLinearLoading(modifier, R.color.md_theme_dark_seed)
+    } else if (state.contentTree.isEmpty()) {
         Center(modifier) { Text("No content found") }
+    } else {
+        TorrentContentTreeView(modifier, state.contentTree)
     }
 }

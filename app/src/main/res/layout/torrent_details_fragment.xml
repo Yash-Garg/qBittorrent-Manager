@@ -20,7 +20,8 @@
             app:collapsedTitleTextAppearance="@style/TitleMedium"
             app:contentScrim="@color/md_theme_dark_bluegray_surface"
             app:expandedTitleTextAppearance="@style/TitleLargeNormal"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="2">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"

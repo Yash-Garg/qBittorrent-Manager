@@ -1,10 +1,11 @@
 package dev.yashgarg.qbit.ui.torrent.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.data.models.TrackerStatus
@@ -12,14 +13,9 @@ import javax.inject.Inject
 import qbittorrent.models.TorrentTracker
 
 class TorrentTrackersAdapter @Inject constructor() :
-    RecyclerView.Adapter<TorrentTrackersAdapter.ViewHolder>() {
+    ListAdapter<TorrentTracker, TorrentTrackersAdapter.ViewHolder>(TrackerComparator()) {
 
-    var trackerList = emptyList<TorrentTracker>()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            notifyDataSetChanged()
-            field = value
-        }
+    var onTrackerClick: ((TorrentTracker) -> Unit)? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val trackerUrl: TextView = view.findViewById(R.id.trackerName)
@@ -31,14 +27,17 @@ class TorrentTrackersAdapter @Inject constructor() :
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = trackerList.size
+    override fun getItemCount(): Int = currentList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val tracker = trackerList.elementAt(position)
+        val tracker = currentList.elementAt(position)
         val context = holder.itemView.context
 
         with(holder) {
             trackerUrl.text = tracker.url
+
+            itemView.setOnClickListener { onTrackerClick?.invoke(tracker) }
+
             when (TrackerStatus.statusOf(tracker.status)) {
                 TrackerStatus.DISABLED -> {
                     trackerUrl.setTextColor(context.getColor(R.color.red))
@@ -56,6 +55,16 @@ class TorrentTrackersAdapter @Inject constructor() :
                     trackerUrl.setTextColor(context.getColor(R.color.red))
                 }
             }
+        }
+    }
+
+    private class TrackerComparator : DiffUtil.ItemCallback<TorrentTracker>() {
+        override fun areItemsTheSame(oldItem: TorrentTracker, newItem: TorrentTracker): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: TorrentTracker, newItem: TorrentTracker): Boolean {
+            return oldItem.url == newItem.url
         }
     }
 }

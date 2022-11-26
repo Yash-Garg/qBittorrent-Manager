@@ -1,6 +1,7 @@
 package dev.yashgarg.qbit
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenResumed
+import androidx.lifecycle.whenStarted
 import androidx.navigation.Navigation.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var serverPrefsStore: DataStore<ServerPreferences>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
@@ -46,28 +48,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                checkPermissions(applicationContext)
-            }
+        Log.i(this.javaClass.simpleName, "SavedInstanceState: $savedInstanceState")
 
-            lifecycleScope.launch {
-                whenResumed {
-                    serverPrefsStore.data
-                        .map { it.showNotification }
-                        .onEach(::launchWorkManager)
-                        .launchIn(lifecycleScope)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkPermissions(applicationContext)
+        }
 
-                    clientManager.configStatus.collect { status ->
-                        when (status) {
-                            ConfigStatus.EXISTS -> {
-                                val bundle = bundleOf(TORRENT_INTENT_KEY to intent?.data.toString())
-                                findNavController(this@MainActivity, R.id.nav_host_fragment)
-                                    .navigate(R.id.action_homeFragment_to_serverFragment, bundle)
-                            }
-                            ConfigStatus.DOES_NOT_EXIST ->
-                                Log.i(ClientManager.tag, "No config found!")
+        lifecycleScope.launch {
+            whenStarted {
+                clientManager.configStatus.collect { status ->
+                    when (status) {
+                        ConfigStatus.EXISTS -> {
+                            val bundle = bundleOf(TORRENT_INTENT_KEY to intent?.data.toString())
+
+                            serverPrefsStore.data
+                                .map { it.showNotification }
+                                .onEach(::launchWorkManager)
+                                .launchIn(lifecycleScope)
+
+                            findNavController(this@MainActivity, R.id.nav_host_fragment)
+                                .navigate(R.id.action_homeFragment_to_serverFragment, bundle)
                         }
+                        ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                     }
                 }
             }

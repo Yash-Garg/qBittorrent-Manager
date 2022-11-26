@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -16,8 +17,11 @@ import com.google.android.material.textfield.TextInputLayout
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.utils.ClipboardUtil
 import dev.yashgarg.qbit.utils.PermissionUtil
+import dev.yashgarg.qbit.validation.LinkValidator
 
 class AddTorrentDialog : DialogFragment() {
+    private val linkValidator by lazy { LinkValidator() }
+
     private val filePickerLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
             if (!uris.isNullOrEmpty()) {
@@ -51,7 +55,7 @@ class AddTorrentDialog : DialogFragment() {
 
         val dialog = alertDialogBuilder.create()
 
-        dialog.window?.setSoftInputMode(5)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         dialog.setOnShowListener {
             val magnetTil = dialog.findViewById<TextInputLayout>(R.id.magnet_til)
             val magnetTiet = dialog.findViewById<TextInputEditText>(R.id.magnet_tiet)
@@ -62,14 +66,12 @@ class AddTorrentDialog : DialogFragment() {
             }
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                if (!magnetTiet?.text.isNullOrEmpty()) {
-                    setFragmentResult(
-                        ADD_TORRENT_KEY,
-                        bundleOf(TORRENT_KEY to magnetTiet?.text.toString())
-                    )
+                val magnetUri = magnetTiet?.text.toString()
+                if (!magnetTiet?.text.isNullOrEmpty() && linkValidator.isValid(magnetUri)) {
+                    setFragmentResult(ADD_TORRENT_KEY, bundleOf(TORRENT_KEY to magnetUri))
                     dialog.dismiss()
                 } else {
-                    magnetTil?.error = "Please enter a url"
+                    magnetTil?.error = "Please enter a valid link!"
                 }
 
                 magnetTiet?.doAfterTextChanged { magnetTil?.error = null }

@@ -18,15 +18,18 @@ import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
+import dev.yashgarg.qbit.validation.LinkValidator
 import java.util.ArrayList
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
+    private val linkValidator by lazy { LinkValidator() }
 
     @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
@@ -90,15 +93,12 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         val uri: String? = arguments?.getString(MainActivity.TORRENT_INTENT_KEY)
         arguments?.clear()
         if (!uri.isNullOrEmpty()) {
-            if (
-                uri.startsWith("http://") ||
-                    uri.startsWith("https://") ||
-                    uri.startsWith("magnet:?xt=urn:")
-            ) {
-                viewModel.addTorrentUrl(uri)
-            } else if (uri.startsWith("content://") || uri.startsWith("file://")) {
-                requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
-                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+            when {
+                linkValidator.isValid(uri) -> viewModel.addTorrentUrl(uri)
+                uri.startsWith("content://") || uri.startsWith("file://") -> {
+                    requireContext().contentResolver.openInputStream(Uri.parse(uri)).use { stream ->
+                        viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+                    }
                 }
             }
         }
@@ -129,6 +129,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         true
                     }
                     R.id.speed_toggle -> {
+                        viewLifecycleOwner.lifecycleScope.launch { viewModel.toggleSpeedLimits() }
                         true
                     }
                     else -> false
