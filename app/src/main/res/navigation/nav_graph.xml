@@ -45,6 +45,9 @@
             android:id="@+id/action_serverFragment_to_torrentInfoFragment"
             app:destination="@id/torrentInfoFragment"
             app:popUpTo="@id/serverFragment" />
+        <action
+            android:id="@+id/action_serverFragment_to_serverManagerFragment"
+            app:destination="@id/serverManagerFragment" />
     </fragment>
     <fragment
         android:id="@+id/torrentInfoFragment"
@@ -54,4 +57,8 @@
             android:name="torrentHash"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/serverManagerFragment"
+        android:name="dev.yashgarg.qbit.ui.server.manager.ServerManagerFragment"
+        android:label="ServerManagerFragment" />
 </navigation>

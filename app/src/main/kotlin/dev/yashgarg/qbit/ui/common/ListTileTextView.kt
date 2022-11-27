@@ -12,6 +12,12 @@ class ListTileTextView(context: Context, attrs: AttributeSet) : LinearLayout(con
     private var titleTv: TextView
     private var subtitleTv: TextView
 
+    var title: String? = null
+        set(value) {
+            titleTv.text = value
+            field = value
+        }
+
     var subtitle: String? = null
         set(value) {
             subtitleTv.text = value
@@ -26,8 +32,8 @@ class ListTileTextView(context: Context, attrs: AttributeSet) : LinearLayout(con
         subtitleTv = findViewById(R.id.subtitle)
 
         try {
-            titleTv.text = typedArr.getString(R.styleable.ListTileTextView_title)
-            subtitleTv.text = subtitle
+            titleTv.text = title ?: typedArr.getString(R.styleable.ListTileTextView_title)
+            subtitleTv.text = subtitle ?: typedArr.getString(R.styleable.ListTileTextView_subtitle)
 
             this.setOnLongClickListener {
                 ClipboardUtil.copyToClipboard(

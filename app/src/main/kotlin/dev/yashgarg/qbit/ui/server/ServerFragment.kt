@@ -126,6 +126,8 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                         true
                     }
                     R.id.sort_list -> {
+                        findNavController()
+                            .navigate(R.id.action_serverFragment_to_serverManagerFragment)
                         true
                     }
                     R.id.speed_toggle -> {
