@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
@@ -33,7 +34,12 @@ class ServerManagerFragment : Fragment(R.layout.server_manager_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.serverRv.adapter = serverConfigAdapter
+        with(binding) {
+            serverRv.adapter = serverConfigAdapter
+            addServerFab.setOnClickListener {
+                findNavController().navigate(R.id.action_serverManagerFragment_to_configFragment)
+            }
+        }
         observeFlows()
     }
 

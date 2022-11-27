@@ -60,5 +60,9 @@
     <fragment
         android:id="@+id/serverManagerFragment"
         android:name="dev.yashgarg.qbit.ui.server.manager.ServerManagerFragment"
-        android:label="ServerManagerFragment" />
+        android:label="ServerManagerFragment" >
+        <action
+            android:id="@+id/action_serverManagerFragment_to_configFragment"
+            app:destination="@id/configFragment" />
+    </fragment>
 </navigation>
