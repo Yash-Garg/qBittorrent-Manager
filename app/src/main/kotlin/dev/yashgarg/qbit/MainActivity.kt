@@ -1,7 +1,6 @@
 package dev.yashgarg.qbit
 
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
+import androidx.lifecycle.whenResumed
 import androidx.navigation.Navigation.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -39,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var serverPrefsStore: DataStore<ServerPreferences>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
@@ -48,14 +46,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.i(this.javaClass.simpleName, "SavedInstanceState: $savedInstanceState")
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             checkPermissions(applicationContext)
         }
 
         lifecycleScope.launch {
-            whenStarted {
+            whenResumed {
                 clientManager.configStatus.collect { status ->
                     when (status) {
                         ConfigStatus.EXISTS -> {
