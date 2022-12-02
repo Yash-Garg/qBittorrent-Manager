@@ -32,12 +32,14 @@ interface ClientManager {
                     level = LogLevel.NONE
                 }
                 engine {
-                    config {
-                        sslSocketFactory(
-                            SslSettings.getSslContext()!!.socketFactory,
-                            SslSettings.getTrustManager()
-                        )
-                        hostnameVerifier { _, _ -> true }
+                    if (tag == "") {
+                        config {
+                            sslSocketFactory(
+                                SslSettings.getSslContext()!!.socketFactory,
+                                SslSettings.getTrustManager()
+                            )
+                            hostnameVerifier { _, _ -> true }
+                        }
                     }
                 }
             }
