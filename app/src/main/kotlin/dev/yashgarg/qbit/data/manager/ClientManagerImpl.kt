@@ -60,10 +60,7 @@ constructor(
                 val config = configDao.getConfigAtIndex()!!
                 client =
                     QBittorrentClient(
-                        "${
-                            config.connectionType.toString().lowercase()
-                        }://${config.baseUrl}" +
-                            if (config.port != 443) ":${config.port}" else "",
+                        "${config.connectionType.toString().lowercase()}://${config.baseUrl}:${config.port}",
                         config.username,
                         config.password,
                         syncInterval = ClientManager.syncInterval,

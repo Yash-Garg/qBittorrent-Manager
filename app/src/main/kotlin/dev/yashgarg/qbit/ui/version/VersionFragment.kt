@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.google.android.material.composethemeadapter3.Mdc3Theme
+import com.google.accompanist.themeadapter.material3.Mdc3Theme
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.R
