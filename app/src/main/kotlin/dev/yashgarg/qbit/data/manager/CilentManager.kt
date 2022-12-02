@@ -37,6 +37,7 @@ interface ClientManager {
                             SslSettings.getSslContext()!!.socketFactory,
                             SslSettings.getTrustManager()
                         )
+                        hostnameVerifier { _, _ -> true }
                     }
                 }
             }

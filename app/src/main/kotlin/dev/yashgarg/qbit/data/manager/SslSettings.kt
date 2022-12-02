@@ -18,7 +18,7 @@ object SslSettings {
 
 @SuppressLint("TrustAllX509TrustManager", "CustomX509TrustManager")
 class TrustAllX509TrustManager : X509TrustManager {
-    override fun getAcceptedIssuers(): Array<X509Certificate?> = arrayOfNulls(0)
+    override fun getAcceptedIssuers() = arrayOf<X509Certificate>()
 
     override fun checkClientTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
 
