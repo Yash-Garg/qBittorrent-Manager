@@ -168,11 +168,11 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <CheckBox
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/trust_cert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_weight="1"
                 android:text="@string/trust_certificates"
                 app:layout_constraintBottom_toTopOf="@id/save_button"
