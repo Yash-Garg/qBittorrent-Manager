@@ -140,6 +140,7 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
                                 "${binding.serverHostTil.editText?.text}:${binding.serverPortTil.editText?.text}",
                             binding.serverUsernameTil.editText?.text.toString(),
                             binding.serverPasswordTil.editText?.text.toString(),
+                            binding.trustCert.isChecked
                         )
 
                     when (connectionResponse) {
@@ -158,7 +159,8 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
                                 binding.serverPortTil.editText?.text.toString(),
                                 binding.typeDropdown.editText?.text.toString(),
                                 binding.serverUsernameTil.editText?.text.toString(),
-                                binding.serverPasswordTil.editText?.text.toString()
+                                binding.serverPasswordTil.editText?.text.toString(),
+                                binding.trustCert.isChecked
                             )
 
                             findNavController().navigateUp()

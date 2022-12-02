@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "fe163e2fadca1f6ec23d2b2b4d07e6a8",
+    "identityHash": "233030ba5c2614cfa247dfd6808ef13e",
     "entities": [
       {
         "tableName": "configs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`config_id` INTEGER NOT NULL, `serverName` TEXT NOT NULL, `baseUrl` TEXT NOT NULL, `port` INTEGER NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `connectionType` TEXT NOT NULL, `trustSelfSigned` INTEGER NOT NULL, PRIMARY KEY(`config_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`config_id` INTEGER NOT NULL, `serverName` TEXT NOT NULL, `baseUrl` TEXT NOT NULL, `port` INTEGER NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `connectionType` TEXT NOT NULL, `trustSelfSigned` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`config_id`))",
         "fields": [
           {
             "fieldPath": "configId",
@@ -54,7 +54,8 @@
             "fieldPath": "trustSelfSigned",
             "columnName": "trustSelfSigned",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -70,7 +71,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fe163e2fadca1f6ec23d2b2b4d07e6a8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '233030ba5c2614cfa247dfd6808ef13e')"
     ]
   }
 }

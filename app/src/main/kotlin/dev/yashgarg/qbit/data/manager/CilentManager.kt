@@ -19,8 +19,9 @@ interface ClientManager {
     companion object {
         const val tag = "ClientManager"
         val syncInterval = 1.seconds
-        val httpClient =
-            HttpClient(OkHttp) {
+
+        fun httpClient(trustAllCerts: Boolean): HttpClient {
+            return HttpClient(OkHttp) {
                 install(HttpTimeout) { connectTimeoutMillis = 3000 }
                 install(Logging) {
                     logger =
@@ -32,7 +33,7 @@ interface ClientManager {
                     level = LogLevel.NONE
                 }
                 engine {
-                    if (tag == "") {
+                    if (trustAllCerts) {
                         config {
                             sslSocketFactory(
                                 SslSettings.getSslContext()!!.socketFactory,
@@ -43,5 +44,6 @@ interface ClientManager {
                     }
                 }
             }
+        }
     }
 }

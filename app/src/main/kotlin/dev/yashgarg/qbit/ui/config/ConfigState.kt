@@ -12,5 +12,6 @@ data class ConfigState(
     val showPortError: Boolean = false,
     val showUsernameError: Boolean = false,
     val showPasswordError: Boolean = false,
-    val showConnectionTypeError: Boolean = false
+    val showConnectionTypeError: Boolean = false,
+    val isTrustSelfSignedChecked: Boolean = false
 )

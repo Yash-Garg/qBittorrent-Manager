@@ -64,7 +64,7 @@ constructor(
                         config.username,
                         config.password,
                         syncInterval = ClientManager.syncInterval,
-                        httpClient = ClientManager.httpClient,
+                        httpClient = ClientManager.httpClient(config.trustSelfSigned),
                         dispatcher = Dispatchers.Default,
                     )
             }
