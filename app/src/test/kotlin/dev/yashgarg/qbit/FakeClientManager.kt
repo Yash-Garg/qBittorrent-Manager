@@ -15,15 +15,7 @@ class FakeClientManager : ClientManager {
     private val password: String by lazy { System.getenv("password") }
 
     val config =
-        ServerConfig(
-            0,
-            "TestServer",
-            baseUrl,
-            443,
-            "admin",
-            password,
-            ConnectionType.HTTPS,
-        )
+        ServerConfig(0, "TestServer", baseUrl, 443, "admin", password, ConnectionType.HTTPS, false)
 
     private val _configStatus = MutableSharedFlow<ConfigStatus>()
     override val configStatus: SharedFlow<ConfigStatus>
@@ -35,7 +27,7 @@ class FakeClientManager : ClientManager {
             config.username,
             config.password,
             syncInterval = ClientManager.syncInterval,
-            httpClient = ClientManager.httpClient,
+            httpClient = ClientManager.httpClient(config.trustSelfSigned),
             dispatcher = Dispatchers.Default,
         )
 }

@@ -54,6 +54,7 @@ class ConfigViewModelTest {
                 "${config.connectionType}://${config.baseUrl}",
                 config.username,
                 config.password,
+                config.trustSelfSigned
             )
 
         when (response) {
