@@ -168,7 +168,8 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
         port: String,
         connectionType: String,
         username: String,
-        password: String
+        password: String,
+        trustSelfSigned: Boolean
     ) {
         val config =
             ServerConfig(
@@ -178,7 +179,8 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                 port.trim().toInt(),
                 username.trim(),
                 password.trim(),
-                if (connectionType.trim() == "HTTP") ConnectionType.HTTP else ConnectionType.HTTPS
+                if (connectionType.trim() == "HTTP") ConnectionType.HTTP else ConnectionType.HTTPS,
+                trustSelfSigned
             )
 
         viewModelScope.launch { configDao.addConfig(config) }
@@ -187,7 +189,8 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
     suspend fun testConfig(
         baseUrl: String,
         username: String,
-        password: String
+        password: String,
+        trustSelfSigned: Boolean
     ): Result<String, Throwable> {
         return runCatching {
             val client =
@@ -195,7 +198,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                     baseUrl,
                     username,
                     password,
-                    httpClient = ClientManager.httpClient,
+                    httpClient = ClientManager.httpClient(trustSelfSigned),
                     dispatcher = Dispatchers.Default
                 )
             client.getVersion()

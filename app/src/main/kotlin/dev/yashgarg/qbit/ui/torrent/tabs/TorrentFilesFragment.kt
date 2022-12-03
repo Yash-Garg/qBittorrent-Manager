@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.composethemeadapter3.Mdc3Theme
+import com.google.accompanist.themeadapter.material3.Mdc3Theme
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.ui.compose.Center
 import dev.yashgarg.qbit.ui.compose.CenterLinearLoading

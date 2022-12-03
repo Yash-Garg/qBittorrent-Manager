@@ -123,7 +123,7 @@ dependencies {
     implementation(libs.google.dagger.hilt)
     kapt(libs.google.dagger.hilt.compiler)
 
-    implementation(libs.ktor.android)
+    implementation(libs.ktor.okhttp)
     implementation(libs.ktor.logging)
     implementation(libs.kotlinx.serialization)
     implementation(libs.qbittorrent.client)
