@@ -166,6 +166,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
         serverName: String,
         serverHost: String,
         port: String,
+        path: String,
         connectionType: String,
         username: String,
         password: String,
@@ -173,14 +174,17 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
     ) {
         val config =
             ServerConfig(
-                0,
-                serverName.trim(),
-                serverHost.trim(),
-                if (port.isEmpty()) null else port.trim().toInt(),
-                username.trim(),
-                password.trim(),
-                if (connectionType.trim() == "HTTP") ConnectionType.HTTP else ConnectionType.HTTPS,
-                trustSelfSigned
+                configId = 0,
+                serverName = serverName.trim(),
+                baseUrl = serverHost.trim(),
+                port = if (port.isEmpty()) null else port.trim().toInt(),
+                path = path.ifEmpty { null },
+                username = username.trim(),
+                password = password.trim(),
+                connectionType =
+                    if (connectionType.trim() == "http") ConnectionType.HTTP
+                    else ConnectionType.HTTPS,
+                trustSelfSigned = trustSelfSigned
             )
 
         viewModelScope.launch { configDao.addConfig(config) }

@@ -61,7 +61,8 @@ constructor(
                 client =
                     QBittorrentClient(
                         "${config.connectionType.toString().lowercase()}://${config.baseUrl}" +
-                            if (config.port != null) ":${config.port}" else "",
+                            if (config.port != null) ":${config.port}"
+                            else "" + (config.path ?: ""),
                         config.username,
                         config.password,
                         syncInterval = ClientManager.syncInterval,
