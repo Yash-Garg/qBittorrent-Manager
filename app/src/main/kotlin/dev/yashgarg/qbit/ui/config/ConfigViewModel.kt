@@ -176,7 +176,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                 0,
                 serverName.trim(),
                 serverHost.trim(),
-                port.trim().toInt(),
+                if (port.isEmpty()) null else port.trim().toInt(),
                 username.trim(),
                 password.trim(),
                 if (connectionType.trim() == "HTTP") ConnectionType.HTTP else ConnectionType.HTTPS,
