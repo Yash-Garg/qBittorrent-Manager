@@ -1,0 +1,5 @@
+- Added toggle for allowing usage of self-signed certificates.
+- Fixed an issue where the app wouldn't connect with ports due to proxies (leaving the port empty should work now).
+- Other misc. improvements and dependency updates.
+
+Please report any issues faced at https://github.com/Yash-Garg/qBittorrent-Manager/issues
