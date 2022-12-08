@@ -88,13 +88,38 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/server_host_til"
-                app:placeholderText="0 - 65535">
+                app:placeholderText="0 - 65535"
+                app:prefixText=":">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/server_port_tiet"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="number"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/server_path_til"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="5dp"
+                android:hint="@string/path"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/server_port_til"
+                app:placeholderText="your/path"
+                app:prefixText="/">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/server_path_tiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -108,9 +133,9 @@
                 android:layout_marginVertical="5dp"
                 android:hint="@string/username"
                 app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@id/server_port_til"
-                app:layout_constraintStart_toStartOf="@id/server_port_til"
-                app:layout_constraintTop_toBottomOf="@id/server_port_til"
+                app:layout_constraintEnd_toEndOf="@id/server_path_til"
+                app:layout_constraintStart_toStartOf="@id/server_path_til"
+                app:layout_constraintTop_toBottomOf="@id/server_path_til"
                 app:placeholderText="e.g. admin">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -134,7 +159,8 @@
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="@id/server_username_til"
                 app:layout_constraintStart_toStartOf="@id/server_username_til"
-                app:layout_constraintTop_toBottomOf="@id/server_username_til">
+                app:layout_constraintTop_toBottomOf="@id/server_username_til"
+                app:placeholderText="e.g. adminadmin">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/server_password_tiet"

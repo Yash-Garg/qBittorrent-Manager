@@ -49,17 +49,20 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
         setupActionbar()
 
         val adapter = ArrayAdapter(requireContext(), AppR.layout.list_item, connectionTypes)
-        (binding.typeDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        binding.saveButton.setOnClickListener {
-            viewModel.validateForm(
-                binding.serverNameTil.editText?.text.toString(),
-                binding.serverHostTil.editText?.text.toString(),
-                binding.serverPortTil.editText?.text.toString(),
-                binding.typeDropdown.editText?.text.toString(),
-                binding.serverUsernameTil.editText?.text.toString(),
-                binding.serverPasswordTil.editText?.text.toString(),
-            )
+        with(binding) {
+            (typeDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+            saveButton.setOnClickListener {
+                viewModel.validateForm(
+                    serverNameTil.editText?.text.toString(),
+                    serverHostTil.editText?.text.toString(),
+                    serverPortTil.editText?.text.toString(),
+                    typeDropdown.editText?.text.toString(),
+                    serverUsernameTil.editText?.text.toString(),
+                    serverPasswordTil.editText?.text.toString(),
+                )
+            }
         }
     }
 
@@ -112,13 +115,17 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
     }
 
     private fun enableFields(enabled: Boolean) {
-        binding.serverNameTiet.isEnabled = enabled
-        binding.serverHostTiet.isEnabled = enabled
-        binding.serverPortTiet.isEnabled = enabled
-        binding.typeDropdown.isEnabled = enabled
-        binding.serverUsernameTiet.isEnabled = enabled
-        binding.serverPasswordTiet.isEnabled = enabled
-        binding.saveButton.isEnabled = enabled
+        with(binding) {
+            enabled.apply {
+                serverNameTiet.isEnabled = this
+                serverHostTiet.isEnabled = this
+                serverPortTiet.isEnabled = this
+                typeDropdown.isEnabled = this
+                serverUsernameTiet.isEnabled = this
+                serverPasswordTiet.isEnabled = this
+                saveButton.isEnabled = this
+            }
+        }
     }
 
     private fun handleEvent(event: ConfigViewModel.ValidationEvent) {
@@ -133,49 +140,59 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
                     )
                 checkSnackbar.show()
 
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val connectionResponse =
-                        viewModel.testConfig(
-                            "${binding.typeDropdown.editText?.text.toString().lowercase()}://" +
-                                "${binding.serverHostTil.editText?.text}:${binding.serverPortTil.editText?.text}",
-                            binding.serverUsernameTil.editText?.text.toString(),
-                            binding.serverPasswordTil.editText?.text.toString(),
-                            binding.trustCert.isChecked
-                        )
+                with(binding) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        val connectionType = typeDropdown.editText?.text.toString().lowercase()
+                        val serverHost = serverHostTil.editText?.text.toString()
+                        val username = serverUsernameTil.editText?.text.toString()
+                        val password = serverPasswordTil.editText?.text.toString()
+                        val path = serverPathTil.editText?.text.toString()
+                        val port = serverPortTil.editText?.text
 
-                    when (connectionResponse) {
-                        is Ok -> {
-                            checkSnackbar.dismiss()
-                            Toast.makeText(
-                                    context,
-                                    "Success! Client app version is ${connectionResponse.value}",
-                                    Toast.LENGTH_LONG
-                                )
-                                .show()
-
-                            viewModel.insert(
-                                binding.serverNameTil.editText?.text.toString(),
-                                binding.serverHostTil.editText?.text.toString(),
-                                binding.serverPortTil.editText?.text.toString(),
-                                binding.typeDropdown.editText?.text.toString(),
-                                binding.serverUsernameTil.editText?.text.toString(),
-                                binding.serverPasswordTil.editText?.text.toString(),
-                                binding.trustCert.isChecked
+                        val connectionResponse =
+                            viewModel.testConfig(
+                                "$connectionType://$serverHost${if (!port.isNullOrEmpty()) ":$port" else ""}" +
+                                    if (path.isNotEmpty()) "/$path" else "",
+                                username,
+                                password,
+                                trustCert.isChecked
                             )
 
-                            findNavController().navigateUp()
-                        }
-                        is Err -> {
-                            Log.e(ClientManager.tag, connectionResponse.error.toString())
-                            Snackbar.make(
-                                    requireView(),
-                                    "Failed! ${connectionResponse.error.message}",
-                                    Snackbar.LENGTH_LONG
+                        when (connectionResponse) {
+                            is Ok -> {
+                                checkSnackbar.dismiss()
+                                Toast.makeText(
+                                        context,
+                                        "Success! Client app version is ${connectionResponse.value}",
+                                        Toast.LENGTH_LONG
+                                    )
+                                    .show()
+
+                                viewModel.insert(
+                                    serverNameTil.editText?.text.toString(),
+                                    serverHost,
+                                    port.toString(),
+                                    path,
+                                    connectionType,
+                                    username,
+                                    password,
+                                    trustCert.isChecked
                                 )
-                                .show()
+
+                                findNavController().navigateUp()
+                            }
+                            is Err -> {
+                                Log.e(ClientManager.tag, connectionResponse.error.toString())
+                                Snackbar.make(
+                                        requireView(),
+                                        "Failed! ${connectionResponse.error.message}",
+                                        Snackbar.LENGTH_LONG
+                                    )
+                                    .show()
+                            }
                         }
+                        enableFields(true)
                     }
-                    enableFields(true)
                 }
             }
         }
