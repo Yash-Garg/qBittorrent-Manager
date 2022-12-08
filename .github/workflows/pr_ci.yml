@@ -11,7 +11,7 @@ jobs:
   file-changes:
     runs-on: ubuntu-latest
     outputs:
-      any: ${{ steps.check.outputs.any_changed }}
+      any: ${{ steps.changed-files.outputs.any_changed }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -31,6 +31,7 @@ jobs:
   check-codestyle:
     needs: [ file-changes ]
     runs-on: ubuntu-latest
+    if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.1.0
@@ -59,6 +60,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
+    if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.1.0

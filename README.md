@@ -1,6 +1,6 @@
 # qBittorrent-Manager 🚧
 
-[![Android CI](https://github.com/Yash-Garg/qBittorrent-Manager/actions/workflows/pr_ci.yml/badge.svg?branch=develop)](https://github.com/Yash-Garg/qBittorrent-Manager/actions/workflows/pr_ci.yml)
+[![Android CI](https://github.com/Yash-Garg/qBittorrent-Manager/actions/workflows/develop_ci.yml/badge.svg?branch=develop)](https://github.com/Yash-Garg/qBittorrent-Manager/actions/workflows/pr_ci.yml)
 
 This is the repository for **_qBittorrent Manager_**, an Android app for managing [qBittorrent](http://www.qbittorrent.org/) remotely, written in Kotlin.
 
