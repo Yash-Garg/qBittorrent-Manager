@@ -178,7 +178,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                 serverName = serverName.trim(),
                 baseUrl = serverHost.trim(),
                 port = if (port.isEmpty()) null else port.trim().toInt(),
-                path = path.ifEmpty { null },
+                path = if (path.isEmpty()) null else "/$path",
                 username = username.trim(),
                 password = password.trim(),
                 connectionType =

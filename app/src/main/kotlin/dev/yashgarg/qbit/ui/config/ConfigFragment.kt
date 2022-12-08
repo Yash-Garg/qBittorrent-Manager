@@ -152,7 +152,7 @@ class ConfigFragment : Fragment(AppR.layout.config_fragment) {
                         val connectionResponse =
                             viewModel.testConfig(
                                 "$connectionType://$serverHost${if (!port.isNullOrEmpty()) ":$port" else ""}" +
-                                    if (path.isEmpty()) "" else "/$path",
+                                    if (path.isNotEmpty()) "/$path" else "",
                                 username,
                                 password,
                                 trustCert.isChecked
