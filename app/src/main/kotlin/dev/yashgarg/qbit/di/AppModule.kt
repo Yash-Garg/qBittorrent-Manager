@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.yashgarg.qbit.data.AppDatabase
+import dev.yashgarg.qbit.data.MIGRATION_1_2
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.manager.ClientManagerImpl
 import dev.yashgarg.qbit.data.models.ServerPreferences
@@ -30,7 +31,9 @@ class AppModule {
     @Singleton
     @Provides
     fun provideRoomDb(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.dbName).build()
+        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
+            .addMigrations(MIGRATION_1_2)
+            .build()
 
     @Singleton @Provides fun provideConfigDao(db: AppDatabase) = db.configDao()
 
