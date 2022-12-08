@@ -68,6 +68,7 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="port">Port (optional)</string>
+    <string name="path">Path (optional)</string>
     <string name="host_or_ip">Host or IP</string>
     <string name="server_name">Server name</string>
     <string name="save_and_test_cfg">Save and test config</string>

@@ -12,6 +12,7 @@ data class ServerConfig(
     val serverName: String,
     val baseUrl: String,
     val port: Int? = null,
+    val path: String? = null,
     val username: String,
     val password: String,
     val connectionType: ConnectionType,
