@@ -17,7 +17,7 @@ lifecycle = "2.5.1"
 qbit = "1.0.0-beta03"
 kotlin = "1.7.20"
 mockito = "4.9.0"
-room = "2.5.0-beta02"
+room = "2.5.0-rc01"
 spotless = "6.12.0"
 uiautomator = "2.2.0"
 
@@ -25,7 +25,7 @@ uiautomator = "2.2.0"
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha07"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha08"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
