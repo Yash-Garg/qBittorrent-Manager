@@ -81,7 +81,7 @@ jobs:
           gradle-home-cache-cleanup: true
 
   build-apks:
-    needs: [ check-codestyle ]
+    needs: [ check-codestyle, lint-debug ]
     strategy:
       matrix:
         os: [ ubuntu-latest, macos-latest ]
