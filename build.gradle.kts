@@ -19,4 +19,6 @@ plugins {
 
 val clean by tasks.existing(Delete::class) { delete(rootProject.buildDir) }
 
-afterEvaluate { tasks.prepareKotlinBuildScriptModel.dependsOn(tasks.copyGitHooks) }
+afterEvaluate {
+    tasks.prepareKotlinBuildScriptModel.dependsOn(tasks.copyGitHooks, tasks.installGitHooks)
+}
