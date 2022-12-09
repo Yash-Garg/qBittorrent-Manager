@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">qBittorrent Manager</string>
+    <string name="add_server">Add server</string>
+    <string name="welcome_text">Welcome to qBittorrent Manager</string>
+    <string name="press_button">Use the button below to add a server</string>
+    <string name="invalid_url">Please enter a valid host</string>
+    <string name="invalid_port">Please enter valid port number</string>
+    <string name="invalid_name">Name cannot be empty</string>
+    <string name="invalid_username">Username cannot be empty</string>
+    <string name="invalid_password">Password cannot be empty</string>
+    <string name="invalid_type">Select a value</string>
+    <string name="version">App Version - %1$s\nApi Version - v%2$s</string>
+    <string name="server_info">Server Information</string>
+    <string name="seed_status">Downloading • %1$d/%2$d seeds</string>
+    <string name="speed_status">▼ %1$s/s • ▲ %2$s/s</string>
+    <string name="percent_done">%1$s / %2$s • %3$d%%</string>
+    <string name="seeding">Seeding</string>
+    <string name="no_queue">Nothing in queue</string>
+    <string name="error">Something went wrong</string>
+    <string name="enter_url">Magnet Url</string>
+    <string name="trust_certificates">Trust self-signed certificates</string>
+    <string name="paused">Paused</string>
+    <string name="stalled">Stalled</string>
+    <string name="completed">Completed</string>
+    <!-- Torrent Info Fragment -->
+    <!-- Titles-->
+    <string name="transfer">Transfer</string>
+    <string name="connections">Connections</string>
+    <string name="seeds">Seeds</string>
+    <string name="peers">Peers</string>
+    <string name="time_active">Time Active</string>
+    <string name="eta">ETA</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="uploaded">Uploaded</string>
+    <string name="dl_speed">Down Speed</string>
+    <string name="up_speed">Upload Speed</string>
+    <string name="dl_limit">Download Limit</string>
+    <string name="up_limit">Upload Limit</string>
+    <string name="wasted">Wasted</string>
+    <string name="ratio">Ratio</string>
+    <string name="reannounce">Reannounce In</string>
+    <string name="last_complete">Last Seen Complete</string>
+    <string name="priority">Priority</string>
+    <string name="torrent_info">Torrent Information</string>
+    <string name="total_size">Total Size</string>
+    <string name="created_by">Created By</string>
+    <string name="added_on">Added On</string>
+    <string name="completed_on">Completed On</string>
+    <string name="save_path">Save Path</string>
+    <string name="category">Category</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="torrent_hash">Torrent Hash</string>
+    <string name="comment">Comment</string>
+    <string name="created_on">Created On</string>
+    <string name="toggle_limits">Toggle speed limits</string>
+    <string name="sort">Sort</string>
+    <!-- Subtitles-->
+    <string name="connections_sub">%1$d (%2$d max)</string>
+    <string name="sp_sub">%1$d (%2$d total)</string>
+    <string name="infinite">Inf.</string>
+    <string name="dl_up_sub">%1$s (%2$s in this session)</string>
+    <string name="dl_up_speed_sub">%1$s (%2$s avg.)</string>
+    <!-- Config Fragment -->
+    <string name="type">Type</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="port">Port (optional)</string>
+    <string name="path">Path (optional)</string>
+    <string name="host_or_ip">Host or IP</string>
+    <string name="server_name">Server name</string>
+    <string name="save_and_test_cfg">Save and test config</string>
+    <!-- Notifications -->
+    <string name="status_channel_id">qBit-Channel-1</string>
+    <string name="status_updates">Status Updates</string>
+    <!-- Dialogs -->
+    <string name="peer_details">IP: %1$s\nPort: %2$d\nCountry: %3$s</string>
+</resources>
