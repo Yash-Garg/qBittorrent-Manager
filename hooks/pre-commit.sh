@@ -1,4 +1,4 @@
-#!C:/Program Files/Git/bin/sh.exe
+#!/bin/sh
 
 echo 'hook: formatting files using :spotlessApply'
 
