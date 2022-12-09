@@ -6,16 +6,16 @@
     <item
         android:id="@+id/category"
         android:icon="@drawable/outline_category_24"
-        android:title="Category"
+        android:title="@string/category"
         app:showAsAction="always" />
     <item
         android:id="@+id/sort_list"
         android:icon="@drawable/twotone_sort_24"
-        android:title="Sort"
+        android:title="@string/sort"
         app:showAsAction="always" />
     <item
         android:id="@+id/speed_toggle"
         android:icon="@drawable/twotone_speed_24"
-        android:title="Toggle speed limits"
+        android:title="@string/toggle_limits"
         app:showAsAction="always" />
 </menu>
