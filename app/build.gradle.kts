@@ -57,11 +57,20 @@ android {
                 "proguard-rules.pro"
             )
         }
+
         create("benchmark") {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
         }
+    }
+
+    lint {
+        abortOnError = true
+        checkReleaseBuilds = false
+        warningsAsErrors = true
+        disable.add("PluralsCandidate")
+        baseline = file("lint-baseline.xml")
     }
 
     compileOptions {

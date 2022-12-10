@@ -21,5 +21,9 @@ gradlePlugin {
             id = "dev.yashgarg.qbit.spotless"
             implementationClass = "dev.yashgarg.qbit.gradle.SpotlessPlugin"
         }
+        register("githooks") {
+            id = "dev.yashgarg.qbit.githooks"
+            implementationClass = "dev.yashgarg.qbit.gradle.GitHooksPlugin"
+        }
     }
 }
