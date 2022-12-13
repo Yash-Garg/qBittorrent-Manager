@@ -1,0 +1,5 @@
+- Added option to specify a server path for connection.
+- Fixed an issue with database migration from v0.1.7 to latest.
+- Other misc. improvements and dependency updates.
+
+Please report any issues faced at https://github.com/Yash-Garg/qBittorrent-Manager/issues
