@@ -45,7 +45,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up JDK
-        uses: actions/setup-java@v3.8.0
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
           java-version: "11"
@@ -67,7 +67,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up JDK
-        uses: actions/setup-java@v3.8.0
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
           java-version: "11"
@@ -92,7 +92,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up JDK
-        uses: actions/setup-java@v3.8.0
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
           java-version: "11"
