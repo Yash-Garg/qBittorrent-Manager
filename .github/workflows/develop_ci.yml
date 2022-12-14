@@ -45,7 +45,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.8.0
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
           java-version: "11"
@@ -71,7 +71,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.8.0
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
           java-version: "11"
@@ -112,7 +112,7 @@ jobs:
           echo $ENCODED_STRING | base64 --decode > "${TMP_KEYSTORE_FILE_PATH}"/qbit-key.jks
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.8.0
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
           java-version: "11"
