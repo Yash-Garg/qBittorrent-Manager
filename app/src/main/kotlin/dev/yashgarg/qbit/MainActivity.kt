@@ -25,9 +25,6 @@ import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
 import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -58,11 +55,6 @@ class MainActivity : AppCompatActivity() {
                             val bundle = bundleOf(TORRENT_INTENT_KEY to intent?.data.toString())
                             val navController =
                                 findNavController(this@MainActivity, R.id.nav_host_fragment)
-
-                            serverPrefsStore.data
-                                .map { it.showNotification }
-                                .onEach(::launchWorkManager)
-                                .launchIn(lifecycleScope)
 
                             if (navController.currentDestination?.id == R.id.homeFragment) {
                                 navController.navigate(
