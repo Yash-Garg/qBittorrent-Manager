@@ -1,6 +1,5 @@
 package dev.yashgarg.qbit.ui.server.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -25,13 +24,6 @@ class TorrentListAdapter @Inject constructor() :
     ListAdapter<Torrent, TorrentListAdapter.TorrentItemViewHolder>(TorrentComparator()) {
 
     var tracker: SelectionTracker<String>? = null
-    var torrentsList = emptyList<Torrent>()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            notifyDataSetChanged()
-            field = value
-        }
-
     var onItemClick: ((String) -> Unit)? = null
 
     inner class TorrentItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -148,11 +140,11 @@ class TorrentListAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: TorrentItemViewHolder, position: Int) {
-        val torrent = torrentsList.elementAt(position)
+        val torrent = currentList.elementAt(position)
         holder.bind(torrent)
     }
 
-    override fun getItemCount(): Int = torrentsList.size
+    override fun getItemCount(): Int = currentList.size
 
     private class TorrentComparator : DiffUtil.ItemCallback<Torrent>() {
         override fun areItemsTheSame(oldItem: Torrent, newItem: Torrent): Boolean {
@@ -168,13 +160,13 @@ class TorrentListAdapter @Inject constructor() :
 class TorrentItemKeyProvider(private val adapter: TorrentListAdapter) :
     ItemKeyProvider<String>(SCOPE_CACHED) {
     override fun getKey(position: Int): String? {
-        return if (adapter.torrentsList.isNotEmpty()) {
-            adapter.torrentsList.elementAt(position).hash
+        return if (adapter.currentList.isNotEmpty()) {
+            adapter.currentList.elementAt(position).hash
         } else null
     }
 
     override fun getPosition(key: String): Int {
-        return adapter.torrentsList.indexOfFirst { it.hash == key }
+        return adapter.currentList.indexOfFirst { it.hash == key }
     }
 }
 

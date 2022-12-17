@@ -176,8 +176,9 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     emptyTv.visibility = View.GONE
                     torrentRv.apply {
                         visibility = View.VISIBLE
-                        torrentListAdapter.torrentsList =
+                        torrentListAdapter.submitList(
                             requireNotNull(state.data).torrents.values.toList()
+                        )
                     }
                 }
                 refreshLayout.isRefreshing = false
