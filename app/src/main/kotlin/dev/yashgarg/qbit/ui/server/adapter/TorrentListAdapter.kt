@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.common.R as CommonR
 import dev.yashgarg.qbit.utils.toHumanReadable
@@ -35,7 +35,7 @@ class TorrentListAdapter @Inject constructor() :
     var onItemClick: ((String) -> Unit)? = null
 
     inner class TorrentItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardView: CardView = view.findViewById(R.id.torrent_card)
+        val cardView: MaterialCardView = view.findViewById(R.id.torrent_card)
         val title: TextView = view.findViewById(R.id.torrentTitle)
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         val peers: TextView = view.findViewById(R.id.peers_tv)
@@ -69,7 +69,14 @@ class TorrentListAdapter @Inject constructor() :
                     )
                 eta.text = if (torrent.eta == 8640000L) null else torrent.eta.toTime()
 
-                cardView.setOnClickListener { onItemClick?.invoke(torrent.hash) }
+                cardView.apply {
+                    setOnClickListener { onItemClick?.invoke(torrent.hash) }
+                    // TODO: Change this according to SelectionTracker
+                    setOnLongClickListener {
+                        this.isChecked = !this.isChecked
+                        true
+                    }
+                }
 
                 when (torrent.state) {
                     Torrent.State.PAUSED_DL -> {
