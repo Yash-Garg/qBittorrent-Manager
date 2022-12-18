@@ -10,12 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.MainActivity
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
+import dev.yashgarg.qbit.ui.server.adapter.TorrentItemDetailsLookup
+import dev.yashgarg.qbit.ui.server.adapter.TorrentItemKeyProvider
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import dev.yashgarg.qbit.validation.LinkValidator
@@ -30,6 +35,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
     private val linkValidator by lazy { LinkValidator() }
+    lateinit var selectionTracker: SelectionTracker<String>
 
     @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
@@ -113,6 +119,29 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             }
 
             torrentRv.adapter = torrentListAdapter
+
+            selectionTracker =
+                SelectionTracker.Builder(
+                        "torrents_selection",
+                        torrentRv,
+                        TorrentItemKeyProvider(torrentListAdapter),
+                        TorrentItemDetailsLookup(torrentRv),
+                        StorageStrategy.createStringStorage()
+                    )
+                    .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+                    .build()
+
+            selectionTracker.addObserver(
+                object : SelectionTracker.SelectionObserver<String>() {
+                    override fun onSelectionChanged() {
+                        super.onSelectionChanged()
+
+                        val items = selectionTracker.selection.size()
+                    }
+                }
+            )
+
+            torrentListAdapter.tracker = selectionTracker
 
             refreshLayout.setOnRefreshListener { viewModel.refresh() }
 

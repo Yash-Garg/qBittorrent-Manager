@@ -39,7 +39,7 @@ class TorrentListAdapter @Inject constructor() :
             object : ItemDetailsLookup.ItemDetails<String>() {
                 override fun getPosition(): Int = adapterPosition
 
-                override fun getSelectionKey(): String? = getItem(adapterPosition).hash
+                override fun getSelectionKey(): String? = getItem(position).hash
             }
 
         fun bind(torrent: Torrent) {
@@ -62,11 +62,12 @@ class TorrentListAdapter @Inject constructor() :
                 eta.text = if (torrent.eta == 8640000L) null else torrent.eta.toTime()
 
                 cardView.apply {
-                    setOnClickListener { onItemClick?.invoke(torrent.hash) }
-                    // TODO: Change this according to SelectionTracker
-                    setOnLongClickListener {
-                        this.isChecked = !this.isChecked
-                        true
+                    tracker?.let {
+                        setOnClickListener { _ ->
+                            if (it.hasSelection() != true) onItemClick?.invoke(torrent.hash)
+                        }
+
+                        isChecked = it.isSelected(torrent.hash)
                     }
                 }
 
@@ -141,6 +142,7 @@ class TorrentListAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: TorrentItemViewHolder, position: Int) {
         val torrent = currentList.elementAt(position)
+
         holder.bind(torrent)
     }
 
