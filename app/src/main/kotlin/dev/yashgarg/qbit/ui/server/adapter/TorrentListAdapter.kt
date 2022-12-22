@@ -8,7 +8,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
+import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +25,32 @@ import qbittorrent.models.Torrent
 class TorrentListAdapter @Inject constructor() :
     ListAdapter<Torrent, TorrentListAdapter.TorrentItemViewHolder>(TorrentComparator()) {
 
-    var tracker: SelectionTracker<String>? = null
+    private var selectionTracker: SelectionTracker<String>? = null
     var onItemClick: ((String) -> Unit)? = null
+
+    fun makeSelectable(recyclerView: RecyclerView) {
+        selectionTracker =
+            SelectionTracker.Builder(
+                    "SelectableTorrentListAdapter",
+                    recyclerView,
+                    itemKeyProvider,
+                    TorrentItemDetailsLookup(recyclerView),
+                    StorageStrategy.createStringStorage()
+                )
+                .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+                .build()
+                .apply {
+                    addObserver(
+                        object : SelectionTracker.SelectionObserver<String>() {
+                            override fun onSelectionChanged() {
+                                super.onSelectionChanged()
+
+                                val items = selection.size()
+                            }
+                        }
+                    )
+                }
+    }
 
     inner class TorrentItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: MaterialCardView = view.findViewById(R.id.torrent_card)
@@ -62,7 +88,7 @@ class TorrentListAdapter @Inject constructor() :
                 eta.text = if (torrent.eta == 8640000L) null else torrent.eta.toTime()
 
                 cardView.apply {
-                    tracker?.let {
+                    selectionTracker?.let {
                         setOnClickListener { _ ->
                             if (it.hasSelection() != true) onItemClick?.invoke(torrent.hash)
                         }
@@ -157,30 +183,26 @@ class TorrentListAdapter @Inject constructor() :
             return oldItem.hash == newItem.hash
         }
     }
-}
 
-class TorrentItemKeyProvider(private val adapter: TorrentListAdapter) :
-    ItemKeyProvider<String>(SCOPE_CACHED) {
-    override fun getKey(position: Int): String? {
-        return if (adapter.currentList.isNotEmpty()) {
-            adapter.currentList.elementAt(position).hash
-        } else null
+    private class TorrentItemDetailsLookup(private val recyclerView: RecyclerView) :
+        ItemDetailsLookup<String>() {
+        override fun getItemDetails(event: MotionEvent): ItemDetails<String>? {
+            val view = recyclerView.findChildViewUnder(event.x, event.y)
+
+            return if (view != null) {
+                return (recyclerView.getChildViewHolder(view)
+                        as TorrentListAdapter.TorrentItemViewHolder)
+                    .itemDetails
+            } else null
+        }
     }
 
-    override fun getPosition(key: String): Int {
-        return adapter.currentList.indexOfFirst { it.hash == key }
-    }
-}
+    private val itemKeyProvider =
+        object : ItemKeyProvider<String>(ItemKeyProvider.SCOPE_CACHED) {
+            override fun getKey(position: Int) = getItem(position).hash
 
-class TorrentItemDetailsLookup(private val recyclerView: RecyclerView) :
-    ItemDetailsLookup<String>() {
-    override fun getItemDetails(event: MotionEvent): ItemDetails<String>? {
-        val view = recyclerView.findChildViewUnder(event.x, event.y)
-
-        return if (view != null) {
-            return (recyclerView.getChildViewHolder(view)
-                    as TorrentListAdapter.TorrentItemViewHolder)
-                .itemDetails
-        } else null
-    }
+            override fun getPosition(key: String): Int {
+                return currentList.indexOfFirst { it.hash == key }
+            }
+        }
 }
