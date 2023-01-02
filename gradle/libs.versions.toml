@@ -18,7 +18,7 @@ qbit = "1.0.0-beta03"
 kotlin = "1.7.20"
 mockito = "4.11.0"
 room = "2.5.0-rc01"
-spotless = "6.12.0"
+spotless = "6.12.1"
 uiautomator = "2.2.0"
 
 [libraries]
