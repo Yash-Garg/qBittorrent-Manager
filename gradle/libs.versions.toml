@@ -42,7 +42,7 @@ androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "axHilt
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "axHilt" }
 androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
 androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
-androidx-test-junit = "androidx.test.ext:junit:1.1.4"
+androidx-test-junit = "androidx.test.ext:junit:1.1.5"
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
