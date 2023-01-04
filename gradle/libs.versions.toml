@@ -9,16 +9,16 @@ axTest = "1.4.0"
 axWork = "2.7.1"
 googleMaterial = "1.7.0"
 agp = "8.0.0-alpha10"
-espresso = "3.5.0"
+espresso = "3.5.1"
 hilt = "2.44.2"
 axHilt = "1.0.0"
 ktor = "2.2.1"
 lifecycle = "2.5.1"
 qbit = "1.0.0-beta03"
 kotlin = "1.7.20"
-mockito = "4.10.0"
+mockito = "4.11.0"
 room = "2.5.0-rc01"
-spotless = "6.12.0"
+spotless = "6.12.1"
 uiautomator = "2.2.0"
 
 [libraries]
@@ -43,7 +43,7 @@ androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "axHilt
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "axHilt" }
 androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
 androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
-androidx-test-junit = "androidx.test.ext:junit:1.1.4"
+androidx-test-junit = "androidx.test.ext:junit:1.1.5"
 
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 
