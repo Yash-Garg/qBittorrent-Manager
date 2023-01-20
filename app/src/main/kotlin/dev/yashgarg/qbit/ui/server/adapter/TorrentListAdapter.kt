@@ -44,8 +44,6 @@ class TorrentListAdapter @Inject constructor() :
                         object : SelectionTracker.SelectionObserver<String>() {
                             override fun onSelectionChanged() {
                                 super.onSelectionChanged()
-
-                                val items = selection.size()
                             }
                         }
                     )
