@@ -1,6 +1,6 @@
 [versions]
 axCore = "1.9.0"
-axAppcompat = "1.5.1"
+axAppcompat = "1.6.0"
 axActivity = "1.6.1"
 axConstraintlayout = "2.1.4"
 axDatastore = "1.0.0"
@@ -17,15 +17,15 @@ lifecycle = "2.5.1"
 qbit = "1.0.0-beta03"
 kotlin = "1.7.20"
 mockito = "4.11.0"
-room = "2.5.0-rc01"
-spotless = "6.12.1"
+room = "2.5.0"
+spotless = "6.13.0"
 uiautomator = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha08"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha09"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -33,7 +33,7 @@ androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", 
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "axNavigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "axNavigation" }
-androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.3.0-alpha02"
+androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.3.0-alpha03n"
 androidx-recyclerview-selection = "androidx.recyclerview:recyclerview-selection:1.1.0"
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
