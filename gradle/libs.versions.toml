@@ -66,7 +66,7 @@ qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.re
 
 tools-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.10"
 tools-cascade = "me.saket.cascade:cascade:1.3.0"
-tools-desugar = "com.android.tools:desugar_jdk_libs:2.0.1"
+tools-desugar = "com.android.tools:desugar_jdk_libs:2.0.2"
 tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
 tools-lottie = "com.airbnb.android:lottie:5.2.0"
 tools-whatthestack = "com.github.haroldadmin:WhatTheStack:1.0.0-alpha04"
