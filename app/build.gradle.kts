@@ -11,7 +11,7 @@ val commitHash: String by lazy {
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("dev.yashgarg.qbit.kotlin-android")
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
@@ -32,6 +32,12 @@ android {
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "${defaultConfig.applicationId}-$versionName")
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 
     val isGithubCi = System.getenv("GITHUB_CI") != null
@@ -72,14 +78,6 @@ android {
         disable.add("PluralsCandidate")
         baseline = file("lint-baseline.xml")
     }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions { jvmTarget = JavaVersion.VERSION_11.toString() }
 
     buildFeatures {
         viewBinding = true

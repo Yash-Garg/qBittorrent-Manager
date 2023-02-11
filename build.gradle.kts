@@ -15,6 +15,7 @@ plugins {
 
     id("dev.yashgarg.qbit.spotless")
     id("dev.yashgarg.qbit.githooks")
+    id("dev.yashgarg.qbit.kotlin-common")
 }
 
 val clean by tasks.existing(Delete::class) { delete(rootProject.buildDir) }
