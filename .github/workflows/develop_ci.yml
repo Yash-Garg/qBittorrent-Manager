@@ -28,7 +28,7 @@ jobs:
         uses: tj-actions/changed-files@v35.4.4
         with:
           files: |
-            .github/workflows/pr_ci.yml
+            .github/workflows/develop_ci.yml
             gradle/libs.versions.toml
             **/*.kt
             **/*.kts
@@ -48,7 +48,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
-          java-version: "11"
+          java-version: "17"
           cache: "gradle"
 
       - name: Check codestyle
@@ -74,7 +74,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
-          java-version: "11"
+          java-version: "17"
           cache: "gradle"
 
       - name: Run unit tests
@@ -115,7 +115,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
-          java-version: "11"
+          java-version: "17"
           cache: "gradle"
 
       - name: Build signed APKs

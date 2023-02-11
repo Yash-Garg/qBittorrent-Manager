@@ -48,7 +48,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
-          java-version: "11"
+          java-version: "17"
           cache: "gradle"
 
       - name: Check codestyle
@@ -70,7 +70,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
-          java-version: "11"
+          java-version: "17"
           cache: "gradle"
 
       - name: Run lint on debug variants
@@ -95,7 +95,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: "zulu"
-          java-version: "11"
+          java-version: "17"
           cache: "gradle"
 
       - name: Build debug APKs

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.SelectionTracker
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.MainActivity
@@ -30,6 +31,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
     private val linkValidator by lazy { LinkValidator() }
+    private lateinit var selectionTracker: SelectionTracker<String>
 
     @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
@@ -114,6 +116,8 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
             torrentRv.adapter = torrentListAdapter
 
+            torrentListAdapter.makeSelectable(torrentRv)
+
             refreshLayout.setOnRefreshListener { viewModel.refresh() }
 
             addTorrentFab.setOnClickListener {
@@ -176,7 +180,9 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                     emptyTv.visibility = View.GONE
                     torrentRv.apply {
                         visibility = View.VISIBLE
-                        torrentListAdapter.torrentsList = state.data!!.torrents
+                        torrentListAdapter.submitList(
+                            requireNotNull(state.data).torrents.values.toList()
+                        )
                     }
                 }
                 refreshLayout.isRefreshing = false

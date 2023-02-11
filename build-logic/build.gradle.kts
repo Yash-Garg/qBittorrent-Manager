@@ -2,7 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins { `kotlin-dsl` }
 
-dependencies { implementation(libs.build.spotless) }
+dependencies {
+    implementation(libs.build.spotless)
+    implementation(libs.build.kotlin)
+}
 
 afterEvaluate {
     tasks.withType<JavaCompile>().configureEach {
@@ -24,6 +27,14 @@ gradlePlugin {
         register("githooks") {
             id = "dev.yashgarg.qbit.githooks"
             implementationClass = "dev.yashgarg.qbit.gradle.GitHooksPlugin"
+        }
+        register("kotlin-common") {
+            id = "dev.yashgarg.qbit.kotlin-common"
+            implementationClass = "dev.yashgarg.qbit.gradle.KotlinCommonPlugin"
+        }
+        register("kotlin-android") {
+            id = "dev.yashgarg.qbit.kotlin-android"
+            implementationClass = "dev.yashgarg.qbit.gradle.KotlinAndroidPlugin"
         }
     }
 }

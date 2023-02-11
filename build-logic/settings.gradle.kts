@@ -2,8 +2,6 @@
 
 rootProject.name = "build-logic"
 
-enableFeaturePreview("VERSION_CATALOGS")
-
 pluginManagement {
     repositories {
         mavenCentral()
