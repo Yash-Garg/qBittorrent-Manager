@@ -10,13 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.selection.SelectionTracker
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.MainActivity
 import dev.yashgarg.qbit.R
 import dev.yashgarg.qbit.databinding.ServerFragmentBinding
 import dev.yashgarg.qbit.ui.dialogs.AddTorrentDialog
+import dev.yashgarg.qbit.ui.dialogs.RemoveTorrentDialog
 import dev.yashgarg.qbit.ui.server.adapter.TorrentListAdapter
 import dev.yashgarg.qbit.utils.viewBinding
 import dev.yashgarg.qbit.validation.LinkValidator
@@ -31,7 +31,6 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
     private val linkValidator by lazy { LinkValidator() }
-    private lateinit var selectionTracker: SelectionTracker<String>
 
     @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
@@ -116,7 +115,16 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
             torrentRv.adapter = torrentListAdapter
 
-            torrentListAdapter.makeSelectable(torrentRv)
+            torrentListAdapter.makeSelectable(torrentRv) { selection ->
+                bottomBar.menu.getItem(3).apply {
+                    isVisible = selection.size() > 0
+                    setOnMenuItemClickListener {
+                        RemoveTorrentDialog.newInstance()
+                            .show(childFragmentManager, RemoveTorrentDialog.TAG)
+                        true
+                    }
+                }
+            }
 
             refreshLayout.setOnRefreshListener { viewModel.refresh() }
 

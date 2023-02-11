@@ -72,6 +72,19 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
         }
     }
 
+    fun deleteTorrents(bytes: ByteArray) {
+        viewModelScope.launch {
+            when (
+                val result = runCatching {
+                    client.addTorrent { rawTorrents["torrent_file"] = bytes }
+                }
+            ) {
+                is Ok -> _status.emit("Successfully added file")
+                is Err -> _status.emit(result.error.message ?: "Failed to add file")
+            }
+        }
+    }
+
     fun toggleSpeedLimits() {
         viewModelScope.launch {
             when (val result = runCatching { client.toggleSpeedLimitsMode() }) {

@@ -18,4 +18,10 @@
         android:icon="@drawable/twotone_speed_24"
         android:title="@string/toggle_limits"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/delete_selection"
+        android:icon="@drawable/twotone_delete_24"
+        android:title="@string/toggle_limits"
+        android:visible="false"
+        app:showAsAction="always" />
 </menu>
