@@ -52,7 +52,7 @@ jobs:
           cache: "gradle"
 
       - name: Check codestyle
-        uses: gradle/gradle-build-action@v2.3.3
+        uses: gradle/gradle-build-action@v2.4.0
         with:
           arguments: spotlessCheck
           gradle-home-cache-cleanup: true
@@ -78,7 +78,7 @@ jobs:
           cache: "gradle"
 
       - name: Run unit tests
-        uses: gradle/gradle-build-action@v2.3.3
+        uses: gradle/gradle-build-action@v2.4.0
         with:
           arguments: test
           gradle-home-cache-cleanup: true
@@ -119,7 +119,7 @@ jobs:
           cache: "gradle"
 
       - name: Build signed APKs
-        uses: gradle/gradle-build-action@v2.3.3
+        uses: gradle/gradle-build-action@v2.4.0
         with:
           arguments: assembleRelease
           gradle-home-cache-cleanup: true
