@@ -61,7 +61,7 @@ google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", vers
 
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 
 qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
 qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
