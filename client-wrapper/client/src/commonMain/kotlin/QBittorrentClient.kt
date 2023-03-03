@@ -367,9 +367,10 @@ class QBittorrentClient(
     @Throws(QBittorrentException::class, CancellationException::class)
     suspend fun pauseTorrents(hashes: List<String> = allList) {
         http
-            .get("${config.baseUrl}/api/v2/torrents/pause") {
-                parameter("hashes", hashes.joinToString("|"))
-            }
+            .submitForm(
+                "${config.baseUrl}/api/v2/torrents/pause",
+                formParameters = Parameters.build { append("hashes", hashes.joinToString("|")) }
+            )
             .orThrow()
     }
 
@@ -381,9 +382,10 @@ class QBittorrentClient(
     @Throws(QBittorrentException::class, CancellationException::class)
     suspend fun resumeTorrents(hashes: List<String> = allList) {
         http
-            .get("${config.baseUrl}/api/v2/torrents/resume") {
-                parameter("hashes", hashes.joinToString("|"))
-            }
+            .submitForm(
+                "${config.baseUrl}/api/v2/torrents/resume",
+                formParameters = Parameters.build { append("hashes", hashes.joinToString("|")) }
+            )
             .orThrow()
     }
 
@@ -411,9 +413,10 @@ class QBittorrentClient(
     @Throws(QBittorrentException::class, CancellationException::class)
     suspend fun recheckTorrents(hashes: List<String> = allList) {
         http
-            .get("${config.baseUrl}/api/v2/torrents/recheck") {
-                parameter("hashes", hashes.joinToString("|"))
-            }
+            .submitForm(
+                "${config.baseUrl}/api/v2/torrents/recheck",
+                formParameters = Parameters.build { append("hashes", hashes.joinToString("|")) }
+            )
             .orThrow()
     }
 
@@ -421,9 +424,10 @@ class QBittorrentClient(
     @Throws(QBittorrentException::class, CancellationException::class)
     suspend fun reannounceTorrents(hashes: List<String> = allList) {
         http
-            .get("${config.baseUrl}/api/v2/torrents/reannounce") {
-                parameter("hashes", hashes.joinToString("|"))
-            }
+            .submitForm(
+                "${config.baseUrl}/api/v2/torrents/reannounce",
+                formParameters = Parameters.build { append("hashes", hashes.joinToString("|")) }
+            )
             .orThrow()
     }
 
