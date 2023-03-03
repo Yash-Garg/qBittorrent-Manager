@@ -28,7 +28,7 @@ class VersionViewModelTest {
     fun `check if client versions are correct`() = runTest {
         viewModel.uiState.drop(1).first().apply {
             assertEquals(appVersion, "v4.5.1")
-            assertEquals(apiVersion, "2.8.5")
+            assertEquals(apiVersion, "2.8.19")
         }
     }
 }
