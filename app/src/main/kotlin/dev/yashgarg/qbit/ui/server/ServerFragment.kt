@@ -3,13 +3,16 @@ package dev.yashgarg.qbit.ui.server
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.Selection
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import dev.yashgarg.qbit.MainActivity
@@ -31,6 +34,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     private val binding by viewBinding(ServerFragmentBinding::bind)
     private val viewModel by viewModels<ServerViewModel>()
     private val linkValidator by lazy { LinkValidator() }
+    private var selectedItems: Selection<String>? = null
 
     @Inject lateinit var torrentListAdapter: TorrentListAdapter
 
@@ -62,29 +66,37 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
     }
 
     private fun setupDialogResultListener() {
-        childFragmentManager.setFragmentResultListener(
-            AddTorrentDialog.ADD_TORRENT_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
-            val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
-            viewModel.addTorrentUrl(requireNotNull(url))
-        }
+        childFragmentManager.apply {
+            setFragmentResultListener(RemoveTorrentDialog.REMOVE_TORRENT_KEY, viewLifecycleOwner) {
+                _,
+                bundle ->
+                val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
+                Log.d(this.javaClass.simpleName, "Selection: ${selectedItems?.toList()}")
+                selectedItems?.toList()?.let { viewModel.removeTorrents(it, deleteFiles) }
+            }
 
-        @Suppress("UNCHECKED_CAST")
-        childFragmentManager.setFragmentResultListener(
-            AddTorrentDialog.ADD_TORRENT_FILE_KEY,
-            viewLifecycleOwner
-        ) { _, bundle ->
-            val uris =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    bundle.getParcelableArrayList(AddTorrentDialog.TORRENT_KEY, Uri::class.java)
-                } else {
-                    bundle.getStringArrayList(AddTorrentDialog.TORRENT_KEY) as ArrayList<Uri>
-                }
+            setFragmentResultListener(AddTorrentDialog.ADD_TORRENT_KEY, viewLifecycleOwner) {
+                _,
+                bundle ->
+                val url = bundle.getString(AddTorrentDialog.TORRENT_KEY)
+                viewModel.addTorrentUrl(requireNotNull(url))
+            }
 
-            uris?.forEach { uri ->
-                requireContext().contentResolver.openInputStream(uri).use { stream ->
-                    viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+            @Suppress("UNCHECKED_CAST")
+            setFragmentResultListener(AddTorrentDialog.ADD_TORRENT_FILE_KEY, viewLifecycleOwner) {
+                _,
+                bundle ->
+                val uris =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        bundle.getParcelableArrayList(AddTorrentDialog.TORRENT_KEY, Uri::class.java)
+                    } else {
+                        bundle.getStringArrayList(AddTorrentDialog.TORRENT_KEY) as ArrayList<Uri>
+                    }
+
+                uris?.forEach { uri ->
+                    requireContext().contentResolver.openInputStream(uri).use { stream ->
+                        viewModel.addTorrentFile(requireNotNull(stream).readBytes())
+                    }
                 }
             }
         }
@@ -116,6 +128,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
             torrentRv.adapter = torrentListAdapter
 
             torrentListAdapter.makeSelectable(torrentRv) { selection ->
+                selectedItems = selection
                 bottomBar.menu.getItem(3).apply {
                     isVisible = selection.size() > 0
                     setOnMenuItemClickListener {

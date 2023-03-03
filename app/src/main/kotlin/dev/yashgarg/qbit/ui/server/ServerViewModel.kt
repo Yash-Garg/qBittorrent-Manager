@@ -72,15 +72,11 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
         }
     }
 
-    fun deleteTorrents(bytes: ByteArray) {
+    fun removeTorrents(hashes: List<String>, deleteFiles: Boolean = false) {
         viewModelScope.launch {
-            when (
-                val result = runCatching {
-                    client.addTorrent { rawTorrents["torrent_file"] = bytes }
-                }
-            ) {
-                is Ok -> _status.emit("Successfully added file")
-                is Err -> _status.emit(result.error.message ?: "Failed to add file")
+            when (val result = runCatching { client.deleteTorrents(hashes, deleteFiles) }) {
+                is Ok -> return@launch
+                is Err -> _status.emit(result.error.message ?: "Failed to remove")
             }
         }
     }

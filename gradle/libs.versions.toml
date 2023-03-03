@@ -8,24 +8,24 @@ axNavigation = "2.5.3"
 axTest = "1.4.0"
 axWork = "2.8.0"
 googleMaterial = "1.8.0"
-agp = "8.1.0-alpha06"
+agp = "8.1.0-alpha07"
 espresso = "3.5.1"
 hilt = "2.45"
 axHilt = "1.0.0"
-ktor = "2.2.3"
+ktor = "2.2.4"
 lifecycle = "2.5.1"
 qbit = "1.0.0-beta03"
 kotlin = "1.8.10"
 mockito = "5.1.1"
 room = "2.5.0"
-spotless = "6.15.0"
+spotless = "6.16.0"
 uiautomator = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha09"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha10"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -49,7 +49,7 @@ build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", vers
 build-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 compose-activity = "androidx.activity:activity-compose:1.6.1"
-compose-compiler = "androidx.compose.compiler:compiler:1.4.2"
+compose-compiler = "androidx.compose.compiler:compiler:1.4.3"
 compose-foundation = "androidx.compose.foundation:foundation:1.3.1"
 compose-material3 = "androidx.compose.material3:material3:1.0.1"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.3.0"
@@ -61,7 +61,7 @@ google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", vers
 
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 
 qbittorrent-client = { module = "org.drewcarlson:qbittorrent-client", version.ref = "qbit" }
 qbittorrent-models = { module = "org.drewcarlson:qbittorrent-models", version.ref = "qbit" }
