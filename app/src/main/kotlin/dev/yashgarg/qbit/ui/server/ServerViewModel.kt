@@ -75,7 +75,7 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
     fun removeTorrents(hashes: List<String>, deleteFiles: Boolean = false) {
         viewModelScope.launch {
             when (val result = runCatching { client.deleteTorrents(hashes, deleteFiles) }) {
-                is Ok -> return@launch
+                is Ok -> _status.emit("Successfully deleted ${hashes.size} file(s)")
                 is Err -> _status.emit(result.error.message ?: "Failed to remove")
             }
         }

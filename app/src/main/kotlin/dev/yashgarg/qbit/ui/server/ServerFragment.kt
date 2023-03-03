@@ -73,6 +73,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
                 Log.d(this.javaClass.simpleName, "Selection: ${selectedItems?.toList()}")
                 selectedItems?.toList()?.let { viewModel.removeTorrents(it, deleteFiles) }
+                binding.bottomBar.menu.getItem(3).isVisible = false
             }
 
             setFragmentResultListener(AddTorrentDialog.ADD_TORRENT_KEY, viewLifecycleOwner) {

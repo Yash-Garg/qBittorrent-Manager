@@ -20,7 +20,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/delete_selection"
-        android:icon="@drawable/twotone_delete_24"
+        android:icon="@drawable/outline_delete_24"
         android:title="@string/toggle_limits"
         android:visible="false"
         app:showAsAction="always" />
