@@ -58,7 +58,7 @@ class ConfigViewModelTest {
             )
 
         when (response) {
-            is Ok -> assertEquals(response.value, "v4.4.5")
+            is Ok -> assertEquals(response.value, "v4.5.1")
             is Err -> throw response.error
         }
     }

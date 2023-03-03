@@ -15,10 +15,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
+        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 
-plugins { id("com.gradle.enterprise") version "3.12" }
+plugins { id("com.gradle.enterprise") version "3.12.4" }
 
 gradleEnterprise {
     buildScan {
@@ -34,4 +35,12 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "qbittorrent-manager"
 
-include(":app", ":ui-compose", ":common", ":bonsai-core", ":benchmark")
+include(
+    ":app",
+    ":ui-compose",
+    ":common",
+    ":bonsai-core",
+    ":benchmark",
+    ":client-wrapper:models",
+    ":client-wrapper:client"
+)

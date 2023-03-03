@@ -25,9 +25,6 @@ import dev.yashgarg.qbit.databinding.ActivityMainBinding
 import dev.yashgarg.qbit.notifications.AppNotificationManager
 import dev.yashgarg.qbit.worker.StatusWorker
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -56,14 +53,15 @@ class MainActivity : AppCompatActivity() {
                     when (status) {
                         ConfigStatus.EXISTS -> {
                             val bundle = bundleOf(TORRENT_INTENT_KEY to intent?.data.toString())
+                            val navController =
+                                findNavController(this@MainActivity, R.id.nav_host_fragment)
 
-                            serverPrefsStore.data
-                                .map { it.showNotification }
-                                .onEach(::launchWorkManager)
-                                .launchIn(lifecycleScope)
-
-                            findNavController(this@MainActivity, R.id.nav_host_fragment)
-                                .navigate(R.id.action_homeFragment_to_serverFragment, bundle)
+                            if (navController.currentDestination?.id == R.id.homeFragment) {
+                                navController.navigate(
+                                    R.id.action_homeFragment_to_serverFragment,
+                                    bundle
+                                )
+                            }
                         }
                         ConfigStatus.DOES_NOT_EXIST -> Log.i(ClientManager.tag, "No config found!")
                     }
