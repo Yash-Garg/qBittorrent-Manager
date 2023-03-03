@@ -130,12 +130,37 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
             torrentListAdapter.makeSelectable(torrentRv) { selection ->
                 selectedItems = selection
-                bottomBar.menu.getItem(3).apply {
-                    isVisible = selection.size() > 0
-                    setOnMenuItemClickListener {
-                        RemoveTorrentDialog.newInstance()
-                            .show(childFragmentManager, RemoveTorrentDialog.TAG)
-                        true
+
+                bottomBar.menu.apply {
+                    getItem(3).apply {
+                        isVisible = selection.size() > 0
+                        setOnMenuItemClickListener {
+                            RemoveTorrentDialog.newInstance()
+                                .show(childFragmentManager, RemoveTorrentDialog.TAG)
+                            true
+                        }
+                    }
+
+                    getItem(4).apply {
+                        isVisible = selection.size() > 0
+                        setOnMenuItemClickListener {
+                            selectedItems?.toList()?.let { hashes ->
+                                viewModel.toggleTorrentsState(true, hashes)
+                            }
+                            isVisible = false
+                            true
+                        }
+                    }
+
+                    getItem(5).apply {
+                        isVisible = selection.size() > 0
+                        setOnMenuItemClickListener {
+                            selectedItems?.toList()?.let { hashes ->
+                                viewModel.toggleTorrentsState(false, hashes)
+                            }
+                            isVisible = false
+                            true
+                        }
                     }
                 }
             }

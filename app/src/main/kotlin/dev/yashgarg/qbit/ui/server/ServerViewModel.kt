@@ -81,6 +81,24 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
         }
     }
 
+    fun toggleTorrentsState(pause: Boolean, hashes: List<String>) {
+        viewModelScope.launch {
+            when (
+                val result = runCatching {
+                    if (pause) client.pauseTorrents(hashes) else client.resumeTorrents(hashes)
+                }
+            ) {
+                is Ok ->
+                    _status.emit("${if (pause) "Paused" else "Resumed"} ${hashes.size} torrent(s)")
+                is Err ->
+                    _status.emit(
+                        result.error.message
+                            ?: "Failed to ${if (pause) "pause" else "resume"} ${hashes.size} torrent(s)"
+                    )
+            }
+        }
+    }
+
     fun toggleSpeedLimits() {
         viewModelScope.launch {
             when (val result = runCatching { client.toggleSpeedLimitsMode() }) {

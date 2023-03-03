@@ -21,7 +21,19 @@
     <item
         android:id="@+id/delete_selection"
         android:icon="@drawable/outline_delete_24"
-        android:title="@string/toggle_limits"
+        android:title="Delete"
         android:visible="false"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/pause_selection"
+        android:icon="@drawable/twotone_pause_24"
+        android:title="Pause"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/resume_selection"
+        android:icon="@drawable/twotone_play_arrow_24"
+        android:title="Resume"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 </menu>
