@@ -26,8 +26,8 @@ android {
         applicationId = "dev.yashgarg.qbit"
         minSdk = 24
         targetSdk = 33
-        versionCode = 10
-        versionName = "v0.2.$versionCode-$commitHash"
+        versionCode = 11
+        versionName = "v0.2.0-$commitHash"
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
