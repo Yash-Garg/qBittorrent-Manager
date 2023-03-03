@@ -132,13 +132,14 @@ dependencies {
     implementation(libs.google.dagger.hilt)
     kapt(libs.google.dagger.hilt.compiler)
 
-    implementation(libs.ktor.okhttp)
-    implementation(libs.ktor.logging)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.logging)
     implementation(libs.kotlinx.serialization)
-    implementation(libs.qbittorrent.client)
 
     implementation(projects.uiCompose)
     implementation(projects.common)
+    implementation(projects.clientWrapper.client)
+    implementation(projects.clientWrapper.models)
 
     debugImplementation(libs.tools.leakcanary)
     implementation(libs.tools.kotlin.result)

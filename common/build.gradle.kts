@@ -16,7 +16,7 @@ android {
 }
 
 dependencies {
-    api(libs.qbittorrent.models)
+    api(projects.clientWrapper.models)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity)
 }

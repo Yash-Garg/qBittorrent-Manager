@@ -12,6 +12,8 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.navigation.safeargs) apply false
+    alias(libs.plugins.multiplatform) apply false
+    alias(libs.plugins.binaryCompat) apply false
 
     id("dev.yashgarg.qbit.spotless")
     id("dev.yashgarg.qbit.githooks")
