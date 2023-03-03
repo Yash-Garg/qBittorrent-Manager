@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
+import androidx.recyclerview.selection.Selection
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
@@ -28,7 +29,7 @@ class TorrentListAdapter @Inject constructor() :
     private var selectionTracker: SelectionTracker<String>? = null
     var onItemClick: ((String) -> Unit)? = null
 
-    fun makeSelectable(recyclerView: RecyclerView) {
+    fun makeSelectable(recyclerView: RecyclerView, onSelection: (Selection<String>) -> Unit) {
         selectionTracker =
             SelectionTracker.Builder(
                     "SelectableTorrentListAdapter",
@@ -44,6 +45,7 @@ class TorrentListAdapter @Inject constructor() :
                         object : SelectionTracker.SelectionObserver<String>() {
                             override fun onSelectionChanged() {
                                 super.onSelectionChanged()
+                                onSelection(selection)
                             }
                         }
                     )
@@ -51,19 +53,19 @@ class TorrentListAdapter @Inject constructor() :
     }
 
     inner class TorrentItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardView: MaterialCardView = view.findViewById(R.id.torrent_card)
-        val title: TextView = view.findViewById(R.id.torrentTitle)
-        val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
-        val peers: TextView = view.findViewById(R.id.peers_tv)
-        val speed: TextView = view.findViewById(R.id.speed_tv)
-        val downloaded: TextView = view.findViewById(R.id.downloaded_percent)
-        val eta: TextView = view.findViewById(R.id.eta_tv)
+        private val cardView: MaterialCardView = view.findViewById(R.id.torrent_card)
+        private val title: TextView = view.findViewById(R.id.torrentTitle)
+        private val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
+        private val peers: TextView = view.findViewById(R.id.peers_tv)
+        private val speed: TextView = view.findViewById(R.id.speed_tv)
+        private val downloaded: TextView = view.findViewById(R.id.downloaded_percent)
+        private val eta: TextView = view.findViewById(R.id.eta_tv)
 
         val itemDetails: ItemDetailsLookup.ItemDetails<String> =
             object : ItemDetailsLookup.ItemDetails<String>() {
                 override fun getPosition(): Int = adapterPosition
 
-                override fun getSelectionKey(): String? = getItem(position).hash
+                override fun getSelectionKey(): String = getItem(position).hash
             }
 
         fun bind(torrent: Torrent) {
@@ -88,7 +90,7 @@ class TorrentListAdapter @Inject constructor() :
                 cardView.apply {
                     selectionTracker?.let {
                         setOnClickListener { _ ->
-                            if (it.hasSelection() != true) onItemClick?.invoke(torrent.hash)
+                            if (!it.hasSelection()) onItemClick?.invoke(torrent.hash)
                         }
 
                         isChecked = it.isSelected(torrent.hash)
@@ -196,7 +198,7 @@ class TorrentListAdapter @Inject constructor() :
     }
 
     private val itemKeyProvider =
-        object : ItemKeyProvider<String>(ItemKeyProvider.SCOPE_CACHED) {
+        object : ItemKeyProvider<String>(SCOPE_CACHED) {
             override fun getKey(position: Int) = getItem(position).hash
 
             override fun getPosition(key: String): Int {
