@@ -22,6 +22,8 @@ android {
                 libs.compose.compiler.get().versionConstraint.requiredVersion
         }
     }
+
+    lint { baseline = file("lint-baseline.xml") }
 }
 
 dependencies {

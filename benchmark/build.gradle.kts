@@ -32,6 +32,8 @@ android {
         }
     }
 
+    lint { baseline = file("lint-baseline.xml") }
+
     targetProjectPath = ":app"
     experimentalProperties["android.experimental.self-instrumenting"] = true
 }
