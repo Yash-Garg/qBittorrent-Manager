@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs) apply false
     alias(libs.plugins.multiplatform) apply false
     alias(libs.plugins.binaryCompat) apply false
+    alias(libs.plugins.sentry) apply false
 
     id("dev.yashgarg.qbit.spotless")
     id("dev.yashgarg.qbit.githooks")

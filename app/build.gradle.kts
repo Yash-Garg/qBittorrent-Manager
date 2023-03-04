@@ -16,6 +16,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.sentry)
 }
 
 android {
@@ -67,6 +68,35 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
+        }
+    }
+
+    flavorDimensions += listOf("app")
+    productFlavors {
+        create("nonFree") {
+            dimension = "app"
+            manifestPlaceholders["sentryDsn"] = System.getenv("SENTRY_DSN") ?: ""
+        }
+
+        create("free") {
+            dimension = "app"
+            isDefault = true
+            manifestPlaceholders["sentryDsn"] = ""
+        }
+    }
+
+    sentry {
+        ignoredBuildTypes.set(setOf("benchmark", "debug"))
+        ignoredFlavors.set(setOf("free"))
+    }
+
+    androidComponents {
+        beforeVariants { variant ->
+            when {
+                variant.name.contains("benchmark", ignoreCase = true) -> {
+                    variant.enable = false
+                }
+            }
         }
     }
 

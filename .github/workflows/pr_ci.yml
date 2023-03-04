@@ -108,4 +108,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Debug APKs
-          path: app/build/outputs/apk/debug/*.apk
+          path: |
+            app/build/outputs/apk/free/debug/*.apk
+            app/build/outputs/apk/nonFree/debug/*.apk

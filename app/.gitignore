@@ -2,3 +2,5 @@
 /release
 *.jks
 *.properties
+free/*
+nonFree/*

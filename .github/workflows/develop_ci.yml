@@ -8,6 +8,8 @@ on:
 env:
   base_url: ${{ secrets.BASE_URL }}
   password: ${{ secrets.PASSWORD }}
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 concurrency:
   group: ${{ github.ref }}
@@ -133,4 +135,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Signed APKs
-          path: app/build/outputs/apk/release/*.apk
+          path: |
+            app/build/outputs/apk/free/release/*.apk
+            app/build/outputs/apk/nonFree/release/*.apk
