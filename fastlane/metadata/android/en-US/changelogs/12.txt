@@ -1,0 +1,6 @@
+- Added option to select multiple torrents and perform actions on main screen
+- Compatibility and Fixes for qBittorrent v4.5.1
+- Fix an issue with desugaring causing app to be non usable
+- Other misc. improvements and dependency updates
+
+Please report any issues faced at https://github.com/Yash-Garg/qBittorrent-Manager/issues
