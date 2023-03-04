@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.utils
 
+import java.lang.StringBuilder
 import java.text.CharacterIterator
 import java.text.StringCharacterIterator
 import java.time.Instant

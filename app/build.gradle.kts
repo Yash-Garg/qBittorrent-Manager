@@ -26,8 +26,8 @@ android {
         applicationId = "dev.yashgarg.qbit"
         minSdk = 24
         targetSdk = 33
-        versionCode = 11
-        versionName = "v0.2.0-$commitHash"
+        versionCode = 12
+        versionName = "v0.2.1-$commitHash"
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -37,7 +37,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-        isCoreLibraryDesugaringEnabled = true
     }
 
     val isGithubCi = System.getenv("GITHUB_CI") != null
@@ -148,5 +147,4 @@ dependencies {
     implementation(libs.tools.whatthestack)
 
     testImplementation(libs.bundles.testing)
-    coreLibraryDesugaring(libs.tools.desugar)
 }
