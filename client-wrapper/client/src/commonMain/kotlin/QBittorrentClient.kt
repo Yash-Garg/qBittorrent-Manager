@@ -921,7 +921,7 @@ class QBittorrentClient(
 
     @Throws(QBittorrentException::class, CancellationException::class)
     suspend fun toggleSpeedLimitsMode() {
-        http.get("${config.baseUrl}/api/v2/transfer/toggleSpeedLimitsMode").orThrow()
+        http.post("${config.baseUrl}/api/v2/transfer/toggleSpeedLimitsMode").orThrow()
     }
 
     /**
