@@ -25,6 +25,8 @@
     <string name="paused">Paused</string>
     <string name="stalled">Stalled</string>
     <string name="completed">Completed</string>
+    <string name="manage_configs">Manage configs</string>
+    <string name="get_started">Get Started</string>
 
     <!-- Torrent Info Fragment -->
     <!-- Titles-->

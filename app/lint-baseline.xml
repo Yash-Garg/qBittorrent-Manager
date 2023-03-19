@@ -2,13 +2,79 @@
 <issues format="6" by="lint 8.1.0-alpha07" type="baseline" client="gradle" dependencies="false" name="AGP (8.1.0-alpha07)" variant="all" version="8.1.0-alpha07">
 
     <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 24): `java.time.format.DateTimeFormatter#ofPattern`"
+        errorLine1="        val formatter = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy, HH:mm:ss&quot;)"
+        errorLine2="                                          ~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/yashgarg/qbit/utils/NumberFormat.kt"
+            line="33"
+            column="43"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 24): `java.time.Instant#ofEpochMilli`"
+        errorLine1="        val instant = Instant.ofEpochMilli(millisEpoch)"
+        errorLine2="                              ~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/yashgarg/qbit/utils/NumberFormat.kt"
+            line="34"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 24): `java.time.LocalDateTime#ofInstant`"
+        errorLine1="        val date = LocalDateTime.ofInstant(instant, zoneId ?: ZoneId.systemDefault())"
+        errorLine2="                                 ~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/yashgarg/qbit/utils/NumberFormat.kt"
+            line="35"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 24): `java.time.ZoneId#systemDefault`"
+        errorLine1="        val date = LocalDateTime.ofInstant(instant, zoneId ?: ZoneId.systemDefault())"
+        errorLine2="                                                                     ~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/yashgarg/qbit/utils/NumberFormat.kt"
+            line="35"
+            column="70"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 24): `java.time.format.DateTimeFormatter#format`"
+        errorLine1="        return formatter.format(date).trim()"
+        errorLine2="                         ~~~~~~">
+        <location
+            file="src/main/kotlin/dev/yashgarg/qbit/utils/NumberFormat.kt"
+            line="36"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Cast from `LocalDateTime` to `TemporalAccessor` requires API level 26 (current min is 24)"
+        errorLine1="        return formatter.format(date).trim()"
+        errorLine2="                                ~~~~">
+        <location
+            file="src/main/kotlin/dev/yashgarg/qbit/utils/NumberFormat.kt"
+            line="36"
+            column="33"/>
+    </issue>
+
+    <issue
         id="KaptUsageInsteadOfKsp"
         message="This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp"
         errorLine1="    kapt(libs.androidx.room.compiler)"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="build.gradle.kts"
-            line="124"
+            line="123"
             column="5"/>
     </issue>
 
@@ -98,6 +164,39 @@
             file="src/main/res/layout/rename_torrent_dialog.xml"
             line="17"
             column="13"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Delete&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Delete&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/server_bottombar.xml"
+            line="24"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Pause&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Pause&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/server_bottombar.xml"
+            line="30"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Resume&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Resume&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/server_bottombar.xml"
+            line="36"
+            column="9"/>
     </issue>
 
 </issues>

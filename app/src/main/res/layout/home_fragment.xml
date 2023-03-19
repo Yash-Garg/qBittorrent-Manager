@@ -17,15 +17,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/add_server_fab"
+        android:id="@+id/manage_servers_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription=""
-        android:text="@string/add_server"
-        android:textSize="16sp"
-        app:icon="@drawable/twotone_add_24" />
+        android:text="@string/get_started"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView"
