@@ -9,14 +9,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.utils.ClientConnectionError
 import dev.yashgarg.qbit.utils.ExceptionHandler
-import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
-import qbittorrent.QBittorrentException
 
 @HiltViewModel
 class ServerViewModel @Inject constructor(private val clientManager: ClientManager) : ViewModel() {
@@ -131,27 +128,23 @@ class ServerViewModel @Inject constructor(private val clientManager: ClientManag
 
     private suspend fun syncData() {
         getSpeedLimitMode()
-        client
-            .observeMainData()
-            .retryWhen { cause, attempt ->
-                if ((cause as QBittorrentException).cause is UnknownHostException) {
-                    emitException(cause)
-                    println("Retrying $attempt")
-                    delay(1000)
-                    true
-                } else false
-            }
-            .catch { emitException(it) }
-            .collect { mainData ->
-                _uiState.update { state ->
-                    state.copy(
-                        dataLoading = false,
-                        data = mainData,
-                        hasError = false,
-                        error = null,
-                    )
+        try {
+            client
+                .observeMainData()
+                .catch { emitException(it) }
+                .collectLatest { mainData ->
+                    _uiState.update { state ->
+                        state.copy(
+                            dataLoading = false,
+                            data = mainData,
+                            hasError = false,
+                            error = null,
+                        )
+                    }
+                    _intent.emit(Unit)
                 }
-                _intent.emit(Unit)
-            }
+        } catch (e: Exception) {
+            emitException(e)
+        }
     }
 }

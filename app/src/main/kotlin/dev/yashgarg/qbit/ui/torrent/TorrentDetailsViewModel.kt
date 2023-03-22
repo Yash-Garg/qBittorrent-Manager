@@ -113,12 +113,18 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
                 client
                     .observeTorrent(hash, waitIfMissing = false)
                     .onEach { info ->
+                        val props = runCatching { client.getTorrentProperties(hash) }
+
                         _uiState.update { state ->
                             state.copy(
                                 loading = false,
                                 torrent = info,
                                 trackers = client.getTrackers(hash) ?: emptyList(),
-                                torrentProperties = client.getTorrentProperties(hash)
+                                torrentProperties =
+                                    when (props) {
+                                        is Ok -> props.value
+                                        is Err -> null
+                                    }
                             )
                         }
                         getContent()
@@ -144,6 +150,7 @@ constructor(private val clientManager: ClientManager, state: SavedStateHandle) :
             .launch {
                 client
                     .observeTorrentPeers(requireNotNull(hash))
+                    .catch { _status.emit(it.message ?: "Sync Failure") }
                     .onEach { peers ->
                         _uiState.update { state ->
                             state.copy(
