@@ -27,8 +27,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        binding.addServerFab.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_configFragment)
+        val navController = findNavController()
+        if (navController.currentDestination?.id == R.id.homeFragment) {
+            binding.addServerFab.setOnClickListener {
+                navController.navigate(R.id.action_homeFragment_to_configFragment)
+            }
         }
     }
 

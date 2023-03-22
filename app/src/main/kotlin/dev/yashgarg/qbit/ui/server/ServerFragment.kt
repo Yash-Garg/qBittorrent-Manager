@@ -147,7 +147,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                             selectedItems?.toList()?.let { hashes ->
                                 viewModel.toggleTorrentsState(true, hashes)
                             }
-                            isVisible = false
+                            close()
                             true
                         }
                     }
@@ -158,7 +158,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                             selectedItems?.toList()?.let { hashes ->
                                 viewModel.toggleTorrentsState(false, hashes)
                             }
-                            isVisible = false
+                            close()
                             true
                         }
                     }
@@ -173,9 +173,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
             bottomBar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.category -> {
-                        true
-                    }
+                    R.id.category,
                     R.id.sort_list -> {
                         true
                     }
