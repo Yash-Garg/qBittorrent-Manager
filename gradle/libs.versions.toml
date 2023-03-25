@@ -1,7 +1,7 @@
 [versions]
 axCore = "1.9.0"
 axAppcompat = "1.6.1"
-axActivity = "1.6.1"
+axActivity = "1.7.0"
 axConstraintlayout = "2.1.4"
 axDatastore = "1.0.0"
 axNavigation = "2.5.3"
@@ -18,7 +18,7 @@ lifecycle = "2.6.1"
 kotlin = "1.8.10"
 binary_compat = "0.13.0"
 mockito = "5.2.0"
-room = "2.5.0"
+room = "2.5.1"
 spotless = "6.17.0"
 uiautomator = "2.2.0"
 serialization = "1.5.0"
@@ -60,7 +60,7 @@ compose-compiler = "androidx.compose.compiler:compiler:1.4.4"
 compose-foundation = "androidx.compose.foundation:foundation:1.4.0"
 compose-material3 = "androidx.compose.material3:material3:1.0.1"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.3.1"
-compose-theme-adapter = "com.google.accompanist:accompanist-themeadapter-material3:0.28.0"
+compose-theme-adapter = "com.google.accompanist:accompanist-themeadapter-material3:0.30.0"
 
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -97,7 +97,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNavigation" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-sentry = "io.sentry.android.gradle:3.4.2"
+sentry = "io.sentry.android.gradle:3.4.3"
 
 [bundles]
 compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]
