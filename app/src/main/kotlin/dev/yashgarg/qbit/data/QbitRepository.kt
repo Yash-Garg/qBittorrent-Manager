@@ -4,8 +4,8 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
 import dev.yashgarg.qbit.data.manager.ClientManager
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import qbittorrent.QBittorrentClient
@@ -16,9 +16,11 @@ import qbittorrent.models.TorrentPeers
 import qbittorrent.models.TorrentProperties
 import qbittorrent.models.TorrentTracker
 
-class QbitRepository @Inject constructor(private val clientManager: ClientManager) {
+class QbitRepository
+@Inject
+constructor(dispatcher: CoroutineDispatcher, private val clientManager: ClientManager) {
     private lateinit var client: QBittorrentClient
-    private val scope by lazy { CoroutineScope(Dispatchers.IO) }
+    private val scope by lazy { CoroutineScope(dispatcher) }
 
     init {
         scope.launch { client = clientManager.checkAndGetClient() ?: return@launch }
@@ -34,6 +36,14 @@ class QbitRepository @Inject constructor(private val clientManager: ClientManage
 
     fun observeTorrentPeers(hash: String): Flow<TorrentPeers> {
         return client.observeTorrentPeers(hash)
+    }
+
+    suspend fun getApiVersion(): Result<String, Throwable> {
+        return runCatching { client.getApiVersion() }
+    }
+
+    suspend fun getVersion(): Result<String, Throwable> {
+        return runCatching { client.getVersion() }
     }
 
     suspend fun addTorrentUrl(url: String): Result<Unit, Throwable> {

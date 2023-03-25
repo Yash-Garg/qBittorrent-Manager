@@ -14,7 +14,7 @@ class FakeClientManager : ClientManager {
     private val baseUrl: String by lazy { System.getenv("base_url") }
     private val password: String by lazy { System.getenv("password") }
 
-    val config =
+    private val config =
         ServerConfig(
             configId = 0,
             serverName = "TestServer",
