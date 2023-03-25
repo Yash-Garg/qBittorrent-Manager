@@ -30,8 +30,8 @@ constructor(private val repository: QbitRepository, state: SavedStateHandle) : V
     init {
         Log.d("TorrentDetailsViewModel", "TorrentHash: $hash")
         viewModelScope.launch {
-            syncTorrentFlow()
-            syncPeers()
+            launch { syncTorrentFlow() }
+            launch { syncPeers() }
         }
     }
 
