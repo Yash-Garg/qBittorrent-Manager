@@ -1,9 +1,19 @@
 #!/bin/sh
 
-echo 'hook: formatting files using :spotlessApply'
+echo '[githooks] formatting files using spotless'
+echo
 
 ./gradlew spotlessApply
 
-git add --all
+changed_files="$(git diff --name-only)"
+echo
 
-echo 'hook: formatting complete'
+# check if there are untracked files
+if [[ -n "$changed_files" ]];
+then
+    echo '[githooks] aborting commit, untracked files found:'
+    echo "$changed_files"
+    exit 1
+else
+    echo '[githooks] continuing commit, no untracked files found'
+fi

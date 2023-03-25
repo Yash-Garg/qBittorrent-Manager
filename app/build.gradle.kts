@@ -91,11 +91,9 @@ android {
     }
 
     androidComponents {
-        beforeVariants { variant ->
-            when {
-                variant.name.contains("benchmark", ignoreCase = true) -> {
-                    variant.enable = false
-                }
+        beforeVariants {
+            if (it.name.contains("benchmark", true)) {
+                it.enable = false
             }
         }
     }

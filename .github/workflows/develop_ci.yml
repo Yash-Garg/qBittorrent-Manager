@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35.6.4
+        uses: tj-actions/changed-files@v35.7.6
         with:
           files: |
             .github/workflows/develop_ci.yml
@@ -42,7 +42,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -63,12 +63,12 @@ jobs:
     needs: [ check-codestyle ]
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -101,10 +101,10 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
-          
+
       - name: Decode Keystore
         env:
           ENCODED_STRING: ${{ secrets.SIGNING_KEY }}

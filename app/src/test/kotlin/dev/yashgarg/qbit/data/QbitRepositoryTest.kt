@@ -6,7 +6,6 @@ import dev.yashgarg.qbit.FakeClientManager
 import dev.yashgarg.qbit.MainDispatcherRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertFalse
@@ -37,7 +36,7 @@ class QbitRepositoryTest {
     fun checkAddTorrentSuccess() = runTest {
         assertTrue(repository.addTorrentUrl(Constants.magnetUrl) is Ok)
 
-        val data = repository.observeMainData().drop(1).first()
+        val data = repository.observeMainData().first()
         assertTrue(data.torrents.containsKey(Constants.magnetHash))
     }
 
@@ -45,7 +44,7 @@ class QbitRepositoryTest {
     fun checkRemoveTorrentSuccess() = runTest {
         assertTrue(repository.removeTorrents(listOf(Constants.magnetHash)) is Ok)
 
-        val data = repository.observeMainData().drop(1).first()
+        val data = repository.observeMainData().first()
         assertFalse(data.torrents.containsKey(Constants.magnetHash))
     }
 }
