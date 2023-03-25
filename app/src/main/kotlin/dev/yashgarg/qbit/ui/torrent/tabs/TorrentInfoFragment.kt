@@ -38,9 +38,9 @@ class TorrentInfoFragment : Fragment(AppR.layout.torrent_info_fragment) {
 
     private fun render(state: TorrentDetailsState) {
         with(binding) {
-            if (!state.loading) {
-                val torrent = requireNotNull(state.torrent)
-                val props = requireNotNull(state.torrentProperties)
+            if (!state.loading && state.torrent != null && state.torrentProperties != null) {
+                val torrent = state.torrent
+                val props = state.torrentProperties
                 loader.visibility = View.GONE
                 infoConstraintLayout.visibility = View.VISIBLE
 

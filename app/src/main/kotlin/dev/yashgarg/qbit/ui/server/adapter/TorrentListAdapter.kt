@@ -63,7 +63,7 @@ class TorrentListAdapter @Inject constructor() :
 
         val itemDetails: ItemDetailsLookup.ItemDetails<String> =
             object : ItemDetailsLookup.ItemDetails<String>() {
-                override fun getPosition(): Int = adapterPosition
+                override fun getPosition(): Int = absoluteAdapterPosition
 
                 override fun getSelectionKey(): String = getItem(position).hash
             }

@@ -13,6 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.yashgarg.qbit.data.AppDatabase
 import dev.yashgarg.qbit.data.MIGRATION_1_2
+import dev.yashgarg.qbit.data.QbitRepository
 import dev.yashgarg.qbit.data.manager.ClientManager
 import dev.yashgarg.qbit.data.manager.ClientManagerImpl
 import dev.yashgarg.qbit.data.models.ServerPreferences
@@ -41,6 +42,9 @@ class AppModule {
 
     @Provides
     fun provideClientManager(clientManager: ClientManagerImpl): ClientManager = clientManager
+
+    @Provides
+    fun provideQbitRepository(clientManager: ClientManager) = QbitRepository(clientManager)
 
     @Singleton
     @Provides
