@@ -175,6 +175,8 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 when (menuItem.itemId) {
                     R.id.category,
                     R.id.sort_list -> {
+                        Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_SHORT)
+                            .show()
                         true
                     }
                     R.id.speed_toggle -> {

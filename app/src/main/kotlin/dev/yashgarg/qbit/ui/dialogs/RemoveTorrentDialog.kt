@@ -17,7 +17,7 @@ class RemoveTorrentDialog : DialogFragment() {
 
         // TODO: Switch to string resources below
         alertDialogBuilder.apply {
-            setTitle("Are you sure you want to delete this torrent?")
+            setTitle("Are you sure you want to delete the torrent(s)?")
             setView(R.layout.delete_files_dialog)
             setPositiveButton("Yes", null)
             setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
