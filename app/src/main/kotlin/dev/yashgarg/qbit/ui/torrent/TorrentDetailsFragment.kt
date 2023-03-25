@@ -169,19 +169,13 @@ class TorrentDetailsFragment : Fragment(R.layout.torrent_details_fragment) {
 
     private fun render(state: TorrentDetailsState) {
         with(binding) {
-            if (!state.loading) {
-                if (state.error != null || state.torrentProperties == null) {
-                    Toast.makeText(requireContext(), "Unable to fetch details", Toast.LENGTH_SHORT)
-                        .show()
-                    findNavController().navigateUp()
-                } else {
-                    val torrent = requireNotNull(state.torrent)
-                    torrent.name.apply {
-                        toolbar.title = this
-                        collapsingToolbar.title = this
-                    }
-                    setupMenu(torrent)
+            if (!state.loading && state.error == null) {
+                val torrent = requireNotNull(state.torrent)
+                torrent.name.apply {
+                    toolbar.title = this
+                    collapsingToolbar.title = this
                 }
+                setupMenu(torrent)
             }
         }
     }

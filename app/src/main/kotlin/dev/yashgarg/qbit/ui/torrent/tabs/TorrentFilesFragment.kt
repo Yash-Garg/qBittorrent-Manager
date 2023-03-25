@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ComposeView
@@ -32,7 +31,6 @@ class TorrentFilesFragment : Fragment() {
     ): View {
         val composeView = ComposeView(requireContext())
 
-        @OptIn(ExperimentalComposeUiApi::class)
         composeView.apply {
             setContent {
                 val state by viewModel.uiState.collectAsState()

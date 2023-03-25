@@ -71,9 +71,9 @@ fun PeersListView(
     modifier: Modifier = Modifier,
     onBan: (TorrentPeer) -> Unit
 ) {
-    if (state.peersLoading || state.peers == null) {
+    if (state.peersLoading) {
         CenterLinearLoading(modifier, R.color.md_theme_dark_seed)
-    } else if (state.peers.peers.isEmpty()) {
+    } else if (state.peers == null || state.peers.peers.isEmpty()) {
         Center(modifier) { Text("No peers connected") }
     } else {
         val peers = requireNotNull(state.peers).peers.values.toList()
