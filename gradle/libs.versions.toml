@@ -97,7 +97,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNavigation" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-sentry = "io.sentry.android.gradle:3.4.3"
+sentry = "io.sentry.android.gradle:3.5.0"
 
 [bundles]
 compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]
