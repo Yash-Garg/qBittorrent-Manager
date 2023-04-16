@@ -907,9 +907,10 @@ class QBittorrentClient(
     @Throws(QBittorrentException::class, CancellationException::class)
     suspend fun banPeers(peers: List<String>) {
         http
-            .get("${config.baseUrl}/api/v2/transfer/banPeers") {
-                parameter("peers", peers.joinToString("|"))
-            }
+            .submitForm(
+                "${config.baseUrl}/api/v2/transfer/banPeers",
+                formParameters = Parameters.build { append("peers", peers.joinToString("|")) }
+            )
             .orThrow()
     }
 

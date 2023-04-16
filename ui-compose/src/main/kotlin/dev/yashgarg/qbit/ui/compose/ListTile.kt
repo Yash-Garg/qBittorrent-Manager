@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -31,8 +32,8 @@ fun ListTile(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(horizontalAlignment = Alignment.Start) {
-            Text(title, style = titleStyle)
+        Column(horizontalAlignment = Alignment.Start, modifier = Modifier.weight(.6f)) {
+            Text(title, style = titleStyle, maxLines = 1, overflow = TextOverflow.Ellipsis)
             subtitle?.let { Text(it, style = subtitleStyle) }
         }
         suffix()
