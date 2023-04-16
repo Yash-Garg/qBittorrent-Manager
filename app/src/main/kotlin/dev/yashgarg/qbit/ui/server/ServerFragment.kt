@@ -1,5 +1,6 @@
 package dev.yashgarg.qbit.ui.server
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -65,6 +66,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         binding.torrentRv.adapter = torrentListAdapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupDialogResultListener() {
         childFragmentManager.apply {
             setFragmentResultListener(RemoveTorrentDialog.REMOVE_TORRENT_KEY, viewLifecycleOwner) {
@@ -72,7 +74,10 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
                 bundle ->
                 val deleteFiles = bundle.getBoolean(RemoveTorrentDialog.TORRENT_KEY)
                 Log.d(this.javaClass.simpleName, "Selection: ${selectedItems?.toList()}")
-                selectedItems?.toList()?.let { viewModel.removeTorrents(it, deleteFiles) }
+                selectedItems?.toList()?.let {
+                    viewModel.removeTorrents(it, deleteFiles)
+                    torrentListAdapter.notifyDataSetChanged()
+                }
                 binding.bottomBar.menu.getItem(3).isVisible = false
             }
 
