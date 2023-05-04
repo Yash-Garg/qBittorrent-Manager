@@ -42,7 +42,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
 
@@ -68,7 +68,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
 
@@ -101,7 +101,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
 
