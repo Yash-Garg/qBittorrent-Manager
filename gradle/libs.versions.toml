@@ -1,23 +1,23 @@
 [versions]
 axCore = "1.10.0"
 axAppcompat = "1.6.1"
-axActivity = "1.7.0"
+axActivity = "1.7.1"
 axConstraintlayout = "2.1.4"
 axDatastore = "1.0.0"
 axNavigation = "2.5.3"
 axTest = "1.4.0"
 axWork = "2.8.1"
 coroutines = "1.6.4"
-googleMaterial = "1.8.0"
-agp = "8.1.0-alpha11"
+googleMaterial = "1.9.0"
+agp = "8.1.0-beta01"
 espresso = "3.5.1"
 hilt = "2.45"
 axHilt = "1.0.0"
-ktor = "2.2.4"
+ktor = "2.3.0"
 lifecycle = "2.6.1"
 kotlin = "1.8.20"
-binary_compat = "0.13.0"
-mockito = "5.3.0"
+binary_compat = "0.13.1"
+mockito = "5.3.1"
 room = "2.5.1"
 spotless = "6.18.0"
 uiautomator = "2.2.0"
@@ -27,7 +27,7 @@ serialization = "1.5.0"
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha13"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha14"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -35,7 +35,7 @@ androidx-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", 
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "axNavigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "axNavigation" }
-androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.3.0"
+androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.3.1"
 androidx-recyclerview-selection = "androidx.recyclerview:recyclerview-selection:1.2.0-alpha01"
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
@@ -55,11 +55,11 @@ coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", ve
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 coroutines-turbine = { module = "app.cash.turbine:turbine", version = "0.12.3" }
 
-compose-activity = "androidx.activity:activity-compose:1.7.0"
-compose-compiler = "androidx.compose.compiler:compiler:1.4.5"
-compose-foundation = "androidx.compose.foundation:foundation:1.4.1"
+compose-activity = "androidx.activity:activity-compose:1.7.1"
+compose-compiler = "androidx.compose.compiler:compiler:1.4.6"
+compose-foundation = "androidx.compose.foundation:foundation:1.4.3"
 compose-material3 = "androidx.compose.material3:material3:1.0.1"
-compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.3.1"
+compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.4.0"
 compose-theme-adapter = "com.google.accompanist:accompanist-themeadapter-material3:0.30.1"
 
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
