@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -44,6 +45,11 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+
+        activity?.addOnNewIntentListener {
+            val bundle = bundleOf(MainActivity.TORRENT_INTENT_KEY to it?.data.toString())
+            handleAddIntent(bundle)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -108,9 +114,9 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
         }
     }
 
-    private fun handleAddIntent() {
-        val uri: String? = arguments?.getString(MainActivity.TORRENT_INTENT_KEY)
-        arguments?.clear()
+    private fun handleAddIntent(bundle: Bundle?) {
+        val uri: String? = (bundle ?: arguments)?.getString(MainActivity.TORRENT_INTENT_KEY)
+        (bundle ?: arguments)?.clear()
         if (!uri.isNullOrEmpty()) {
             when {
                 linkValidator.isValid(uri) -> viewModel.addTorrentUrl(uri)
@@ -207,7 +213,7 @@ class ServerFragment : Fragment(R.layout.server_fragment) {
 
         viewModel.intent
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-            .onEach { handleAddIntent() }
+            .onEach { handleAddIntent(null) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
