@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
           fetch-depth: 0
       - name: Get changed files
         id: changed-files
@@ -37,7 +37,7 @@ jobs:
             **/*.xml
 
   check-codestyle:
-    needs: [ file-changes ]
+    needs: [file-changes]
     runs-on: ubuntu-latest
     if: needs.file-changes.outputs.any == 'true'
     steps:
@@ -60,10 +60,10 @@ jobs:
           gradle-home-cache-cleanup: true
 
   unit-tests:
-    needs: [ check-codestyle ]
+    needs: [check-codestyle]
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     if: needs.file-changes.outputs.any == 'true'
     steps:
@@ -93,10 +93,10 @@ jobs:
           path: app/build/reports/tests/
 
   build-apks:
-    needs: [ check-codestyle ]
+    needs: [check-codestyle]
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest ]
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     if: needs.file-changes.outputs.any == 'true'
     steps:
