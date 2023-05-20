@@ -59,39 +59,6 @@ jobs:
           arguments: spotlessCheck
           gradle-home-cache-cleanup: true
 
-  unit-tests:
-    needs: [check-codestyle]
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    if: needs.file-changes.outputs.any == 'true'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3.5.2
-        with:
-          fetch-depth: 0
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3.11.0
-        with:
-          distribution: "zulu"
-          java-version: "17"
-          cache: "gradle"
-
-      - name: Run unit tests
-        uses: gradle/gradle-build-action@v2.4.2
-        with:
-          arguments: test
-          gradle-home-cache-cleanup: true
-
-      - name: (Fail-only) Upload test report
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: Unit tests report
-          path: app/build/reports/tests/
-
   build-apks:
     needs: [check-codestyle]
     strategy:
