@@ -1,4 +1,4 @@
-# qBittorrent-Manager 🚧
+# qBittorrent-Manager (SLOW DEVELOPMENT) 🚧
 
 [![Android CI](https://github.com/Yash-Garg/qBittorrent-Manager/actions/workflows/develop_ci.yml/badge.svg?branch=develop)](https://github.com/Yash-Garg/qBittorrent-Manager/actions/workflows/develop_ci.yml)
 
