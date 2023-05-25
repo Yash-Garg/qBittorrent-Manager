@@ -53,7 +53,7 @@ build-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-coroutines-turbine = { module = "app.cash.turbine:turbine", version = "0.12.3" }
+coroutines-turbine = { module = "app.cash.turbine:turbine", version = "0.13.0" }
 
 compose-activity = "androidx.activity:activity-compose:1.7.1"
 compose-compiler = "androidx.compose.compiler:compiler:1.4.6"
