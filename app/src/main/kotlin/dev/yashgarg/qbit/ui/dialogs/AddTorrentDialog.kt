@@ -91,6 +91,7 @@ class AddTorrentDialog : DialogFragment() {
 
     companion object {
         fun newInstance(): AddTorrentDialog = AddTorrentDialog()
+
         const val TAG = "AddTorrentDialogFragment"
         const val ADD_TORRENT_KEY = "add_torrent"
         const val ADD_TORRENT_FILE_KEY = "add_torrent_file"

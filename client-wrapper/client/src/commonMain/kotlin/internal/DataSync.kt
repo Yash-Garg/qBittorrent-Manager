@@ -29,6 +29,7 @@ internal abstract class DataSync<T>(
 
     abstract val endpointUrl: String
     abstract val nestedObjectKeys: List<String>
+
     open fun HttpRequestBuilder.configureRequest() = Unit
 
     private val serializer = serializer(requireNotNull(typeInfo.kotlinType))
@@ -41,6 +42,7 @@ internal abstract class DataSync<T>(
         set(value) {
             atomicSyncRid.value = value
         }
+
     private val syncLoopJob =
         syncScope.launch {
             while (true) {
