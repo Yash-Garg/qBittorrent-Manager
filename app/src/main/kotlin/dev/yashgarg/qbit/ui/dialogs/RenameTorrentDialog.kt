@@ -63,6 +63,7 @@ class RenameTorrentDialog : DialogFragment() {
 
     companion object {
         fun newInstance(): RenameTorrentDialog = RenameTorrentDialog()
+
         const val TAG = "RenameTorrentDialogFragment"
         const val TORRENT_NAME_KEY = "torrent_name"
         const val RENAME_TORRENT_KEY = "rename_torrent"

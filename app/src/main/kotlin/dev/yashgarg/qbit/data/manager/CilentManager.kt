@@ -14,6 +14,7 @@ import qbittorrent.QBittorrentClient
 
 interface ClientManager {
     val configStatus: SharedFlow<ConfigStatus>
+
     suspend fun checkAndGetClient(): QBittorrentClient?
 
     companion object {

@@ -47,6 +47,7 @@ class RemoveTorrentDialog : DialogFragment() {
 
     companion object {
         fun newInstance(): RemoveTorrentDialog = RemoveTorrentDialog()
+
         const val TAG = "RemoveTorrentDialogFragment"
         const val REMOVE_TORRENT_KEY = "remove_torrent"
         const val TORRENT_KEY = "torrent"
