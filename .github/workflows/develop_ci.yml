@@ -86,6 +86,10 @@ jobs:
           distribution: "zulu"
           java-version: "17"
           cache: "gradle"
+          
+      - name: Accept all SDK licenses
+        shell: bash
+        run: printf 'y\ny\ny\ny\ny\ny\n' | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
       - name: Build signed APKs
         uses: gradle/gradle-build-action@v2.4.2
