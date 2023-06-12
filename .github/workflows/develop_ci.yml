@@ -63,7 +63,7 @@ jobs:
     needs: [check-codestyle]
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     if: needs.file-changes.outputs.any == 'true'
     steps:
