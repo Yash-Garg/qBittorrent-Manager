@@ -27,7 +27,7 @@ serialization = "1.5.1"
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha15"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-beta05"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
