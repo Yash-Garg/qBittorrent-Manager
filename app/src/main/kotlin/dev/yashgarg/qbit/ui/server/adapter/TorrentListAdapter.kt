@@ -176,11 +176,11 @@ class TorrentListAdapter @Inject constructor() :
 
     private class TorrentComparator : DiffUtil.ItemCallback<Torrent>() {
         override fun areItemsTheSame(oldItem: Torrent, newItem: Torrent): Boolean {
-            return oldItem.hash == newItem.hash
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Torrent, newItem: Torrent): Boolean {
-            return oldItem == newItem
+            return oldItem.hash == newItem.hash
         }
     }
 
