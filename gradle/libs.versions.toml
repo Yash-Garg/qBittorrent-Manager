@@ -82,7 +82,7 @@ tools-whatthestack = "com.github.haroldadmin:WhatTheStack:1.0.0-alpha04"
 
 junit = "junit:junit:4.13.2"
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
-mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:5.0.0"
+mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:5.1.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
