@@ -21,13 +21,13 @@ jobs:
     outputs:
       any: ${{ steps.changed-files.outputs.any_changed }}
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v4.0.0
         with:
           submodules: "recursive"
           fetch-depth: 0
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35.9.2
+        uses: tj-actions/changed-files@v39.0.0
         with:
           files: |
             .github/workflows/develop_ci.yml
@@ -42,19 +42,19 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.0.0
         with:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.11.0
+        uses: actions/setup-java@v3.12.0
         with:
           distribution: "zulu"
           java-version: "17"
           cache: "gradle"
 
       - name: Check codestyle
-        uses: gradle/gradle-build-action@v2.4.2
+        uses: gradle/gradle-build-action@v2.8.0
         with:
           arguments: spotlessCheck
           gradle-home-cache-cleanup: true
@@ -68,7 +68,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.0.0
         with:
           fetch-depth: 0
 
@@ -81,7 +81,7 @@ jobs:
           echo $ENCODED_STRING | base64 --decode > "${TMP_KEYSTORE_FILE_PATH}"/qbit-key.jks
 
       - name: Set up JDK
-        uses: actions/setup-java@v3.11.0
+        uses: actions/setup-java@v3.12.0
         with:
           distribution: "zulu"
           java-version: "17"
@@ -92,7 +92,7 @@ jobs:
         run: printf 'y\ny\ny\ny\ny\ny\n' | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
       - name: Build signed APKs
-        uses: gradle/gradle-build-action@v2.4.2
+        uses: gradle/gradle-build-action@v2.8.0
         with:
           arguments: assembleRelease
           gradle-home-cache-cleanup: true
