@@ -21,7 +21,7 @@ jobs:
     outputs:
       any: ${{ steps.changed-files.outputs.any_changed }}
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.6.0
         with:
           submodules: "recursive"
           fetch-depth: 0
@@ -42,7 +42,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.6.0
         with:
           fetch-depth: 0
 
@@ -68,7 +68,7 @@ jobs:
     if: needs.file-changes.outputs.any == 'true'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.6.0
         with:
           fetch-depth: 0
 
