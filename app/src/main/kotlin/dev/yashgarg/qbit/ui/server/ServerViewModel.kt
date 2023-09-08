@@ -27,7 +27,7 @@ class ServerViewModel @Inject constructor(private val repository: QbitRepository
     private var syncJob: Job? = null
 
     init {
-        refresh()
+        syncJob = viewModelScope.launch { syncData() }
     }
 
     fun refresh() {

@@ -31,12 +31,14 @@ constructor(
     }
 
     private suspend fun checkIfConfigsExist() {
-        configDao.getConfigs().collect { configs ->
-            if (configs.isNotEmpty()) {
-                _configStatus.emit(ConfigStatus.EXISTS)
-                checkAndGetClient()
-            } else {
-                _configStatus.emit(ConfigStatus.DOES_NOT_EXIST)
+        withContext(Dispatchers.IO) {
+            configDao.getConfigs().collect { configs ->
+                if (configs.isNotEmpty()) {
+                    _configStatus.emit(ConfigStatus.EXISTS)
+                    checkAndGetClient()
+                } else {
+                    _configStatus.emit(ConfigStatus.DOES_NOT_EXIST)
+                }
             }
         }
     }

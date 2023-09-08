@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import qbittorrent.QBittorrentClient
 
 @HiltViewModel
@@ -187,7 +188,7 @@ class ConfigViewModel @Inject constructor(private val configDao: ConfigDao) : Vi
                 trustSelfSigned = trustSelfSigned
             )
 
-        viewModelScope.launch { configDao.addConfig(config) }
+        viewModelScope.launch { withContext(Dispatchers.IO) { configDao.addConfig(config) } }
     }
 
     suspend fun testConfig(
