@@ -1,33 +1,32 @@
 [versions]
-axCore = "1.10.1"
+axCore = "1.12.0"
 axAppcompat = "1.6.1"
 axActivity = "1.7.2"
 axConstraintlayout = "2.1.4"
 axDatastore = "1.0.0"
-axNavigation = "2.6.0"
-axTest = "1.4.0"
+axNavigation = "2.7.2"
 axWork = "2.8.1"
 binary_compat = "0.13.2"
-coroutines = "1.7.1"
+coroutines = "1.7.3"
 googleMaterial = "1.9.0"
-agp = "8.2.0-alpha07"
+agp = "8.2.0-alpha15"
 espresso = "3.5.1"
-hilt = "2.46.1"
+hilt = "2.48"
 axHilt = "1.0.0"
-ktor = "2.3.1"
-lifecycle = "2.6.1"
-kotlin = "1.8.21"
-mockito = "5.3.1"
-room = "2.5.1"
+ktor = "2.3.4"
+lifecycle = "2.6.2"
+kotlin = "1.9.10"
+mockito = "5.5.0"
+room = "2.5.2"
 spotless = "6.19.0"
 uiautomator = "2.2.0"
-serialization = "1.5.1"
+serialization = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha15"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-beta05"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -53,12 +52,12 @@ build-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "coroutines" }
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-coroutines-turbine = { module = "app.cash.turbine:turbine", version = "0.13.0" }
+coroutines-turbine = { module = "app.cash.turbine:turbine", version = "1.0.0" }
 
 compose-activity = "androidx.activity:activity-compose:1.7.2"
-compose-compiler = "androidx.compose.compiler:compiler:1.4.7"
-compose-foundation = "androidx.compose.foundation:foundation:1.4.3"
-compose-material3 = "androidx.compose.material3:material3:1.1.0"
+compose-compiler = "androidx.compose.compiler:compiler:1.5.3"
+compose-foundation = "androidx.compose.foundation:foundation:1.5.1"
+compose-material3 = "androidx.compose.material3:material3:1.1.1"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.4.0"
 compose-theme-adapter = "com.google.accompanist:accompanist-themeadapter-material3:0.30.1"
 
@@ -76,7 +75,7 @@ ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotia
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 tools-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.11"
-tools-cascade = "me.saket.cascade:cascade:2.0.0"
+tools-cascade = "me.saket.cascade:cascade:2.2.0"
 tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 tools-lottie = "com.airbnb.android:lottie:6.0.1"
 tools-whatthestack = "com.github.haroldadmin:WhatTheStack:1.0.0-alpha04"
@@ -97,7 +96,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "axNavigation" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-sentry = "io.sentry.android.gradle:3.10.0"
+sentry = "io.sentry.android.gradle:3.12.0"
 
 [bundles]
 compose = ["compose-theme-adapter", "compose-activity", "compose-foundation", "compose-material3"]

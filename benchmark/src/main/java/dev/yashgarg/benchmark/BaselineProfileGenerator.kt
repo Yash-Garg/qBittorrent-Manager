@@ -13,7 +13,7 @@ class BaselineProfileGenerator {
 
     @Test
     fun generateBaselineProfile() =
-        baselineRule.collectBaselineProfile(StartupBenchmark.packageName) {
+        baselineRule.collect(StartupBenchmark.packageName) {
             pressHome()
             startActivityAndWait()
 
