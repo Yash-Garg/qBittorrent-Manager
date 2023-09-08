@@ -1,33 +1,32 @@
 [versions]
-axCore = "1.10.1"
+axCore = "1.12.0"
 axAppcompat = "1.6.1"
 axActivity = "1.7.2"
 axConstraintlayout = "2.1.4"
 axDatastore = "1.0.0"
-axNavigation = "2.6.0"
-axTest = "1.4.0"
+axNavigation = "2.7.2"
 axWork = "2.8.1"
 binary_compat = "0.13.2"
-coroutines = "1.7.1"
+coroutines = "1.7.3"
 googleMaterial = "1.9.0"
-agp = "8.2.0-alpha07"
+agp = "8.2.0-alpha15"
 espresso = "3.5.1"
-hilt = "2.46.1"
+hilt = "2.48"
 axHilt = "1.0.0"
 ktor = "2.3.1"
-lifecycle = "2.6.1"
-kotlin = "1.8.21"
+lifecycle = "2.6.2"
+kotlin = "1.9.10"
 mockito = "5.3.1"
-room = "2.5.1"
+room = "2.5.2"
 spotless = "6.19.0"
 uiautomator = "2.2.0"
-serialization = "1.5.1"
+serialization = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "axActivity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "axAppcompat" }
-androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha15"
+androidx-benchmark-junit = "androidx.benchmark:benchmark-macro-junit4:1.2.0-beta05"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "axConstraintlayout" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "axDatastore" }
 androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -56,9 +55,9 @@ kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-te
 coroutines-turbine = { module = "app.cash.turbine:turbine", version = "0.13.0" }
 
 compose-activity = "androidx.activity:activity-compose:1.7.2"
-compose-compiler = "androidx.compose.compiler:compiler:1.4.7"
-compose-foundation = "androidx.compose.foundation:foundation:1.4.3"
-compose-material3 = "androidx.compose.material3:material3:1.1.0"
+compose-compiler = "androidx.compose.compiler:compiler:1.5.3"
+compose-foundation = "androidx.compose.foundation:foundation:1.5.1"
+compose-material3 = "androidx.compose.material3:material3:1.1.1"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.4.0"
 compose-theme-adapter = "com.google.accompanist:accompanist-themeadapter-material3:0.30.1"
 
