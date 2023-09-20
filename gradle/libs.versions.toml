@@ -57,7 +57,7 @@ coroutines-turbine = { module = "app.cash.turbine:turbine", version = "1.0.0" }
 compose-activity = "androidx.activity:activity-compose:1.7.2"
 compose-compiler = "androidx.compose.compiler:compiler:1.5.3"
 compose-foundation = "androidx.compose.foundation:foundation:1.5.1"
-compose-material3 = "androidx.compose.material3:material3:1.1.1"
+compose-material3 = "androidx.compose.material3:material3:1.1.2"
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.5.1"
 compose-theme-adapter = "com.google.accompanist:accompanist-themeadapter-material3:0.32.0"
 
