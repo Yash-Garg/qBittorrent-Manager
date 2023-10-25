@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.yashgarg.qbit"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
         versionCode = 17
         versionName = "v0.2.5-$commitHash"
