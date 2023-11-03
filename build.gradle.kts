@@ -16,9 +16,9 @@ plugins {
     alias(libs.plugins.binaryCompat) apply false
     alias(libs.plugins.sentry) apply false
 
-    id("dev.yashgarg.qbit.spotless")
-    id("dev.yashgarg.qbit.githooks")
-    id("dev.yashgarg.qbit.kotlin-common")
+    alias(libs.plugins.custom.githooks)
+    alias(libs.plugins.custom.spotless)
+    alias(libs.plugins.kotlin.common)
 }
 
 val clean by tasks.existing(Delete::class) { delete(rootProject.layout.buildDirectory) }

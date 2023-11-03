@@ -8,6 +8,7 @@ axNavigation = "2.7.5"
 axWork = "2.8.1"
 binary_compat = "0.13.2"
 coroutines = "1.7.3"
+custom = "1.0.0"
 googleMaterial = "1.10.0"
 agp = "8.3.0-alpha12"
 espresso = "3.5.1"
@@ -89,6 +90,9 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 binaryCompat = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary_compat" }
+custom-githooks = { id = "dev.yashgarg.qbit.githooks", version.ref = "custom" }
+custom-spotless = { id = "dev.yashgarg.qbit.spotless", version.ref = "custom" }
+kotlin-common = { id = "dev.yashgarg.qbit.kotlin-common", version.ref = "custom" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
