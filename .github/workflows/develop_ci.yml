@@ -54,7 +54,7 @@ jobs:
           cache: "gradle"
 
       - name: Check codestyle
-        uses: gradle/gradle-build-action@v2.8.0
+        uses: gradle/gradle-build-action@v2.9.0
         with:
           arguments: spotlessCheck
           gradle-home-cache-cleanup: true
@@ -92,7 +92,7 @@ jobs:
         run: printf 'y\ny\ny\ny\ny\ny\n' | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
       - name: Build signed APKs
-        uses: gradle/gradle-build-action@v2.8.0
+        uses: gradle/gradle-build-action@v2.9.0
         with:
           arguments: assembleRelease
           gradle-home-cache-cleanup: true
