@@ -78,7 +78,7 @@ ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", versi
 tools-leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 tools-cascade = "me.saket.cascade:cascade:2.3.0"
 tools-kotlin-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
-tools-lottie = "com.airbnb.android:lottie:6.1.0"
+tools-lottie = "com.airbnb.android:lottie:6.2.0"
 tools-whatthestack = "com.github.haroldadmin:WhatTheStack:1.0.0-alpha04"
 
 junit = "junit:junit:4.13.2"
