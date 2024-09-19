@@ -21,7 +21,7 @@ mockito = "5.7.0"
 room = "2.6.0"
 spotless = "6.22.0"
 uiautomator = "2.2.0"
-serialization = "1.6.0"
+serialization = "1.7.3"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "axCore" }
