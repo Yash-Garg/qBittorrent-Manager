@@ -55,7 +55,7 @@ coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", ve
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 coroutines-turbine = { module = "app.cash.turbine:turbine", version = "1.0.0" }
 
-compose-activity = "androidx.activity:activity-compose:1.8.0"
+compose-activity = "androidx.activity:activity-compose:1.9.3"
 compose-compiler = "androidx.compose.compiler:compiler:1.5.3"
 compose-foundation = "androidx.compose.foundation:foundation:1.5.4"
 compose-material3 = "androidx.compose.material3:material3:1.1.2"
