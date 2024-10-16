@@ -1,7 +1,7 @@
 [versions]
 axCore = "1.12.0"
 axAppcompat = "1.6.1"
-axActivity = "1.8.0"
+axActivity = "1.9.3"
 axConstraintlayout = "2.1.4"
 axDatastore = "1.0.0"
 axNavigation = "2.7.5"
