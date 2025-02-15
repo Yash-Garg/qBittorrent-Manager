@@ -43,3 +43,9 @@ This is the repository for **_qBittorrent Manager_**, an Android app for managin
 ## License
 
 See [LICENSE](LICENSE.txt)
+
+
+## Alternatives
+* [Transdroid](https://www.transdroid.org/) supports many other clients
+* [qBitController](https://github.com/Bartuzen/qBitController) for qBitTorrent
+* [Tremotesf](https://github.com/equeim/tremotesf-android) for Transmission
